@@ -1,0 +1,47 @@
+
+.title {
+    position: absolute;
+    z-index: 2;
+    top: 13rem;
+    left: 10vw;
+    width: calc(100vw - 15vw);
+}
+
+.title h1 {
+   color: white;
+    font-size: clamp(35px, 5vw, 70px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: clamp(3.5rem, 6.5vw, 6.11rem);
+    letter-spacing: -0.2rem;
+}
+
+.titleBlend {
+    position: absolute;
+    z-index: 0;
+}
+
+@media screen and (max-width: 1199px) {
+    .title {
+        left: 5vw;
+        width: calc(100vw - 5vw);
+    }
+}
+
+@media screen and (max-width: 1090px) {
+    .title {
+        left: 5vw;
+        width: calc(100vw - 5vw);
+    }
+}
+
+@media screen and (max-width: 700px) {
+  .title h1 {
+   color: white;
+    font-size: clamp(32px, 5vw, 75px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: clamp(3.5rem, 6.5vw, 6.11rem);
+    letter-spacing: 0rem;
+}
+}
