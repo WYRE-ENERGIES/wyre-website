@@ -130,7 +130,7 @@ const Statistics = () => {
           </p>
         </div>
       </div>
-      <div className="max-2xl:px-6 max-w-[87rem] w-full mx-auto px-6 mt-18 lg:mt-14">
+      <div className="max-2xl:px-6 container w-full mx-auto px-6 mt-18 lg:mt-14">
         {error && (
           <div className="mb-4 text-center text-sm text-orange-600 bg-orange-50 border border-orange-100 px-3 py-2 rounded-md">
             {error}
@@ -149,7 +149,7 @@ const Statistics = () => {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100">
               <Zap className="h-6 w-6 text-yellow-600" />
             </div>
-            <p className="text-4xl xl:text-5xl font-bold text-heading mb-2">
+            <p className="text-4xl 2xl:text-5xl font-bold text-heading mb-2">
               <Counter end={energyProcessed} suffix=" MWh" isInView={isStatsInView} />
             </p>
             <p className="text-gray-400 font-medium">Total Energy Analyzed</p>
@@ -164,7 +164,7 @@ const Statistics = () => {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
               <Leaf className="h-6 w-6 text-green-600" />
             </div>
-            <p className="text-4xl xl:text-5xl font-bold text-heading mb-2">
+            <p className="text-4xl 2xl:text-5xl font-bold text-heading mb-2">
               <Counter end={carbonAnalysed} suffix=" Gt" isInView={isStatsInView} />
             </p>
             <p className="text-gray-400 font-medium">Total Carbon Analyzed</p>
@@ -179,7 +179,7 @@ const Statistics = () => {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
               <Layers className="h-6 w-6 text-blue-600" />
             </div>
-            <p className="text-4xl xl:text-5xl font-bold text-heading mb-2">
+            <p className="text-4xl 2xl:text-5xl font-bold text-heading mb-2">
               <Counter end={15} suffix="+ MW" isInView={isStatsInView} />
             </p>
             <p className="text-gray-400 font-medium">Pipeline</p>
@@ -194,7 +194,7 @@ const Statistics = () => {
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
               <Sun className="h-6 w-6 text-orange-600" />
             </div>
-            <p className="text-4xl xl:text-5xl font-bold text-heading mb-2">
+            <p className="text-4xl 2xl:text-5xl font-bold text-heading mb-2">
               <Counter end={solarCapacity} suffix=" MW" isInView={isStatsInView} />
             </p>
             <p className="text-gray-400 font-medium">Solar Capacity</p>

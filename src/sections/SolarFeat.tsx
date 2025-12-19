@@ -49,7 +49,7 @@ const solarSolutions: SolarSolution[] = [
 const SolarFeat = () => {
   return (
     <section className="bg-[#F8FAFC] py-24">
-      <div className="max-2xl:px-6 max-w-[83rem] mx-auto px-6">
+      <div className="max-2xl:px-6 container mx-auto px-6">
         <header className="mb-20">
           <p className="text-gray-400 max-sm:text-sm mb-4">Solar</p>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">

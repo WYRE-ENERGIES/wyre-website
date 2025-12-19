@@ -16,7 +16,7 @@ const totalNetWorth = clientPortfolio.reduce((sum, client) => sum + client.netWo
 export default function LogoCloud() {
   return (
     <section className="bg-background overflow-hidden">
-      <div className="group relative m-auto max-w-[90rem] max-md:px-6">
+      <div className="group relative m-auto container max-md:px-6">
         {/* <p className="text-center text-sm font-medium text-muted-foreground">OurClient Portfolio</p> */}
         <div className="flex flex-col items-center md:flex-row">
           <div className="max-md:flex items-center gap-x-1 md:max-w-44 md:border-r md:pr-6">

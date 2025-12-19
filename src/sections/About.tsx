@@ -5,7 +5,7 @@ const About = () => {
 
   return (
     <section id="about" className="relative min-h-screen py-24 lg:py-32">
-      <div className="max-2xl:px-6 max-w-[83rem] mx-auto px-6">
+      <div className="max-2xl:px-6 container mx-auto px-6">
         {/* Header Section */}
         <div className="mb-24">
           <p className="text-gray-400 max-sm:text-sm mb-4">Empowering Africa with Solar Energy and E.M.S</p>

@@ -84,9 +84,9 @@ const Hero = () => {
 
   return (
     <>
-      <div className="min-h-[75vh] relative overflow-hidden z-20 max-2xl:px-12 w-full mx-auto flex items-center justify-center gap-8">
-        <div className="flex flex-col flex-1 max-w-[50%] max-[599px]:max-w-full 2xl:px-0 2xl:ml-[10%]">
-          <h1 className="flex flex-wrap gap-2 text-white text-[clamp(35px,5vw,70px)] not-italic font-bold leading-[clamp(3.5rem,6.5vw,6.11rem)] tracking-[-0.2rem] max-[700px]:text-[clamp(32px,5vw,75px)] max-[700px]:tracking-normal">
+      <div className="min-h-[75vh] container relative overflow-hidden z-20 max-2xl:px-12 w-full mx-auto flex items-center justify-center gap-8">
+        <div className="flex flex-col flex-1 max-w-[60%] max-[599px]:max-w-full 2xl:px-0 2xl:ml-[10%]">
+          <h1 className="flex gap-2 text-white text-[clamp(35px,5vw,70px)] not-italic font-bold leading-[clamp(3.5rem,6.5vw,6.11rem)] tracking-[-0.2rem] max-[700px]:text-[clamp(32px,5vw,75px)] max-[700px]:tracking-normal">
             <motion.span
               variants={heroHeadingVariants}
               initial="hidden"

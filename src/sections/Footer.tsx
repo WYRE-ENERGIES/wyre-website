@@ -108,7 +108,7 @@ export default function Footer() {
 
   return (
     <footer className="m-1">
-      <div className="mx-auto max-w-[83rem] space-y-16 px-5 pt-16">
+      <div className="mx-auto container space-y-16 px-5 pt-16">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-8">
           <a
             href="/"

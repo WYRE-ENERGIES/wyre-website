@@ -97,7 +97,7 @@ export default function FAQsFour() {
 
   return (
     <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-[83rem] px-4 md:px-6">
+      <div className="mx-auto container px-4 md:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2
             data-aos="fade-up"
@@ -109,7 +109,7 @@ export default function FAQsFour() {
             className="text-muted-foreground mt-4 text-balance">Discover quick answers to common questions about our platform, services, and features.</p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-[83rem]">
+        <div className="mx-auto mt-12 container">
           <Accordion
             type="single"
             collapsible
