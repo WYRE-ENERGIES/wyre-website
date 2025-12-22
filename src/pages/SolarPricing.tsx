@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
+import { Search, Filter, Grid, List, SlidersHorizontal, Send, X } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Input } from '../components/ui/input';
@@ -7,6 +7,13 @@ import { Badge } from '../components/ui/badge';
 import OtherNavbar from '../components/navbar/OtherNavbar';
 import Footer from '../sections/Footer';
 import { motion } from 'framer-motion';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '../components/ui/dialog';
 
 // Solar system packages data (shared with SolarCatalog)
 const solarProducts = [
@@ -126,6 +133,24 @@ const SolarPricing = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('relevance');
   const [showFilters, setShowFilters] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<typeof solarProducts[0][]>([]);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+
+  const subjects = [
+    'EMS (Energy Management System)',
+    'Solar Purchase',
+    'Product Purchase',
+    'Maintenance',
+    'Operations',
+    'General Inquiry'
+  ];
 
   const filteredProducts = solarProducts.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -149,30 +174,98 @@ const SolarPricing = () => {
   });
 
   const toggleCategory = (category: string) => {
-    setSelectedCategories(prev =>
-      prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
-    );
+    setSelectedCategories(prev => {
+      const isSelected = prev.includes(category);
+      if (isSelected) {
+        return prev.filter(c => c !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
   };
 
   const toggleKVA = (kva: string) => {
-    setSelectedKVA(prev =>
-      prev.includes(kva)
-        ? prev.filter(k => k !== kva)
-        : [...prev, kva]
-    );
+    setSelectedKVA(prev => {
+      const isSelected = prev.includes(kva);
+      if (isSelected) {
+        return prev.filter(k => k !== kva);
+      } else {
+        return [...prev, kva];
+      }
+    });
   };
 
-  const handleContactRedirect = (product: typeof solarProducts[0]) => {
-    // Store product info in localStorage for contact form pre-filling
-    localStorage.setItem('selectedProduct', JSON.stringify({
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      category: product.category
+  const handleGetQuote = (product: typeof solarProducts[0]) => {
+    // Check if product is already in selected products
+    const isAlreadySelected = selectedProducts.some(p => p.id === product.id);
+    if (!isAlreadySelected) {
+      setSelectedProducts(prev => [...prev, product]);
+    }
+
+    // Pre-fill form with product information
+    const priceText = product.price !== null && product.price !== undefined
+      ? `₦${product.price.toLocaleString()}`
+      : 'Price on Request';
+
+    setFormData(prev => ({
+      ...prev,
+      subject: 'Solar Purchase',
+      message: prev.message
+        ? `${prev.message}\n\n${product.name} (${priceText})`
+        : `I'm interested in purchasing: ${product.name} (${priceText})\n\nPlease provide more information about this product and availability.`
     }));
-    window.location.href = '/contact';
+
+    setIsModalOpen(true);
+  };
+
+  const removeProductFromQuote = (productId: number) => {
+    const product = selectedProducts.find(p => p.id === productId);
+    setSelectedProducts(prev => prev.filter(p => p.id !== productId));
+    // Update message to remove the product reference
+    if (product) {
+      setFormData(prev => ({
+        ...prev,
+        message: prev.message.replace(new RegExp(`.*${product.name}.*\\(.*\\).*`, 'g'), '').trim()
+      }));
+    }
+  };
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log('Form submitted:', formData);
+    console.log('Selected products:', selectedProducts);
+    alert('Thank you for your message! We will get back to you soon.');
+
+    // Reset form and close modal
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      subject: 'Solar Purchase',
+      message: ''
+    });
+    setSelectedProducts([]);
+    setIsModalOpen(false);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    // Optionally reset form when closing
+    // setFormData({
+    //   name: '',
+    //   email: '',
+    //   phone: '',
+    //   subject: '',
+    //   message: ''
+    // });
   };
 
   const containerVariants = {
@@ -180,18 +273,19 @@ const SolarPricing = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.05,
+        delayChildren: 0
       }
     }
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5
+        duration: 0.3
       }
     }
   }
@@ -283,11 +377,17 @@ const SolarPricing = () => {
                   <h4 className="text-heading font-medium mb-3">Categories</h4>
                   <div className="space-y-2">
                     {categories.map((category) => (
-                      <label key={category.name} className="flex items-center gap-2 cursor-pointer">
+                      <label
+                        key={category.name}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           checked={selectedCategories.includes(category.name)}
-                          onChange={() => toggleCategory(category.name)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            toggleCategory(category.name);
+                          }}
                           className="rounded border-border text-brandColor focus:ring-brandColor"
                         />
                         <span className="text-muted-foreground text-sm">
@@ -303,11 +403,17 @@ const SolarPricing = () => {
                   <h4 className="text-heading font-medium mb-3">KVA Rating</h4>
                   <div className="space-y-2">
                     {kvaOptions.map((kva) => (
-                      <label key={kva.name} className="flex items-center gap-2 cursor-pointer">
+                      <label
+                        key={kva.name}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           checked={selectedKVA.includes(kva.name)}
-                          onChange={() => toggleKVA(kva.name)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            toggleKVA(kva.name);
+                          }}
                           className="rounded border-border text-brandColor focus:ring-brandColor"
                         />
                         <span className="text-muted-foreground text-sm">
@@ -357,45 +463,47 @@ const SolarPricing = () => {
               </select>
             </div>
 
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}
-            >
-              {sortedProducts.map((product) => (
-                <motion.div
-                  key={product.id}
-                  variants={cardVariants}
-                  className="group"
-                >
-                  <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-                    <CardContent className="p-0 flex flex-col h-full">
-                      <div className="relative">
-                        <div className="absolute top-3 left-3 z-10">
-                          <Badge
-                            className={product.inStock ? "bg-green-500 text-white" : "bg-red-500 text-white"}
-                          >
-                            {product.inStock ? "In Stock" : "Out of Stock"}
-                          </Badge>
+            {sortedProducts.length > 0 ? (
+              <motion.div
+                key={`products-${sortedProducts.length}-${selectedCategories.join('-')}-${selectedKVA.join('-')}-${searchTerm}`}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}
+              >
+                {sortedProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    variants={cardVariants}
+                    className="group"
+                  >
+                    <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+                      <CardContent className="p-0 flex flex-col h-full">
+                        <div className="relative">
+                          <div className="absolute top-3 left-3 z-10">
+                            <Badge
+                              className={product.inStock ? "bg-green-500 text-white" : "bg-red-500 text-white"}
+                            >
+                              {product.inStock ? "In Stock" : "Out of Stock"}
+                            </Badge>
+                          </div>
+                          <div className="aspect-square bg-gray-50 rounded-t-lg overflow-hidden flex items-center justify-center">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
-                        <div className="aspect-square bg-gray-50 rounded-t-lg overflow-hidden flex items-center justify-center">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="p-4 flex-1 flex flex-col">
-                        <h3 className="text-heading font-semibold mb-2 line-clamp-2">{product.name}</h3>
+                        <div className="p-4 flex-1 flex flex-col">
+                          <h3 className="text-heading font-semibold mb-2 line-clamp-2">{product.name}</h3>
 
-                        <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
-                          {product.description}
-                        </p>
+                          <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
+                            {product.description}
+                          </p>
 
-                        {/* <div className="flex items-center gap-2 mb-4">
+                          {/* <div className="flex items-center gap-2 mb-4">
                           {product.price !== null ? (
                             <>
                               <span className="text-2xl font-bold text-heading">
@@ -414,24 +522,195 @@ const SolarPricing = () => {
                           )}
                         </div> */}
 
-                        <div className="mt-auto pt-4">
-                          <Button
-                            className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
-                            onClick={() => handleContactRedirect(product)}
-                            disabled={!product.inStock}
-                          >
-                            {product.inStock ? 'Get a Quote' : 'Out of Stock'}
-                          </Button>
+                          <div className="mt-auto pt-4">
+                            <Button
+                              className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
+                              onClick={() => handleGetQuote(product)}
+                              disabled={!product.inStock}
+                            >
+                              {product.inStock ? 'Get a Quote' : 'Out of Stock'}
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground text-lg">No products found matching your filters.</p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSelectedCategories([]);
+                    setSelectedKVA([]);
+                    setSearchTerm('');
+                  }}
+                  className="mt-4"
+                >
+                  Clear All Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Contact Form Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-heading">Get a Quote</DialogTitle>
+            <DialogDescription>
+              Fill out the form below and we'll get back to you with pricing information.
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Selected Products Display */}
+          {selectedProducts.length > 0 && (
+            <div className="space-y-2 mb-4">
+              <h4 className="text-sm font-medium text-heading">Products in Quote:</h4>
+              <div className="space-y-2 max-h-32 overflow-y-auto">
+                {selectedProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg"
+                  >
+                    <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-heading truncate">{product.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {product.price !== null && product.price !== undefined
+                          ? `₦${product.price.toLocaleString()}`
+                          : 'Price on Request'}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => removeProductFromQuote(product.id)}
+                      className="p-1 hover:bg-gray-200 rounded transition-colors"
+                      aria-label="Remove product"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="modal-name" className="block text-sm font-medium text-heading mb-2">
+                  Full Name *
+                </label>
+                <Input
+                  id="modal-name"
+                  name="name"
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  className="bg-background"
+                  placeholder="Your full name"
+                />
+              </div>
+              <div>
+                <label htmlFor="modal-email" className="block text-sm font-medium text-heading mb-2">
+                  Email Address *
+                </label>
+                <Input
+                  id="modal-email"
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  className="bg-background"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="modal-phone" className="block text-sm font-medium text-heading mb-2">
+                  Phone Number
+                </label>
+                <Input
+                  id="modal-phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleFormChange}
+                  className="bg-background"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+              <div>
+                <label htmlFor="modal-subject" className="block text-sm font-medium text-heading mb-2">
+                  Subject *
+                </label>
+                <select
+                  id="modal-subject"
+                  name="subject"
+                  required
+                  value={formData.subject}
+                  onChange={handleFormChange}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent"
+                >
+                  <option value="">Select a subject</option>
+                  {subjects.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="modal-message" className="block text-sm font-medium text-heading mb-2">
+                Message *
+              </label>
+              <textarea
+                id="modal-message"
+                name="message"
+                required
+                rows={6}
+                value={formData.message}
+                onChange={handleFormChange}
+                className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-none"
+                placeholder="Tell us about your solar energy needs..."
+              />
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <Button
+                type="submit"
+                className="flex-1 bg-brandColor hover:bg-brandColor/80 text-white"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send Message
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleModalClose}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

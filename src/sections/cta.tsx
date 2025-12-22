@@ -30,7 +30,7 @@ export function CTA() {
             className="z-10 bg-brandColor hover:bg-brandColor hover:opacity-80"
             asChild
             size="lg">
-            <a href="/">
+            <a href="/get-started">
               <span>Get Started</span>
             </a>
           </Button>
@@ -40,7 +40,7 @@ export function CTA() {
             asChild
             size="lg"
             variant="secondary">
-            <a href="/">
+            <a href="/get-started">
               <span>Book Demo</span>
             </a>
           </Button>

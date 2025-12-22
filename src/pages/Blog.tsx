@@ -182,63 +182,67 @@ export default function Blog() {
         </motion.div>
 
         {/* Articles Grid */}
-        <div
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-16"
-        >
-          {filteredPosts.map((post) => {
-            const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
-            const description = getPlainTextFromPortableText(post.body, 160);
-            return (
-              <motion.div
-                key={post._id}
-                variants={cardVariants}
-                className="group"
-              >
-                <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-                  {imageUrl && (
-                    <div className="relative overflow-hidden rounded-t-xl">
-                      <img
-                        src={imageUrl}
-                        alt={post.title}
-                        className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
-                        width="600"
-                        height="300"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge variant="secondary" className="bg-white/90 text-gray-800">
-                          Article
-                        </Badge>
+        {filteredPosts.length > 1 ?
+          <div
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-16"
+          >
+            {filteredPosts.map((post) => {
+              const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
+              const description = getPlainTextFromPortableText(post.body, 160);
+              return (
+                <motion.div
+                  key={post._id}
+                  variants={cardVariants}
+                  className="group"
+                >
+                  <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+                    {imageUrl && (
+                      <div className="relative overflow-hidden rounded-t-xl">
+                        <img
+                          src={imageUrl}
+                          alt={post.title}
+                          className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
+                          width="600"
+                          height="300"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <Badge variant="secondary" className="bg-white/90 text-gray-800">
+                            Article
+                          </Badge>
+                        </div>
                       </div>
+                    )}
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                        <Calendar className="h-4 w-4" />
+                        <span>{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
+                      </div>
+                      <CardTitle className="text-xl font-semibold line-clamp-2 min-h-[2.5rem] text-heading">
+                        {post.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1">
+                      <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                        {description}
+                      </p>
+                    </CardContent>
+                    <div className="px-6 pb-6 mt-auto">
+                      <Link
+                        to={`/blogs/${post.slug.current}`}
+                        className="inline-flex items-center text-brandColor font-semibold hover:text-brandColor/80 transition-colors group/link"
+                      >
+                        Read more
+                        <ArrowRight className="ml-1 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
                     </div>
-                  )}
-                  <CardHeader className="pb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
-                    </div>
-                    <CardTitle className="text-xl font-semibold line-clamp-2 min-h-[2.5rem] text-heading">
-                      {post.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
-                      {description}
-                    </p>
-                  </CardContent>
-                  <div className="px-6 pb-6 mt-auto">
-                    <Link
-                      to={`/blogs/${post.slug.current}`}
-                      className="inline-flex items-center text-brandColor font-semibold hover:text-brandColor/80 transition-colors group/link"
-                    >
-                      Read more
-                      <ArrowRight className="ml-1 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
+          : <div className="flex items-center justify-center min-h-[20vh]">
+            <h1 className="text-2xl md:text-3xl font-medium text-muted-foreground">No Blogs Published yet</h1>
+          </div>}
 
         {/* CTA Section */}
         <motion.div

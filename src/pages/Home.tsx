@@ -7,7 +7,7 @@ import Scale from "../sections/Scale"
 // import FAQsFour from "../sections/faq"
 import Footer from "../sections/Footer"
 import { CTA } from "../sections/cta"
-import BlogSection from "../sections/BlogSection"
+// import BlogSection from "../sections/BlogSection"
 import EmsFeat from "../sections/EmsFeat"
 import SolarFeat from "../sections/SolarFeat"
 import About from "../sections/About"
@@ -34,7 +34,7 @@ function App() {
       <Feature />
       <ProjectsSection />
       {/* <Testimonials /> */}
-      <BlogSection />
+      {/* <BlogSection /> */}
       <Scale />
       {/* <FAQsFour /> */}
       <CTA />

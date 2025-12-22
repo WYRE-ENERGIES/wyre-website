@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Building2, Home, Briefcase, ArrowRight, TrendingUp, Users, Target } from 'lucide-react'
+import { Check, ArrowRight, TrendingUp, Users, Target, Bot } from 'lucide-react'
 import { motion } from 'framer-motion'
 import OtherNavbar from '../components/navbar/OtherNavbar'
 import { Button } from '../components/ui/button'
@@ -110,7 +110,7 @@ const Segments = () => {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="pt-20 pb-16 px-6"
+        className="pt-20 px-6"
       >
         <div className="w-max mx-auto text-center">
           <motion.h1
@@ -133,51 +133,6 @@ const Segments = () => {
               Tailored energy management solutions for different industries and business types across Africa.
             </motion.p>
           </div>
-        </div>
-      </motion.section>
-
-      {/* Stats Section */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-        className="py-16 px-6 bg-white border-b border-gray-200"
-      >
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={fadeUp}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
-          >
-            <div className="text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
-                <Home className="h-6 w-6 text-brandColor" />
-              </div>
-              <div className="text-2xl font-bold text-heading">500+</div>
-              <div className="text-sm text-muted-foreground">Properties</div>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
-                <Building2 className="h-6 w-6 text-brandColor" />
-              </div>
-              <div className="text-2xl font-bold text-heading">200+</div>
-              <div className="text-sm text-muted-foreground">Facilities</div>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
-                <Briefcase className="h-6 w-6 text-brandColor" />
-              </div>
-              <div className="text-2xl font-bold text-heading">100K+</div>
-              <div className="text-sm text-muted-foreground">Locations</div>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
-                <TrendingUp className="h-6 w-6 text-brandColor" />
-              </div>
-              <div className="text-2xl font-bold text-heading">30%</div>
-              <div className="text-sm text-muted-foreground">Avg. Savings</div>
-            </div>
-          </motion.div>
         </div>
       </motion.section>
 
@@ -227,6 +182,13 @@ const Segments = () => {
             variants={containerVariants}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
+            <motion.div variants={fadeUp} className="text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mx-auto mb-4">
+                <Bot className="h-6 w-6 text-green-600" />
+              </div>
+              <h3 className="font-semibold text-heading mb-2">AI Insight</h3>
+              <p className="text-sm text-muted-foreground">Use Wyre AI to get advance insight on all sites and facilities data</p>
+            </motion.div>
             <motion.div variants={fadeUp} className="text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mx-auto mb-4">
                 <Check className="h-6 w-6 text-green-600" />
