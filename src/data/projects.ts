@@ -36,7 +36,7 @@ export const featuredProjects: Project[] = [
     title: "Whitestone by Schlepp",
     category: "Commercial Solar & Energy Management",
     description: "Integrated solar power and centralized energy management platform for whitestone delivering reliable, sustainable, and efficient operations.",
-    image: "img/whitestone.jpeg",
+    image: "/img/whitestone.jpeg",
     client: "Schlepp Properties",
     clientLogo: "",
     location: "Lagos, Nigeria",

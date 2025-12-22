@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, Grid, List, SlidersHorizontal, Send, X } from 'lucide-react';
+import { Search, Filter, Grid, List, SlidersHorizontal, X } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Input } from '../components/ui/input';
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '../components/ui/dialog';
+import { ContactForm } from '../components/ContactForm';
 
 // Solar system packages data (shared with SolarCatalog)
 const solarProducts = [
@@ -22,7 +23,7 @@ const solarProducts = [
     name: "6Kva Inverter with 6kWh Lithium Battery",
     category: "Complete Systems",
     description: "Compact 6Kva hybrid inverter system with 6kWh lithium battery. Perfect for small residential applications, apartments, or single-room setups requiring reliable backup power and solar integration.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-3.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -32,7 +33,7 @@ const solarProducts = [
     name: "10Kva Inverter with 10kWh Lithium Battery",
     category: "Complete Systems",
     description: "Efficient 10Kva hybrid inverter paired with 10kWh lithium battery. Ideal for small to medium residential homes seeking reliable solar power backup with moderate energy storage capacity.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-4.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -42,7 +43,7 @@ const solarProducts = [
     name: "10Kva Inverter with 15kwh Lithium Battery",
     category: "Complete Systems",
     description: "Complete solar power system featuring a 10Kva hybrid inverter paired with a 15kwh lithium battery. Perfect for small to medium residential applications with reliable backup power.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null, // Price available on request
     originalPrice: null as number | null
@@ -52,7 +53,7 @@ const solarProducts = [
     name: "10Kva Inverter with 30kwh Battery",
     category: "Complete Systems",
     description: "Enhanced solar power system with 10Kva inverter and larger 30kwh lithium battery capacity. Ideal for medium-sized homes requiring extended backup power and energy independence.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -62,7 +63,7 @@ const solarProducts = [
     name: "20kva with 60kwh Lithium Battery",
     category: "Complete Systems",
     description: "Powerful 20kva inverter system with 60kwh lithium battery storage. Designed for large residential or small commercial installations with high energy demands.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -72,7 +73,7 @@ const solarProducts = [
     name: "40kva with 100kwh Lithium Battery",
     category: "Complete Systems",
     description: "Commercial-grade 40kva inverter system with 100kwh lithium battery bank. Perfect for large commercial buildings, offices, and industrial applications requiring substantial power capacity.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -82,7 +83,7 @@ const solarProducts = [
     name: "80kva with 160kwh Battery",
     category: "Complete Systems",
     description: "High-capacity 80kva inverter system with 160kwh lithium battery storage. Engineered for large-scale commercial and industrial facilities with significant energy requirements.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-7.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -92,7 +93,7 @@ const solarProducts = [
     name: "80kva with 210kwh Battery",
     category: "Complete Systems",
     description: "Maximum capacity 80kva inverter system with 210kwh lithium battery bank. The ultimate solution for large industrial facilities, data centers, and operations requiring maximum energy storage and reliability.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-8.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -135,22 +136,13 @@ const SolarPricing = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<typeof solarProducts[0][]>([]);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
-  const subjects = [
-    'EMS (Energy Management System)',
-    'Solar Purchase',
-    'Product Purchase',
-    'Maintenance',
-    'Operations',
-    'General Inquiry'
-  ];
+  const [initialFormData, setInitialFormData] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    subject?: string;
+    message?: string;
+  }>({});
 
   const filteredProducts = solarProducts.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -207,65 +199,59 @@ const SolarPricing = () => {
       ? `₦${product.price.toLocaleString()}`
       : 'Price on Request';
 
-    setFormData(prev => ({
-      ...prev,
+    const productMessages = selectedProducts.map(p => {
+      const pPriceText = p.price !== null && p.price !== undefined
+        ? `₦${p.price.toLocaleString()}`
+        : 'Price on Request';
+      return `${p.name} (${pPriceText})`;
+    });
+
+    const newProductMessage = `${product.name} (${priceText})`;
+    const allProducts = [...productMessages, newProductMessage].join('\n');
+
+    setInitialFormData({
       subject: 'Solar Purchase',
-      message: prev.message
-        ? `${prev.message}\n\n${product.name} (${priceText})`
-        : `I'm interested in purchasing: ${product.name} (${priceText})\n\nPlease provide more information about this product and availability.`
-    }));
+      message: `I'm interested in purchasing:\n${allProducts}\n\nPlease provide more information about these products and availability.`
+    });
 
     setIsModalOpen(true);
   };
 
   const removeProductFromQuote = (productId: number) => {
-    const product = selectedProducts.find(p => p.id === productId);
     setSelectedProducts(prev => prev.filter(p => p.id !== productId));
-    // Update message to remove the product reference
-    if (product) {
-      setFormData(prev => ({
-        ...prev,
-        message: prev.message.replace(new RegExp(`.*${product.name}.*\\(.*\\).*`, 'g'), '').trim()
-      }));
+    // Update message to reflect remaining products
+    const remainingProducts = selectedProducts.filter(p => p.id !== productId);
+    if (remainingProducts.length > 0) {
+      const productMessages = remainingProducts.map(p => {
+        const pPriceText = p.price !== null && p.price !== undefined
+          ? `₦${p.price.toLocaleString()}`
+          : 'Price on Request';
+        return `${p.name} (${pPriceText})`;
+      });
+      setInitialFormData({
+        subject: 'Solar Purchase',
+        message: `I'm interested in purchasing:\n${productMessages.join('\n')}\n\nPlease provide more information about these products and availability.`
+      });
+    } else {
+      setInitialFormData({
+        subject: 'Solar Purchase',
+        message: ''
+      });
     }
   };
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    console.log('Selected products:', selectedProducts);
-    alert('Thank you for your message! We will get back to you soon.');
-
-    // Reset form and close modal
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: 'Solar Purchase',
-      message: ''
-    });
+  const handleFormSuccess = () => {
+    // Reset selected products and close modal after successful submission
     setSelectedProducts([]);
+    setInitialFormData({});
     setIsModalOpen(false);
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    // Optionally reset form when closing
-    // setFormData({
-    //   name: '',
-    //   email: '',
-    //   phone: '',
-    //   subject: '',
-    //   message: ''
-    // });
+    // Optionally reset when closing
+    setSelectedProducts([]);
+    setInitialFormData({});
   };
 
   const containerVariants = {
@@ -605,110 +591,15 @@ const SolarPricing = () => {
             </div>
           )}
 
-          <form onSubmit={handleFormSubmit} className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="modal-name" className="block text-sm font-medium text-heading mb-2">
-                  Full Name *
-                </label>
-                <Input
-                  id="modal-name"
-                  name="name"
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={handleFormChange}
-                  className="bg-background"
-                  placeholder="Your full name"
-                />
-              </div>
-              <div>
-                <label htmlFor="modal-email" className="block text-sm font-medium text-heading mb-2">
-                  Email Address *
-                </label>
-                <Input
-                  id="modal-email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleFormChange}
-                  className="bg-background"
-                  placeholder="your@email.com"
-                />
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="modal-phone" className="block text-sm font-medium text-heading mb-2">
-                  Phone Number
-                </label>
-                <Input
-                  id="modal-phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleFormChange}
-                  className="bg-background"
-                  placeholder="(555) 123-4567"
-                />
-              </div>
-              <div>
-                <label htmlFor="modal-subject" className="block text-sm font-medium text-heading mb-2">
-                  Subject *
-                </label>
-                <select
-                  id="modal-subject"
-                  name="subject"
-                  required
-                  value={formData.subject}
-                  onChange={handleFormChange}
-                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent"
-                >
-                  <option value="">Select a subject</option>
-                  {subjects.map((subject) => (
-                    <option key={subject} value={subject}>
-                      {subject}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="modal-message" className="block text-sm font-medium text-heading mb-2">
-                Message *
-              </label>
-              <textarea
-                id="modal-message"
-                name="message"
-                required
-                rows={6}
-                value={formData.message}
-                onChange={handleFormChange}
-                className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-none"
-                placeholder="Tell us about your solar energy needs..."
-              />
-            </div>
-
-            <div className="flex gap-3 pt-2">
-              <Button
-                type="submit"
-                className="flex-1 bg-brandColor hover:bg-brandColor/80 text-white"
-              >
-                <Send className="h-4 w-4 mr-2" />
-                Send Message
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleModalClose}
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
+          <ContactForm
+            initialData={initialFormData}
+            onSubmitSuccess={handleFormSuccess}
+            showTitle={false}
+            idPrefix="modal"
+            className="space-y-4"
+            showCancelButton={true}
+            onCancel={handleModalClose}
+          />
         </DialogContent>
       </Dialog>
 

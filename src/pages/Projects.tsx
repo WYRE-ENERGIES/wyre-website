@@ -7,10 +7,15 @@ import { AnimatedGridPattern } from "../components/magicui/animated-grid-pattern
 import { cn } from '../lib/utils'
 import { Link } from 'react-router-dom'
 import { featuredProjects } from '../data/projects'
+import { useEffect } from 'react'
 
 const projects = featuredProjects
 
 const Projects = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

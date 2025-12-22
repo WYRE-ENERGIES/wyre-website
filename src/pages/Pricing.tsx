@@ -423,10 +423,7 @@ const Pricing = () => {
                   <thead className="bg-gradient-to-r from-brandColor/10 via-brandColor/5 to-purple-500/10">
                     <tr>
                       <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
-                        CT Capacity Rating
-                      </th>
-                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
-                        Price
+                        CT Capacity
                       </th>
                       <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
                         Rated Current
@@ -439,6 +436,9 @@ const Pricing = () => {
                       </th>
                       <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap hidden lg:table-cell">
                         Output Signal
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
+                        Price
                       </th>
                       <th className="px-4 md:px-6 py-4 text-center text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
                         Actions
@@ -469,14 +469,6 @@ const Pricing = () => {
                               {product.name}
                             </div>
                           </td>
-                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                            <div className="text-base md:text-lg font-bold text-heading">
-                              {formatPrice(product.sellingPrice)}
-                            </div>
-                            <div className="text-xs text-muted-foreground mt-0.5">
-                              One-time payment
-                            </div>
-                          </td>
                           <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap">
                             {product.specifications.ratedCurrent}
                           </td>
@@ -488,6 +480,14 @@ const Pricing = () => {
                           </td>
                           <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
                             {product.specifications.outputSignal || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="text-base md:text-lg font-bold text-heading">
+                              {formatPrice(product.sellingPrice)}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              One-time payment
+                            </div>
                           </td>
                           <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                             <div className="flex flex-col gap-2 min-w-[140px] md:min-w-[200px]">

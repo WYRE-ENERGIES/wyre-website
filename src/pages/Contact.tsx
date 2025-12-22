@@ -1,34 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { Button } from '../components/ui/button';
+import { useState, useEffect } from 'react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import OtherNavbar from '../components/navbar/OtherNavbar';
 import Footer from '../sections/Footer';
 import { motion } from 'framer-motion';
 import FAQsFour from "../sections/faq";
+import { ContactForm } from '../components/ContactForm';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-
-  const subjects = [
-    'EMS (Energy Management System)',
-    'Solar Purchase',
-    'Product Purchase',
-    'Maintenance',
-    'Operations',
-    'General Inquiry'
-  ];
+  const [initialFormData, setInitialFormData] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    subject?: string;
+    message?: string;
+  }>({});
 
   useEffect(() => {
     // Check if user came from product catalog
@@ -39,11 +28,10 @@ const Contact = () => {
       const priceText = product.price !== null && product.price !== undefined
         ? `₦${product.price.toLocaleString()}`
         : 'Price on Request';
-      setFormData(prev => ({
-        ...prev,
+      setInitialFormData({
         subject: 'Solar Purchase',
         message: `I'm interested in purchasing: ${product.name} (${priceText})\n\nPlease provide more information about this product and availability.`
-      }));
+      });
       // Clear the stored product data
       localStorage.removeItem('selectedProduct');
     }
@@ -59,19 +47,6 @@ const Contact = () => {
     }
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F6F9FC] to-white">
@@ -231,101 +206,10 @@ const Contact = () => {
                 <CardTitle className="text-heading text-2xl">Send us a Message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-heading mb-2">
-                        Full Name *
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="bg-background"
-                        placeholder="Your full name"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-heading mb-2">
-                        Email Address *
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="bg-background"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-heading mb-2">
-                        Phone Number
-                      </label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="bg-background"
-                        placeholder="(555) 123-4567"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-heading mb-2">
-                        Subject *
-                      </label>
-                      <select
-                        id="subject"
-                        name="subject"
-                        required
-                        value={formData.subject}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent"
-                      >
-                        <option value="">Select a subject</option>
-                        {subjects.map((subject) => (
-                          <option key={subject} value={subject}>
-                            {subject}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-heading mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 bg-background border border-border rounded-lg text-heading placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-none"
-                      placeholder="Tell us about your solar energy needs..."
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
-                  >
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Message
-                  </Button>
-                </form>
+                <ContactForm
+                  initialData={initialFormData}
+                  showTitle={false}
+                />
               </CardContent>
             </Card>
           </motion.div>
