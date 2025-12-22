@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
@@ -337,7 +337,7 @@ const Pricing = () => {
 
       {/* Package Includes & Admin Panel Features - Shown Once */}
       <div className="container mx-auto px-6 py-8">
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Package Includes */}
           <Card className="border border-gray-200 shadow-sm">
             <CardContent className="pt-6">
@@ -409,7 +409,7 @@ const Pricing = () => {
       </div>
 
       {/* Pricing Table */}
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -447,137 +447,131 @@ const Pricing = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
                     {emsProducts.map((product, index) => (
-                      <motion.tr
-                        key={product.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                        className="hover:bg-gray-50/80 transition-colors duration-150 group"
-                      >
-                        <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
-                            <div className="text-base md:text-lg font-bold text-heading">
-                              {product.rating}
+                      <React.Fragment key={product.id}>
+                        <motion.tr
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          className="hover:bg-gray-50/80 transition-colors duration-150 group"
+                        >
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <div className="text-base md:text-lg font-bold text-heading">
+                                {product.rating}
+                              </div>
+                              {product.id === 'ct-6000' && (
+                                <Badge className="bg-brandColor text-white text-xs">
+                                  Premium
+                                </Badge>
+                              )}
                             </div>
-                            {product.id === 'ct-6000' && (
-                              <Badge className="bg-brandColor text-white text-xs">
-                                Premium
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            {product.name}
-                          </div>
-                        </td>
-                        <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                          <div className="text-base md:text-lg font-bold text-heading">
-                            {formatPrice(product.sellingPrice)}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            One-time payment
-                          </div>
-                        </td>
-                        <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap">
-                          {product.specifications.ratedCurrent}
-                        </td>
-                        <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden md:table-cell">
-                          {product.specifications.accuracyClass || '-'}
-                        </td>
-                        <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
-                          {product.specifications.ctOpeningSize || '-'}
-                        </td>
-                        <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
-                          {product.specifications.outputSignal || '-'}
-                        </td>
-                        <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                          <div className="flex flex-col gap-2 min-w-[140px] md:min-w-[200px]">
-                            <Button
-                              className="w-full bg-brandColor hover:bg-brandColor/80 text-white text-xs md:text-sm"
-                              size="sm"
-                              onClick={() => handleRequestQuote(product)}
-                            >
-                              Request Quote
-                              <ChevronRight className="ml-1 h-3 w-3" />
-                            </Button>
-                            <Button
-                              className="w-full border border-gray-300 hover:bg-gray-50 text-xs md:text-sm"
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleViewSpecs(product.id)}
-                            >
-                              <FileText className="mr-1 h-3 w-3" />
-                              {selectedProduct === product.id ? 'Hide' : 'Specs'}
-                            </Button>
-                          </div>
-                        </td>
-                      </motion.tr>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              {product.name}
+                            </div>
+                          </td>
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="text-base md:text-lg font-bold text-heading">
+                              {formatPrice(product.sellingPrice)}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              One-time payment
+                            </div>
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap">
+                            {product.specifications.ratedCurrent}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden md:table-cell">
+                            {product.specifications.accuracyClass || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
+                            {product.specifications.ctOpeningSize || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
+                            {product.specifications.outputSignal || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-col gap-2 min-w-[140px] md:min-w-[200px]">
+                              <Button
+                                className="w-full bg-brandColor hover:bg-brandColor/80 text-white text-xs md:text-sm"
+                                size="sm"
+                                onClick={() => handleRequestQuote(product)}
+                              >
+                                Get a Quote
+                                <ChevronRight className="ml-1 h-3 w-3" />
+                              </Button>
+                              <Button
+                                className="w-full border border-gray-300 hover:bg-gray-50 text-xs md:text-sm"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleViewSpecs(product.id)}
+                              >
+                                <FileText className="mr-1 h-3 w-3" />
+                                {selectedProduct === product.id ? 'Hide' : 'Specs'}
+                              </Button>
+                            </div>
+                          </td>
+                        </motion.tr>
+                        {selectedProduct === product.id && (
+                          <motion.tr
+                            key={`${product.id}-specs`}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="bg-gray-50/50"
+                          >
+                            <td colSpan={7} className="px-4 md:px-6 py-6">
+                              <div className="max-w-4xl">
+                                <h4 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
+                                  <Info className="h-5 w-5 text-brandColor" />
+                                  Technical Specifications: {product.rating}
+                                </h4>
+                                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span className="text-sm text-muted-foreground">Rated Current:</span>
+                                    <span className="text-sm font-medium text-heading">{product.specifications.ratedCurrent}</span>
+                                  </div>
+                                  {product.specifications.accuracyClass && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Accuracy Class:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.accuracyClass}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.ctOpeningSize && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">CT Opening Size:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.ctOpeningSize}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.outputSignal && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Output Signal:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.outputSignal}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.certification && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Certification:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.certification}</span>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-gray-200">
+                                  <p className="text-xs text-muted-foreground flex items-center gap-2">
+                                    <Wrench className="h-3 w-3" />
+                                    Installation: 1-2 hours per sensor • Our team handles everything
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                          </motion.tr>
+                        )}
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-
-          {/* Expanded Specifications */}
-          {selectedProduct && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="border-t border-gray-200 bg-gray-50/50"
-            >
-              <div className="px-6 py-6">
-                {(() => {
-                  const product = emsProducts.find(p => p.id === selectedProduct)
-                  if (!product) return null
-                  return (
-                    <div className="max-w-4xl">
-                      <h4 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
-                        <Info className="h-5 w-5 text-brandColor" />
-                        Technical Specifications: {product.rating}
-                      </h4>
-                      <div className="grid md:grid-cols-2 gap-4 mb-4">
-                        <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                          <span className="text-sm text-muted-foreground">Rated Current:</span>
-                          <span className="text-sm font-medium text-heading">{product.specifications.ratedCurrent}</span>
-                        </div>
-                        {product.specifications.accuracyClass && (
-                          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                            <span className="text-sm text-muted-foreground">Accuracy Class:</span>
-                            <span className="text-sm font-medium text-heading">{product.specifications.accuracyClass}</span>
-                          </div>
-                        )}
-                        {product.specifications.ctOpeningSize && (
-                          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                            <span className="text-sm text-muted-foreground">CT Opening Size:</span>
-                            <span className="text-sm font-medium text-heading">{product.specifications.ctOpeningSize}</span>
-                          </div>
-                        )}
-                        {product.specifications.outputSignal && (
-                          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                            <span className="text-sm text-muted-foreground">Output Signal:</span>
-                            <span className="text-sm font-medium text-heading">{product.specifications.outputSignal}</span>
-                          </div>
-                        )}
-                        {product.specifications.certification && (
-                          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                            <span className="text-sm text-muted-foreground">Certification:</span>
-                            <span className="text-sm font-medium text-heading">{product.specifications.certification}</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mt-4 pt-4 border-t border-gray-200">
-                        <p className="text-xs text-muted-foreground flex items-center gap-2">
-                          <Wrench className="h-3 w-3" />
-                          Installation: 1-2 hours per sensor • Our team handles everything
-                        </p>
-                      </div>
-                    </div>
-                  )
-                })()}
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       </div>
 
