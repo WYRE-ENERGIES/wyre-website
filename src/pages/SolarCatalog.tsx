@@ -166,7 +166,7 @@ const SolarCatalog = () => {
 
       {/* Header */}
       <div className="bg-white py-6 border-b border-gray-200">
-        <div className="max-w-[83rem] mx-auto px-6 py-8">
+        <div className="container mx-auto px-6 py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -184,7 +184,7 @@ const SolarCatalog = () => {
       </div>
 
       {/* Search and Controls */}
-      <div className="max-w-[83rem] mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

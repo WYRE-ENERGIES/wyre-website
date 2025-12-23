@@ -11,6 +11,26 @@ import { motion } from 'framer-motion';
 // Solar system packages data (shared with SolarCatalog)
 const solarProducts = [
   {
+    id: 7,
+    name: "6Kva Inverter with 6kWh Lithium Battery",
+    category: "Complete Systems",
+    description: "Compact 6Kva hybrid inverter system with 6kWh lithium battery. Perfect for small residential applications, apartments, or single-room setups requiring reliable backup power and solar integration.",
+    image: "/img/deye-solar-package.png",
+    inStock: true,
+    price: null as number | null,
+    originalPrice: null as number | null
+  },
+  {
+    id: 8,
+    name: "10Kva Inverter with 10kWh Lithium Battery",
+    category: "Complete Systems",
+    description: "Efficient 10Kva hybrid inverter paired with 10kWh lithium battery. Ideal for small to medium residential homes seeking reliable solar power backup with moderate energy storage capacity.",
+    image: "/img/deye-solar-package.png",
+    inStock: true,
+    price: null as number | null,
+    originalPrice: null as number | null
+  },
+  {
     id: 1,
     name: "10Kva Inverter with 15kwh Lithium Battery",
     category: "Complete Systems",
@@ -73,7 +93,7 @@ const solarProducts = [
 ];
 
 const categories = [
-  { name: "Complete Systems", count: 6 }
+  { name: "Complete Systems", count: 8 }
 ];
 
 // Helper function to extract KVA from product name
@@ -182,7 +202,7 @@ const SolarPricing = () => {
 
       {/* Header */}
       <div className="bg-white py-6 border-b border-gray-200">
-        <div className="max-w-[83rem] mx-auto px-6 py-8">
+        <div className="container mx-auto px-6 py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -200,7 +220,7 @@ const SolarPricing = () => {
       </div>
 
       {/* Search and Controls */}
-      <div className="max-w-[83rem] mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

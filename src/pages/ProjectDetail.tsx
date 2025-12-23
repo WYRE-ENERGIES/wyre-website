@@ -22,7 +22,7 @@ const ProjectDetail = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F6F9FC] to-white">
         <OtherNavbar />
-        <div className="max-w-[83rem] mx-auto px-6 py-32 text-center">
+        <div className="container mx-auto px-6 py-32 text-center">
           <h1 className="text-4xl font-bold text-heading mb-4">Project Not Found</h1>
           <p className="text-muted-foreground mb-8">The project you're looking for doesn't exist.</p>
           <Button asChild>
@@ -58,7 +58,7 @@ const ProjectDetail = () => {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-8 max-w-[83rem] mx-auto">
+        <div className="absolute bottom-0 left-0 right-0 p-8 container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      <div className="max-w-[83rem] mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">

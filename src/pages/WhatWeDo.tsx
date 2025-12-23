@@ -385,7 +385,7 @@ const WhatWeDo = () => {
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.6 }}
-        className="relative pb-24 my-12 lg:pb-32 flex h-[500px] max-w-[83rem] mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20"
+        className="relative pb-24 my-12 lg:pb-32 flex h-[500px] container mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20"
       >
         <AnimatedGridPattern
           numSquares={30}

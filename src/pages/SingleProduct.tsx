@@ -428,7 +428,7 @@ const SingleProduct = () => {
 
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-[83rem] mx-auto px-6 py-4">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/solar-catalog" className="hover:text-brandColor">
               Product Catalog
@@ -439,7 +439,7 @@ const SingleProduct = () => {
         </div>
       </div>
 
-      <div className="max-w-[83rem] mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Product Images */}
           <div className="space-y-4">

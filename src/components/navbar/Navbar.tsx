@@ -35,7 +35,7 @@ const ListItem = ({ title, children, href, ...props }: React.ComponentPropsWitho
 const Navbar = () => {
   return (
     <header className="relative z-50 px-6">
-      <nav className="flex items-center justify-between max-w-[1430px] mx-auto h-[80px]">
+      <nav className="flex items-center justify-between container mx-auto h-[80px]">
         <div className="flex items-center space-x-12">
           <Link to="/" className="text-white font-bold text-2xl">
             <Logo />

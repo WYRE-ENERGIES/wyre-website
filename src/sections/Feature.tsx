@@ -38,7 +38,7 @@ const Feature = () => {
 
   return (
     <section className="min-h-screen bg-[#F8FAFC] py-24 lg:py-32 space-y-[150px] lg:space-y-[200px]">
-      <div className="max-2xl:px-6 max-w-[83rem] gap-12 mx-auto flex flex-col max-xl:flex-col items-center">
+      <div className="max-2xl:px-6 container gap-12 mx-auto flex flex-col max-xl:flex-col items-center">
         <article className="text-center">
           <h3
             data-aos="fade-right"

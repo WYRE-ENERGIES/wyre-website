@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
 
 export function CTA() {
   return (
-    <div className="relative pb-24 lg:pb-32 mt-24 lg:mt-32 flex h-[500px] max-w-[83rem] mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20">
+    <div className="relative pb-24 lg:pb-32 mt-24 lg:mt-32 flex h-[500px] container mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20">
       <AnimatedGridPattern
         numSquares={30}
         maxOpacity={0.1}

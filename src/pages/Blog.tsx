@@ -95,7 +95,7 @@ export default function Blog() {
 
       {/* Header */}
       <div className="bg-white pt-6 border-b border-gray-200">
-        <div className="max-w-[83rem] mx-auto px-6 pt-8">
+        <div className="container mx-auto px-6 pt-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ export default function Blog() {
       </div>
 
       {/* Search and Filter */}
-      <div className="max-w-[83rem] mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8">
 
         {/* Results count */}
         <motion.div
@@ -245,7 +245,7 @@ export default function Blog() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="relative pb-24 my-12 lg:pb-32 flex h-[500px] max-w-[83rem] mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20"
+          className="relative pb-24 my-12 lg:pb-32 flex h-[500px] container mx-auto w-full items-center justify-center overflow-hidden rounded-lg lg:rounded-xl border-border border bg-background p-20"
         >
           <AnimatedGridPattern
             numSquares={30}

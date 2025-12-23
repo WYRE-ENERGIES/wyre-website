@@ -79,7 +79,7 @@ const Contact = () => {
 
       {/* Header */}
       <div className="bg-white py-6 border-b border-gray-200">
-        <div className="max-w-[83rem] mx-auto px-6 py-8">
+        <div className="container mx-auto px-6 py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ const Contact = () => {
       </div>
 
       {/* Contact Content */}
-      <div className="max-w-[83rem] mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-12">
         {/* Selected Product Display */}
         {selectedProduct && (
           <motion.div
@@ -334,7 +334,7 @@ const Contact = () => {
 
       {/* FAQ */}
       <section id="faq" className="scroll-mt-24">
-        <div className="mx-auto max-w-[83rem] px-4 md:px-6">
+        <div className="mx-auto container px-4 md:px-6">
           <FAQsFour />
         </div>
       </section>
