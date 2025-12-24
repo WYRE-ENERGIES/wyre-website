@@ -113,7 +113,7 @@ const Hero = () => {
           >  with AI</span>
           </h1>
           <AnimatePresence>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8 }} className="mt-5 sm:mt-10 text-lg text-gray-700 max-w-lg leading-relaxed pb-12 max-[1199px]:max-w-none">
@@ -134,7 +134,7 @@ const Hero = () => {
                   </a>
                 </Button>
               </motion.div>
-            </motion.p>
+            </motion.div>
           </AnimatePresence>
         </div>
         <div className="flex-1 flex items-end justify-end max-w-[50%] max-md:hidden h-full">

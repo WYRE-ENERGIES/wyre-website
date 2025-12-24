@@ -77,8 +77,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         message: formData.message.trim(),
       };
 
-      const response = await socialsClient.post('contact-us/', payload);
-      console.log('Success:', response.data);
+      await socialsClient.post('contact-us/', payload);
 
       // Show success message
       setShowSuccess(true);
@@ -102,7 +101,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         setShowSuccess(false);
       }, 5000);
     } catch (err: unknown) {
-      console.error('Error submitting form:', err);
       if (err && typeof err === 'object' && 'response' in err) {
         const axiosError = err as { response?: { data?: { message?: string }; status?: number } };
         const errorMessage = axiosError.response?.data?.message || `Server error: ${axiosError.response?.status || 'Unknown'}`;

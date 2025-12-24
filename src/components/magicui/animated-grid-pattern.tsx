@@ -30,6 +30,8 @@ export function AnimatedGridPattern({
   className,
   maxOpacity = 0.5,
   duration = 4,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  repeatDelay,
   ...props
 }: AnimatedGridPatternProps) {
   const id = useId();
