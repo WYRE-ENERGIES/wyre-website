@@ -27,7 +27,7 @@ const Feature = () => {
   //     alt: 'Analytics dashboard',
   //   },
   //   'item-5': {
-  //     image: '/img/wyre-report.png',
+  //     image: '/img/wyre-report.jpeg',
   //     alt: 'Analytics dashboard',
   //   },
   //   'item-6': {

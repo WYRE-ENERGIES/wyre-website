@@ -15,8 +15,8 @@ const totalNetWorth = clientPortfolio.reduce((sum, client) => sum + client.netWo
 
 export default function LogoCloud() {
   return (
-    <section className="bg-background overflow-hidden">
-      <div className="group relative m-auto container max-md:px-6">
+    <section className="bg-background overflow-hidden max-md:pt-6">
+      <div className="group relative m-auto container max-md:px-6 max-2xl:scale-90 max-2xl:origin-center">
         {/* <p className="text-center text-sm font-medium text-muted-foreground">OurClient Portfolio</p> */}
         <div className="flex flex-col items-center md:flex-row">
           <div className="max-md:flex items-center gap-x-1 md:max-w-44 md:border-r md:pr-6">
@@ -30,7 +30,7 @@ export default function LogoCloud() {
               <div className="flex items-center justify-center flex-shrink-0 w-24">
                 <div className="text-lg font-bold text-foreground">    <img
                   className="mx-auto w-full h-full object-contain"
-                  src="https://th.bing.com/th/id/R.37af980f525dda8d7731cfb4e99fe6f6?rik=uAp%2bXNbpNoMhLg&pid=ImgRaw&r=0"
+                  src="/img/sterling-logo.png"
                   alt="Sterling Bank"
                   width="auto"
                 /></div>
@@ -39,7 +39,7 @@ export default function LogoCloud() {
               <div className="flex items-center justify-center flex-shrink-0 w-24">
                 <div className="text-lg font-bold text-foreground">  <img
                   className="mx-auto w-full h-full object-contain"
-                  src="https://contextanalysis.com.ng/wp-content/uploads/2021/04/UPDC-Logo_Primary-1.png"
+                  src="/img/updc-logo.png"
                   alt="UPDC Logo"
                   width="auto"
                 /></div>
@@ -56,12 +56,12 @@ export default function LogoCloud() {
               <div className="flex items-center justify-center flex-shrink-0 w-24">
                 <div className="text-lg font-bold text-foreground">   <img
                   className="mx-auto w-full h-full object-contain"
-                  src="https://landmarklagos.com/wp-content/uploads/2021/12/Landmark-logo.png"
+                  src="/img/landmark-logo.png"
                   alt="Landmark Center"
                   width="auto"
                 /></div>
               </div>
-              <div className="flex items-center justify-center flex-shrink-0 w-20">
+              <div className="flex items-center justify-center flex-shrink-0 w-14">
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-cover"
@@ -70,11 +70,11 @@ export default function LogoCloud() {
                     width="auto"
                   /></div>
               </div>
-              <div className="flex items-center justify-center flex-shrink-0 w-24">
+              <div className="flex items-center justify-center flex-shrink-0 w-[67.2px]">
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-cover"
-                    src="https://th.bing.com/th/id/R.44a6fa733e4c19ab6180c926b8cc0347?rik=fSDYHsu49S%2bSeA&riu=http%3a%2f%2fwww.viathan-ng.com%2fwp-content%2fuploads%2f2019%2f06%2fsticky-logo.png&ehk=sxUeLOl739FxmfNUbN%2fE5ucWaAbdb7MfuGqHTUL13UA%3d&risl=&pid=ImgRaw&r=0"
+                    src="/img/viathan-logo.png"
                     alt="Viathan"
                     width="auto"
                   /></div>
@@ -83,7 +83,7 @@ export default function LogoCloud() {
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-cover"
-                    src="https://iconape.com/wp-content/files/au/84162/png/oando-logo.png"
+                    src="/img/oando-logo.png"
                     alt="Oando PLC"
                     width="auto"
                   /></div>
@@ -92,7 +92,7 @@ export default function LogoCloud() {
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-contain"
-                    src="https://www.mrmoneymagnet.com/wp-content/uploads/2023/04/American-Tower-Corp-REIT-.png"
+                    src="/img/atc-logo.png"
                     alt="ATC"
                     width="auto"
                   /></div>

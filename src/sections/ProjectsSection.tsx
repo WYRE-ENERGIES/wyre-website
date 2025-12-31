@@ -83,7 +83,9 @@ const ProjectsSection = () => {
             size="lg"
             className=""
           >
-            <Link to="/projects">
+            <Link
+              to="/projects"
+            >
               View All Projects
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

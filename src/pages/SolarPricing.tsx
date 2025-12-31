@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
+import { Search, Filter, Grid, List, SlidersHorizontal, X } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Input } from '../components/ui/input';
@@ -7,6 +7,14 @@ import { Badge } from '../components/ui/badge';
 import OtherNavbar from '../components/navbar/OtherNavbar';
 import Footer from '../sections/Footer';
 import { motion } from 'framer-motion';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '../components/ui/dialog';
+import { ContactForm } from '../components/ContactForm';
 
 // Solar system packages data (shared with SolarCatalog)
 const solarProducts = [
@@ -15,7 +23,7 @@ const solarProducts = [
     name: "6Kva Inverter with 6kWh Lithium Battery",
     category: "Complete Systems",
     description: "Compact 6Kva hybrid inverter system with 6kWh lithium battery. Perfect for small residential applications, apartments, or single-room setups requiring reliable backup power and solar integration.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-3.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -25,7 +33,7 @@ const solarProducts = [
     name: "10Kva Inverter with 10kWh Lithium Battery",
     category: "Complete Systems",
     description: "Efficient 10Kva hybrid inverter paired with 10kWh lithium battery. Ideal for small to medium residential homes seeking reliable solar power backup with moderate energy storage capacity.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-4.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -35,7 +43,7 @@ const solarProducts = [
     name: "10Kva Inverter with 15kwh Lithium Battery",
     category: "Complete Systems",
     description: "Complete solar power system featuring a 10Kva hybrid inverter paired with a 15kwh lithium battery. Perfect for small to medium residential applications with reliable backup power.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null, // Price available on request
     originalPrice: null as number | null
@@ -45,7 +53,7 @@ const solarProducts = [
     name: "10Kva Inverter with 30kwh Battery",
     category: "Complete Systems",
     description: "Enhanced solar power system with 10Kva inverter and larger 30kwh lithium battery capacity. Ideal for medium-sized homes requiring extended backup power and energy independence.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -55,7 +63,7 @@ const solarProducts = [
     name: "20kva with 60kwh Lithium Battery",
     category: "Complete Systems",
     description: "Powerful 20kva inverter system with 60kwh lithium battery storage. Designed for large residential or small commercial installations with high energy demands.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -65,7 +73,7 @@ const solarProducts = [
     name: "40kva with 100kwh Lithium Battery",
     category: "Complete Systems",
     description: "Commercial-grade 40kva inverter system with 100kwh lithium battery bank. Perfect for large commercial buildings, offices, and industrial applications requiring substantial power capacity.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -75,7 +83,7 @@ const solarProducts = [
     name: "80kva with 160kwh Battery",
     category: "Complete Systems",
     description: "High-capacity 80kva inverter system with 160kwh lithium battery storage. Engineered for large-scale commercial and industrial facilities with significant energy requirements.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-7.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -85,7 +93,7 @@ const solarProducts = [
     name: "80kva with 210kwh Battery",
     category: "Complete Systems",
     description: "Maximum capacity 80kva inverter system with 210kwh lithium battery bank. The ultimate solution for large industrial facilities, data centers, and operations requiring maximum energy storage and reliability.",
-    image: "/img/deye-solar-package.png",
+    image: "/img/solar-8.jpeg",
     inStock: true,
     price: null as number | null,
     originalPrice: null as number | null
@@ -126,6 +134,15 @@ const SolarPricing = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('relevance');
   const [showFilters, setShowFilters] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<typeof solarProducts[0][]>([]);
+  const [initialFormData, setInitialFormData] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    subject?: string;
+    message?: string;
+  }>({});
 
   const filteredProducts = solarProducts.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -149,30 +166,92 @@ const SolarPricing = () => {
   });
 
   const toggleCategory = (category: string) => {
-    setSelectedCategories(prev =>
-      prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
-    );
+    setSelectedCategories(prev => {
+      const isSelected = prev.includes(category);
+      if (isSelected) {
+        return prev.filter(c => c !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
   };
 
   const toggleKVA = (kva: string) => {
-    setSelectedKVA(prev =>
-      prev.includes(kva)
-        ? prev.filter(k => k !== kva)
-        : [...prev, kva]
-    );
+    setSelectedKVA(prev => {
+      const isSelected = prev.includes(kva);
+      if (isSelected) {
+        return prev.filter(k => k !== kva);
+      } else {
+        return [...prev, kva];
+      }
+    });
   };
 
-  const handleContactRedirect = (product: typeof solarProducts[0]) => {
-    // Store product info in localStorage for contact form pre-filling
-    localStorage.setItem('selectedProduct', JSON.stringify({
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      category: product.category
-    }));
-    window.location.href = '/contact';
+  const handleGetQuote = (product: typeof solarProducts[0]) => {
+    // Check if product is already in selected products
+    const isAlreadySelected = selectedProducts.some(p => p.id === product.id);
+    if (!isAlreadySelected) {
+      setSelectedProducts(prev => [...prev, product]);
+    }
+
+    // Pre-fill form with product information
+    const priceText = product.price !== null && product.price !== undefined
+      ? `₦${product.price.toLocaleString()}`
+      : 'Price on Request';
+
+    const productMessages = selectedProducts.map(p => {
+      const pPriceText = p.price !== null && p.price !== undefined
+        ? `₦${p.price.toLocaleString()}`
+        : 'Price on Request';
+      return `${p.name} (${pPriceText})`;
+    });
+
+    const newProductMessage = `${product.name} (${priceText})`;
+    const allProducts = [...productMessages, newProductMessage].join('\n');
+
+    setInitialFormData({
+      subject: 'Solar Purchase',
+      message: `I'm interested in purchasing:\n${allProducts}\n\nPlease provide more information about these products and availability.`
+    });
+
+    setIsModalOpen(true);
+  };
+
+  const removeProductFromQuote = (productId: number) => {
+    setSelectedProducts(prev => prev.filter(p => p.id !== productId));
+    // Update message to reflect remaining products
+    const remainingProducts = selectedProducts.filter(p => p.id !== productId);
+    if (remainingProducts.length > 0) {
+      const productMessages = remainingProducts.map(p => {
+        const pPriceText = p.price !== null && p.price !== undefined
+          ? `₦${p.price.toLocaleString()}`
+          : 'Price on Request';
+        return `${p.name} (${pPriceText})`;
+      });
+      setInitialFormData({
+        subject: 'Solar Purchase',
+        message: `I'm interested in purchasing:\n${productMessages.join('\n')}\n\nPlease provide more information about these products and availability.`
+      });
+    } else {
+      setInitialFormData({
+        subject: 'Solar Purchase',
+        message: ''
+      });
+    }
+  };
+
+  const handleFormSuccess = () => {
+    // Reset selected products and close modal after successful submission
+    setSelectedProducts([]);
+    setInitialFormData({});
+    setIsModalOpen(false);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    // Optionally reset when closing
+    setSelectedProducts([]);
+    setInitialFormData({});
   };
 
   const containerVariants = {
@@ -180,18 +259,19 @@ const SolarPricing = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.05,
+        delayChildren: 0
       }
     }
   }
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5
+        duration: 0.3
       }
     }
   }
@@ -283,11 +363,17 @@ const SolarPricing = () => {
                   <h4 className="text-heading font-medium mb-3">Categories</h4>
                   <div className="space-y-2">
                     {categories.map((category) => (
-                      <label key={category.name} className="flex items-center gap-2 cursor-pointer">
+                      <label
+                        key={category.name}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           checked={selectedCategories.includes(category.name)}
-                          onChange={() => toggleCategory(category.name)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            toggleCategory(category.name);
+                          }}
                           className="rounded border-border text-brandColor focus:ring-brandColor"
                         />
                         <span className="text-muted-foreground text-sm">
@@ -303,11 +389,17 @@ const SolarPricing = () => {
                   <h4 className="text-heading font-medium mb-3">KVA Rating</h4>
                   <div className="space-y-2">
                     {kvaOptions.map((kva) => (
-                      <label key={kva.name} className="flex items-center gap-2 cursor-pointer">
+                      <label
+                        key={kva.name}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           checked={selectedKVA.includes(kva.name)}
-                          onChange={() => toggleKVA(kva.name)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            toggleKVA(kva.name);
+                          }}
                           className="rounded border-border text-brandColor focus:ring-brandColor"
                         />
                         <span className="text-muted-foreground text-sm">
@@ -357,45 +449,47 @@ const SolarPricing = () => {
               </select>
             </div>
 
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}
-            >
-              {sortedProducts.map((product) => (
-                <motion.div
-                  key={product.id}
-                  variants={cardVariants}
-                  className="group"
-                >
-                  <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
-                    <CardContent className="p-0 flex flex-col h-full">
-                      <div className="relative">
-                        <div className="absolute top-3 left-3 z-10">
-                          <Badge
-                            className={product.inStock ? "bg-green-500 text-white" : "bg-red-500 text-white"}
-                          >
-                            {product.inStock ? "In Stock" : "Out of Stock"}
-                          </Badge>
+            {sortedProducts.length > 0 ? (
+              <motion.div
+                key={`products-${sortedProducts.length}-${selectedCategories.join('-')}-${selectedKVA.join('-')}-${searchTerm}`}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}
+              >
+                {sortedProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    variants={cardVariants}
+                    className="group"
+                  >
+                    <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
+                      <CardContent className="p-0 flex flex-col h-full">
+                        <div className="relative">
+                          <div className="absolute top-3 left-3 z-10">
+                            <Badge
+                              className={product.inStock ? "bg-green-500 text-white" : "bg-red-500 text-white"}
+                            >
+                              {product.inStock ? "In Stock" : "Out of Stock"}
+                            </Badge>
+                          </div>
+                          <div className="aspect-square bg-gray-50 rounded-t-lg overflow-hidden flex items-center justify-center">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
-                        <div className="aspect-square bg-gray-50 rounded-t-lg overflow-hidden flex items-center justify-center">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="p-4 flex-1 flex flex-col">
-                        <h3 className="text-heading font-semibold mb-2 line-clamp-2">{product.name}</h3>
+                        <div className="p-4 flex-1 flex flex-col">
+                          <h3 className="text-heading font-semibold mb-2 line-clamp-2">{product.name}</h3>
 
-                        <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
-                          {product.description}
-                        </p>
+                          <p className="text-muted-foreground text-sm mb-2 line-clamp-2">
+                            {product.description}
+                          </p>
 
-                        {/* <div className="flex items-center gap-2 mb-4">
+                          {/* <div className="flex items-center gap-2 mb-4">
                           {product.price !== null ? (
                             <>
                               <span className="text-2xl font-bold text-heading">
@@ -414,24 +508,100 @@ const SolarPricing = () => {
                           )}
                         </div> */}
 
-                        <div className="mt-auto pt-4">
-                          <Button
-                            className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
-                            onClick={() => handleContactRedirect(product)}
-                            disabled={!product.inStock}
-                          >
-                            {product.inStock ? 'Get a Quote' : 'Out of Stock'}
-                          </Button>
+                          <div className="mt-auto pt-4">
+                            <Button
+                              className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
+                              onClick={() => handleGetQuote(product)}
+                              disabled={!product.inStock}
+                            >
+                              {product.inStock ? 'Get a Quote' : 'Out of Stock'}
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground text-lg">No products found matching your filters.</p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSelectedCategories([]);
+                    setSelectedKVA([]);
+                    setSearchTerm('');
+                  }}
+                  className="mt-4"
+                >
+                  Clear All Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Contact Form Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-heading">Get a Quote</DialogTitle>
+            <DialogDescription>
+              Fill out the form below and we'll get back to you with pricing information.
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Selected Products Display */}
+          {selectedProducts.length > 0 && (
+            <div className="space-y-2 mb-4">
+              <h4 className="text-sm font-medium text-heading">Products in Quote:</h4>
+              <div className="space-y-2 max-h-32 overflow-y-auto">
+                {selectedProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg"
+                  >
+                    <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-heading truncate">{product.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {product.price !== null && product.price !== undefined
+                          ? `₦${product.price.toLocaleString()}`
+                          : 'Price on Request'}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => removeProductFromQuote(product.id)}
+                      className="p-1 hover:bg-gray-200 rounded transition-colors"
+                      aria-label="Remove product"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <ContactForm
+            initialData={initialFormData}
+            onSubmitSuccess={handleFormSuccess}
+            showTitle={false}
+            idPrefix="modal"
+            className="space-y-4"
+            showCancelButton={true}
+            onCancel={handleModalClose}
+          />
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

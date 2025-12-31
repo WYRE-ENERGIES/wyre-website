@@ -29,7 +29,7 @@ const MobileMenu = ({ menuButtonClassName = "" }: MobileMenuProps) => {
 
   return (
     <Sheet>
-      <SheetTrigger className={`${menuButtonClassName} lg:hidden`}>
+      <SheetTrigger asChild className={`${menuButtonClassName} lg:hidden`}>
         <Button variant="outline" size="icon" className="p-1">
           <Menu className="size-5" />
         </Button>

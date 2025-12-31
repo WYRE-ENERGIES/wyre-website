@@ -535,7 +535,7 @@ const Solutions = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 items-center">
               <span className="bg-yellow-400 text-heading font-bold px-4 py-2 rounded-lg text-2xl shadow-sm">
-                ₦ 585,000,000
+                ₦ 810,000,000
               </span>
               <span className="text-muted-foreground font-medium">OR</span>
               <span className="bg-yellow-400 text-heading font-bold px-4 py-2 rounded-lg text-2xl shadow-sm">

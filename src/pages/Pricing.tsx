@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Card, CardContent, CardHeader } from '../components/ui/card'
+import React, { useState } from 'react'
+import { Card, CardContent } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
 import {
@@ -8,7 +8,8 @@ import {
   Wrench,
   Package,
   ChevronRight,
-  Info
+  Info,
+  Zap
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import OtherNavbar from "../components/navbar/OtherNavbar"
@@ -201,27 +202,6 @@ const packageIncludes = [
 const Pricing = () => {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
-  }
-
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -325,10 +305,10 @@ const Pricing = () => {
             className="text-center space-y-4"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-heading">
-              EMS - Wyre Smart Box Packages
+              EMS - Wyre Smart Box Pricing
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Complete energy monitoring solutions with professional installation included.
+              Compare our complete energy monitoring solutions by CT Capacity Rating. All packages include professional installation and free admin panel access.
             </p>
           </motion.div>
         </div>
@@ -355,195 +335,248 @@ const Pricing = () => {
         </motion.div>
       </div>
 
-      {/* Pricing Cards */}
-      <div className="container mx-auto px-6 py-12">
+      {/* Package Includes & Admin Panel Features - Shown Once */}
+      <div className="container mx-auto px-6 py-8">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {/* Package Includes */}
+          <Card className="border border-gray-200 shadow-sm">
+            <CardContent className="pt-6">
+              <h3 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
+                <Package className="h-5 w-5 text-brandColor" />
+                What's Included in Every Package:
+              </h3>
+              <ul className="space-y-2.5">
+                {packageIncludes.map((item, index) => (
+                  <li key={index} className="flex items-start space-x-2 text-sm">
+                    <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-muted-foreground">
+                      {item.name}
+                      {typeof item.quantity === 'number' && (
+                        <span className="text-brandColor ml-1 font-semibold">({item.quantity}x)</span>
+                      )}
+                      {typeof item.quantity === 'string' && (
+                        <span className="text-brandColor ml-1 font-semibold">({item.quantity})</span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Admin Panel Features */}
+          <Card className="border border-gray-200 shadow-sm">
+            <CardContent className="pt-6">
+              <h3 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
+                <Zap className="h-5 w-5 text-brandColor" />
+                Free Admin Panel Features:
+              </h3>
+              <ul className="space-y-2.5">
+                <li className="flex items-start space-x-2 text-sm">
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">
+                    Monitor 3 Energy Sources (Utility, Generator, or Solar)
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2 text-sm">
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">
+                    5 year historical archive
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2 text-sm">
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">
+                    Analysis from 15 minutes to a year
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2 text-sm">
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">
+                    Unlimited email alerts for deviations & budget performance
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2 text-sm">
+                  <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">
+                    12 monthly reports
+                  </span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Pricing Table */}
+      <div className="container mx-auto px-6 pb-8">
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden"
         >
-          {emsProducts.map((product) => (
-            <motion.div
-              key={product.id}
-              variants={cardVariants}
-              className="relative group"
-            >
-              <Card className="h-full border-none shadow-sm hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-2xl font-bold text-heading">
-                      {product.name}
-                    </h3>
-                    {product.id === 'ct-6000' && (
-                      <Badge className="bg-brandColor text-white">
-                        Premium
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-base text-muted-foreground">
-                    CT Capacity: {product.rating}
-                  </p>
-                </CardHeader>
-
-                <CardContent className="space-y-6">
-                  {/* Package Includes */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-heading mb-3 flex items-center gap-2">
-                      <Package className="h-4 w-4 text-brandColor" />
-                      What's Included:
-                    </h4>
-                    <ul className="space-y-2">
-                      {packageIncludes.map((item, index) => (
-                        <li key={index} className="flex items-start space-x-2 text-sm">
-                          <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">
-                            {item.name}
-                            {typeof item.quantity === 'number' && (
-                              <span className="text-brandColor ml-1">({item.quantity}x)</span>
-                            )}
-                            {typeof item.quantity === 'string' && (
-                              <span className="text-brandColor ml-1 font-semibold">({item.quantity})</span>
-                            )}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Admin Panel Features */}
-                  <div className="pt-4 border-t border-gray-200">
-                    <h4 className="text-sm font-semibold text-heading mb-3">
-                      Free Admin Panel Features:
-                    </h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start space-x-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">
-                          Monitor 3 Energy Sources (Utility, Generator, or Solar)
-                        </span>
-                      </li>
-                      <li className="flex items-start space-x-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">
-                          5 year historical archive
-                        </span>
-                      </li>
-                      <li className="flex items-start space-x-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">
-                          Analysis from 15 minutes to a year
-                        </span>
-                      </li>
-                      <li className="flex items-start space-x-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">
-                          Unlimited email alerts for deviations & budget performance
-                        </span>
-                      </li>
-                      <li className="flex items-start space-x-2 text-sm">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">
-                          12 monthly reports
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Price */}
-                  <div className="pt-4 border-t border-gray-200">
-                    <div className="text-center">
-                      <p className="text-sm text-muted-foreground mb-1">One-Time Payment</p>
-                      <div className="text-3xl font-bold text-heading">
-                        {formatPrice(product.sellingPrice)}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        Includes everything • No hidden fees
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Technical Specifications (Collapsible) */}
-                  {selectedProduct === product.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pt-4 border-t border-gray-200"
-                    >
-                      <h4 className="text-sm font-semibold text-heading mb-3 flex items-center gap-2">
-                        <Info className="h-4 w-4 text-brandColor" />
-                        Technical Specifications:
-                      </h4>
-                      <ul className="space-y-2 text-sm">
-                        <li className="flex justify-between">
-                          <span className="text-muted-foreground">Rated Current:</span>
-                          <span className="text-heading font-medium">{product.specifications.ratedCurrent}</span>
-                        </li>
-                        {product.specifications.accuracyClass && (
-                          <li className="flex justify-between">
-                            <span className="text-muted-foreground">Accuracy Class:</span>
-                            <span className="text-heading font-medium">{product.specifications.accuracyClass}</span>
-                          </li>
+          <div className="overflow-x-auto -mx-6 md:mx-0">
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gradient-to-r from-brandColor/10 via-brandColor/5 to-purple-500/10">
+                    <tr>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
+                        CT Capacity
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
+                        Rated Current
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap hidden md:table-cell">
+                        Accuracy Class
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap hidden lg:table-cell">
+                        CT Opening Size
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap hidden lg:table-cell">
+                        Output Signal
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-left text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
+                        Price
+                      </th>
+                      <th className="px-4 md:px-6 py-4 text-center text-xs md:text-sm font-bold text-heading uppercase tracking-wider whitespace-nowrap">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-100">
+                    {emsProducts.map((product, index) => (
+                      <React.Fragment key={product.id}>
+                        <motion.tr
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          className="hover:bg-gray-50/80 transition-colors duration-150 group"
+                        >
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <div className="text-base md:text-lg font-bold text-heading">
+                                {product.rating}
+                              </div>
+                              {product.id === 'ct-6000' && (
+                                <Badge className="bg-brandColor text-white text-xs">
+                                  Premium
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              {product.name}
+                            </div>
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap">
+                            {product.specifications.ratedCurrent}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden md:table-cell">
+                            {product.specifications.accuracyClass || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
+                            {product.specifications.ctOpeningSize || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 text-sm text-muted-foreground whitespace-nowrap hidden lg:table-cell">
+                            {product.specifications.outputSignal || '-'}
+                          </td>
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="text-base md:text-lg font-bold text-heading">
+                              {formatPrice(product.sellingPrice)}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              One-time payment
+                            </div>
+                          </td>
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-col gap-2 min-w-[140px] md:min-w-[200px]">
+                              <Button
+                                className="w-full bg-brandColor hover:bg-brandColor/80 text-white text-xs md:text-sm"
+                                size="sm"
+                                onClick={() => handleRequestQuote(product)}
+                              >
+                                Get a Quote
+                                <ChevronRight className="ml-1 h-3 w-3" />
+                              </Button>
+                              <Button
+                                className="w-full border border-gray-300 hover:bg-gray-50 text-xs md:text-sm"
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleViewSpecs(product.id)}
+                              >
+                                <FileText className="mr-1 h-3 w-3" />
+                                {selectedProduct === product.id ? 'Hide' : 'Specs'}
+                              </Button>
+                            </div>
+                          </td>
+                        </motion.tr>
+                        {selectedProduct === product.id && (
+                          <motion.tr
+                            key={`${product.id}-specs`}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="bg-gray-50/50"
+                          >
+                            <td colSpan={7} className="px-4 md:px-6 py-6">
+                              <div className="max-w-4xl">
+                                <h4 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
+                                  <Info className="h-5 w-5 text-brandColor" />
+                                  Technical Specifications: {product.rating}
+                                </h4>
+                                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                    <span className="text-sm text-muted-foreground">Rated Current:</span>
+                                    <span className="text-sm font-medium text-heading">{product.specifications.ratedCurrent}</span>
+                                  </div>
+                                  {product.specifications.accuracyClass && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Accuracy Class:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.accuracyClass}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.ctOpeningSize && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">CT Opening Size:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.ctOpeningSize}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.outputSignal && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Output Signal:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.outputSignal}</span>
+                                    </div>
+                                  )}
+                                  {product.specifications.certification && (
+                                    <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                                      <span className="text-sm text-muted-foreground">Certification:</span>
+                                      <span className="text-sm font-medium text-heading">{product.specifications.certification}</span>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-gray-200">
+                                  <p className="text-xs text-muted-foreground flex items-center gap-2">
+                                    <Wrench className="h-3 w-3" />
+                                    Installation: 1-2 hours per sensor • Our team handles everything
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                          </motion.tr>
                         )}
-                        {product.specifications.ctOpeningSize && (
-                          <li className="flex justify-between">
-                            <span className="text-muted-foreground">CT Opening Size:</span>
-                            <span className="text-heading font-medium">{product.specifications.ctOpeningSize}</span>
-                          </li>
-                        )}
-                        {product.specifications.outputSignal && (
-                          <li className="flex justify-between">
-                            <span className="text-muted-foreground">Output Signal:</span>
-                            <span className="text-heading font-medium">{product.specifications.outputSignal}</span>
-                          </li>
-                        )}
-                        {product.specifications.certification && (
-                          <li className="flex justify-between">
-                            <span className="text-muted-foreground">Certification:</span>
-                            <span className="text-heading font-medium">{product.specifications.certification}</span>
-                          </li>
-                        )}
-                      </ul>
-                      <div className="mt-3 pt-3 border-t border-gray-100">
-                        <p className="text-xs text-muted-foreground flex items-center gap-2">
-                          <Wrench className="h-3 w-3" />
-                          Installation: 1-2 hours per sensor
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Our team handles everything
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* CTA Buttons */}
-                  <div className="space-y-2 pt-2">
-                    <Button
-                      className="w-full bg-brandColor hover:bg-brandColor/80 text-white"
-                      size="lg"
-                      onClick={() => handleRequestQuote(product)}
-                    >
-                      Request Quote
-                      <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
-                    <Button
-                      className="w-full border border-gray-300 hover:bg-gray-50"
-                      size="lg"
-                      variant="outline"
-                      onClick={() => handleViewSpecs(product.id)}
-                    >
-                      <FileText className="mr-2 h-4 w-4" />
-                      {selectedProduct === product.id ? 'Hide Specs' : 'View Specs'}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </motion.div>
+      </div>
 
-        {/* Comparison Note */}
+      {/* Comparison Note */}
+      <div className="container mx-auto px-6 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
