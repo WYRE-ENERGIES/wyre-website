@@ -4,50 +4,53 @@ import * as React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '../../../../lib/utils';
 
-type FlipWordsProps = Omit<React.ComponentProps<'span'>, 'children'> & {
+type FlipWordsProps = Omit<React.ComponentProps<'span'>, 'children' | 'ref'> & {
   words: string[];
   duration?: number;
   letterDelay?: number;
   wordDelay?: number;
 };
 
-function FlipWords({
-  ref,
-  words,
-  duration = 3000,
-  letterDelay = 0.05,
-  wordDelay = 0.3,
-  className,
-  ...props
-}: FlipWordsProps) {
-  const localRef = React.useRef<HTMLSpanElement>(null);
-  React.useImperativeHandle(ref, () => localRef.current as HTMLSpanElement);
+const FlipWords = React.forwardRef<HTMLSpanElement, FlipWordsProps>(
+  (
+    {
+      words,
+      duration = 3000,
+      letterDelay = 0.05,
+      wordDelay = 0.3,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const localRef = React.useRef<HTMLSpanElement>(null);
+    React.useImperativeHandle(ref, () => localRef.current as HTMLSpanElement);
 
-  const [currentWord, setCurrentWord] = React.useState(words[0]);
-  const [isAnimating, setIsAnimating] = React.useState<boolean>(false);
+	  const [currentWord, setCurrentWord] = React.useState(words[0]);
+	  const [isAnimating, setIsAnimating] = React.useState<boolean>(false);
 
-  const startAnimation = React.useCallback(() => {
-    const word = words[words.indexOf(currentWord) + 1] || words[0];
-    setCurrentWord(word);
-    setIsAnimating(true);
-  }, [currentWord, words]);
+	  const startAnimation = React.useCallback(() => {
+	    const word = words[words.indexOf(currentWord) + 1] || words[0];
+	    setCurrentWord(word);
+	    setIsAnimating(true);
+	  }, [currentWord, words]);
 
-  React.useEffect(() => {
-    if (!isAnimating) {
-      const timeoutId = setTimeout(() => {
-        startAnimation();
-      }, duration);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [isAnimating, duration, startAnimation]);
+	  React.useEffect(() => {
+	    if (!isAnimating) {
+	      const timeoutId = setTimeout(() => {
+	        startAnimation();
+	      }, duration);
+	      return () => clearTimeout(timeoutId);
+	    }
+	  }, [isAnimating, duration, startAnimation]);
 
-  return (
-    <span ref={localRef} data-slot="flip-words" {...props}>
-      <AnimatePresence
-        onExitComplete={() => {
-          setIsAnimating(false);
-        }}
-      >
+	  return (
+	    <span ref={localRef} data-slot="flip-words" {...props}>
+	      <AnimatePresence
+	        onExitComplete={() => {
+	          setIsAnimating(false);
+	        }}
+	      >
         <motion.span
           initial={{
             opacity: 0,
@@ -107,7 +110,8 @@ function FlipWords({
         </motion.span>
       </AnimatePresence>
     </span>
-  );
-}
+	  );
+	},
+);
 
 export { FlipWords, type FlipWordsProps };
