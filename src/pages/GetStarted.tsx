@@ -26,10 +26,13 @@ const GetStarted = () => {
     facilityType: '',
     sourcesCount: '',
     sourcesOfEnergy: '',
-    averageCost: ''
+    averageCost: '',
+    subject: '',
+    message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
 
   const applications = [
@@ -60,33 +63,60 @@ const GetStarted = () => {
     if (error) setError(null)
   }
 
-  const mapUseCase = (application: string): string => {
-    if (application === 'Single Site') return 'single_site'
-    if (application === 'Multi Site') return 'multi_site'
-    return application.toLowerCase().replace(' ', '_')
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setIsSubmitting(true)
 
     try {
-      // Map form data to API payload structure
-      const payload = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone_number: formData.phone.trim(),
-        location: formData.location.trim(),
-        use_case: mapUseCase(formData.application),
-        facility_type: formData.facilityType,
-        no_of_sources: formData.sourcesCount.trim() || "1",
-        sources_of_energy: formData.sourcesOfEnergy,
-        avg_energy_cost: formData.averageCost.replace(/[₦,]/g, '').trim(),
+      // Generate subject from application type
+      const subject = formData.application
+        ? `Inquiry about ${formData.application} ${formData.facilityType} Setup`
+        : 'Inquiry about services'
+
+      // Generate message from form details
+      const messageParts = []
+      if (formData.application) {
+        messageParts.push(`Application Type: ${formData.application}`)
+      }
+      if (formData.facilityType) {
+        messageParts.push(`Facility Type: ${formData.facilityType}`)
+      }
+      if (formData.location) {
+        messageParts.push(`Location: ${formData.location}`)
+      }
+      if (formData.sourcesCount) {
+        messageParts.push(`Number of Sources: ${formData.sourcesCount}`)
+      }
+      if (formData.sourcesOfEnergy) {
+        messageParts.push(`Source of Energy: ${formData.sourcesOfEnergy}`)
+      }
+      if (formData.averageCost) {
+        messageParts.push(`Average Monthly Cost: ₦${formData.averageCost.replace(/[₦,]/g, '')}`)
+      }
+      if (formData.message) {
+        messageParts.push(`\nAdditional Information: ${formData.message}`)
       }
 
-      const response = await socialsClient.post('contact/', payload)
+      const message = messageParts.length > 0
+        ? messageParts.join('\n')
+        : 'I would like to know more about your services.'
+
+      // Map form data to API payload structure
+      const payload = {
+        full_name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone_number: formData.phone.trim(),
+        subject: subject,
+        message: message,
+      }
+
+      const response = await socialsClient.post('contact-us/', payload)
       console.log('Success:', response.data)
+
+      // Store success message from API response
+      const apiMessage = response.data?.message || "Thanks for reaching out! We're thrilled to hear from you. Our representative will get in touch with you."
+      setSuccessMessage(apiMessage)
 
       // Show success dialog
       setShowSuccessDialog(true)
@@ -101,13 +131,16 @@ const GetStarted = () => {
         facilityType: '',
         sourcesCount: '',
         sourcesOfEnergy: '',
-        averageCost: ''
+        averageCost: '',
+        subject: '',
+        message: ''
       })
     } catch (err: unknown) {
       console.error('Error submitting form:', err)
       if (err && typeof err === 'object' && 'response' in err) {
-        const axiosError = err as { response?: { data?: { message?: string }; status?: number } }
-        const errorMessage = axiosError.response?.data?.message || `Server error: ${axiosError.response?.status || 'Unknown'}`
+        const axiosError = err as { response?: { data?: { message?: string; error?: string }; status?: number } }
+        // Handle both 'message' and 'error' fields in response
+        const errorMessage = axiosError.response?.data?.message || axiosError.response?.data?.error || `Server error: ${axiosError.response?.status || 'Unknown'}`
         setError(errorMessage)
       } else {
         setError(err instanceof Error ? err.message : 'Failed to submit form. Please try again.')
@@ -115,6 +148,16 @@ const GetStarted = () => {
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  // Handle textarea changes
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+    // Clear error when user starts typing
+    if (error) setError(null)
   }
 
   return (
@@ -312,6 +355,22 @@ const GetStarted = () => {
                 </div>
               </div>
 
+              {/* Additional Message */}
+              <div>
+                <Label htmlFor="message" className="text-heading mb-2 block">
+                  Additional Information (Optional)
+                </Label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleTextareaChange}
+                  placeholder="Tell us more about your requirements..."
+                  rows={4}
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-none"
+                />
+              </div>
+
               {/* Error Message */}
               {error && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -344,7 +403,7 @@ const GetStarted = () => {
               Thank You
             </DialogTitle>
             <DialogDescription className="text-base text-gray-600 pt-2">
-              Thanks for reaching out! We're thrilled to hear from you. Our representative will get in touch with you.
+              {successMessage}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-center">
