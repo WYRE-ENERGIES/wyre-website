@@ -10,7 +10,7 @@ import LogoCloud from "../sections/LogoCloud"
 const Hero = () => {
   const images = [
     {
-      src: "/img/hero-img.png", 
+      src: "/img/hero-img.png",
       alt: "hero image",
       containerClassName: "w-full h-full h-[75%] max-h-[600px] -ml-14 object-contain"
     },
@@ -20,7 +20,7 @@ const Hero = () => {
       containerClassName: "w-full h-full -ml-24 h-[70%] max-h-[580px] max-2xl:max-h-[500px] object-contain -ml-28 "
     },
     {
-      src: "/img/solar-container.png",
+      src: "/img/wyre-commercial.png",
       alt: "solar container",
       containerClassName: "w-full h-full h-[60%] max-h-[500px] -ml-24 object-contain rounded-2xl"
     },
