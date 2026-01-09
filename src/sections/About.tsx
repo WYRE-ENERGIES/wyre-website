@@ -33,6 +33,7 @@ const About = () => {
                 src="/img/wyre-solar.png"
                 alt="Solar panel installer working on rooftop"
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
             <div className="relative overflow-hidden rounded-2xl">
@@ -40,6 +41,7 @@ const About = () => {
                 src="/img/wyre-commercial.png"
                 alt="Solar panel installer working on rooftop"
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
           </div>

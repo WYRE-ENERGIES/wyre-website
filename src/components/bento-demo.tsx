@@ -25,6 +25,7 @@ const features = [
           src="/img/wyre-report.png"
           alt="Periodic Energy Usage Report"
           className="relative h-48 w-auto cursor-pointer overflow-hidden rounded-xl border border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05] transform-gpu transition-all duration-300 ease-out hover:blur-none object-contain shadow-sm"
+          loading="lazy"
         />
       </HorizontalScroll>
     ),

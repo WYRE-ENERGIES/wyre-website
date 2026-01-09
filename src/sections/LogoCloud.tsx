@@ -33,6 +33,7 @@ export default function LogoCloud() {
                   src="/img/sterling-logo.png"
                   alt="Sterling Bank"
                   width="auto"
+                  loading="lazy"
                 /></div>
               </div>
 
@@ -42,6 +43,7 @@ export default function LogoCloud() {
                   src="/img/updc-logo.png"
                   alt="UPDC Logo"
                   width="auto"
+                  loading="lazy"
                 /></div>
               </div>
               {/* <div className="flex items-center justify-center flex-shrink-0 w-24">
@@ -59,6 +61,7 @@ export default function LogoCloud() {
                   src="/img/landmark-logo.png"
                   alt="Landmark Center"
                   width="auto"
+                  loading="lazy"
                 /></div>
               </div>
               <div className="flex items-center justify-center flex-shrink-0 w-14">
@@ -68,6 +71,7 @@ export default function LogoCloud() {
                     src="/img/polaris-logo.png"
                     alt="Polaris Bank"
                     width="auto"
+                    loading="lazy"
                   /></div>
               </div>
               <div className="flex items-center justify-center flex-shrink-0 w-[67.2px]">
@@ -77,6 +81,7 @@ export default function LogoCloud() {
                     src="/img/viathan-logo.png"
                     alt="Viathan"
                     width="auto"
+                    loading="lazy"
                   /></div>
               </div>
               <div className="flex items-center justify-center flex-shrink-0 w-24">
@@ -86,6 +91,7 @@ export default function LogoCloud() {
                     src="/img/oando-logo.png"
                     alt="Oando PLC"
                     width="auto"
+                    loading="lazy"
                   /></div>
               </div>
               <div className="flex items-center justify-center flex-shrink-0 w-24">
@@ -95,6 +101,7 @@ export default function LogoCloud() {
                     src="/img/atc-logo.png"
                     alt="ATC"
                     width="auto"
+                    loading="lazy"
                   /></div>
               </div>
             </InfiniteSlider>
