@@ -1,5 +1,3 @@
-import { Suspense } from "react"
-// const Globe = React.lazy(() => import("../components/magicui/globe").then(mod => ({ default: mod.Globe })))
 
 export default function Scale() {
   return (
@@ -10,11 +8,9 @@ export default function Scale() {
       {/* Globe positioned absolutely to overlap backgrounds */}
       {/* Note: The red and light blue lines on the globe in the image are not directly supported by the cobe library's configuration. */}
       {/* They would require custom SVG or canvas drawing overlays. This implementation focuses on the globe's base color, dots, and markers. */}
-      <Suspense fallback={null}>
-        <div className="absolute xl:z-20 -right-[25%] w-[800px] h-[800px] md:w-[1000px] md:h-[1000px] lg:w-[1200px] lg:h-[1200px]">
-          <img src="/img/globe-img.png" alt="World Globe" className="w-full h-full object-contain" />
-        </div>
-      </Suspense>
+      <div className="absolute xl:z-20 -right-[25%] w-[800px] h-[800px] md:w-[1000px] md:h-[1000px] lg:w-[1200px] lg:h-[1200px]">
+        <img src="/img/globe-img.png" alt="World Globe" className="w-full h-full object-contain" loading="lazy" />
+      </div>
 
       {/* Content container */}
       <div className="relative px-6 max-w-[90rem] mx-auto mt-[300px] spy-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">

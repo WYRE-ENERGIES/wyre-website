@@ -36,7 +36,7 @@ const solarSolutions: SolarSolution[] = [
     title: "Energy Storage Solutions",
     description:
       "Optimize energy storage with intelligent battery management, ensuring peak performance and cost-effective operation.",
-    image: "/img/energy-storage.png",
+    image: "/img/wyre-commercial.png",
   },
   {
     title: "Hybrid & Off-Grid Solutions",

@@ -108,4 +108,61 @@
       transform: translateY(calc(-100% / 3));
     }
   }
+
+  /* Hero Image Carousel Animations - 3 images, 4.5s each = 13.5s total cycle */
+  @keyframes hero-image-1 {
+    0%, 30% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    33.33%, 100% {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes hero-image-2 {
+    0%, 30% {
+      opacity: 0;
+      pointer-events: none;
+    }
+    33.33%, 63.33% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    66.67%, 100% {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes hero-image-3 {
+    0%, 63.33% {
+      opacity: 0;
+      pointer-events: none;
+    }
+    66.67%, 97% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    100% {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .animate-hero-image-1 {
+    animation: hero-image-1 18s ease-in-out infinite;
+    z-index: 10;
+  }
+
+  .animate-hero-image-2 {
+    animation: hero-image-2 18s ease-in-out infinite;
+    z-index: 10;
+  }
+
+  .animate-hero-image-3 {
+    animation: hero-image-3 18s ease-in-out infinite;
+    z-index: 10;
+  }
 }

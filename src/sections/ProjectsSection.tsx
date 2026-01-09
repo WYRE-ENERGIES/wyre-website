@@ -45,6 +45,7 @@ const ProjectsSection = () => {
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover object-bottom rounded-xl group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "https://placehold.co/600x600/f3f4f6/6b7280?text=Project+Image";
                       }}

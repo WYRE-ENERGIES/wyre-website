@@ -1,45 +1,33 @@
-import { useState, useEffect } from "react"
 import { ChevronRight } from "lucide-react"
 import { Button } from "../components/ui/button"
 import ".././styles/contents.css"
 import { AnimatePresence, motion } from "framer-motion";
 import type { Variants } from "framer-motion"
+import img1 from "/img/hero-img.png"
+import img2 from "/img/wyre-monitor-1.png"
+import img3 from "/img/wyre-commercial.png"
 import { FlipWords } from "../components/ui/shadcn-io/flip-words"
 import LogoCloud from "../sections/LogoCloud"
 
 const Hero = () => {
   const images = [
     {
-      src: "/img/hero-img.png",
+      src: img1,
       alt: "hero image",
       containerClassName: "w-full h-full h-[75%] max-h-[600px] -ml-14 object-contain"
     },
     {
-      src: "/img/wyre-monitor-1.png",
+      src: img2,
       alt: "hero image",
       containerClassName: "w-full h-full -ml-24 h-[70%] max-h-[580px] max-2xl:max-h-[500px] object-contain -ml-28 "
     },
     {
-      src: "/img/wyre-commercial.png",
+      src: img3,
       alt: "solar container",
       containerClassName: "w-full h-full h-[60%] max-h-[500px] -ml-24 object-contain rounded-2xl"
     },
-    {
-      src: "/img/energy-storage.png",
-      alt: "energy storage",
-      containerClassName: "w-full h-full h-[60%] max-h-[500px] -ml-24 heroImage object-contain rounded-2xl"
-    },
   ]
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 4500)
-
-    return () => clearInterval(interval)
-  }, [images.length])
 
   const heroHeadingVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
@@ -59,28 +47,6 @@ const Hero = () => {
     },
   }
 
-  const imageVariants = {
-    enter: {
-      opacity: 0,
-      scale: 0.98,
-    },
-    center: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 2.5,
-        ease: [0.25, 0.1, 0.25, 1] as const,
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 1.02,
-      transition: {
-        duration: 2,
-        ease: [0.25, 0.1, 0.25, 1] as const,
-      },
-    },
-  }
 
   return (
     <>
@@ -138,23 +104,17 @@ const Hero = () => {
           </AnimatePresence>
         </div>
         <div className="flex-1 flex items-end justify-end max-w-[50%] max-md:hidden h-full">
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={currentImageIndex}
-              className={"absolute top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%]"}
-              variants={imageVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
+          {images.map((image, index) => (
+            <div key={index} className={`absolute top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%] animate-hero-image-${index + 1}`}>
               <img
-                src={images[currentImageIndex].src}
-                alt={images[currentImageIndex].alt}
-                className={images[currentImageIndex].containerClassName}
-              // className="w-full h-full object-contain"
+                src={image.src}
+                alt={image.alt}
+                className={image.containerClassName}
+                loading="lazy"
+                decoding="async"
               />
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          ))}
         </div>
       </div>
       <motion.div

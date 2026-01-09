@@ -31,7 +31,7 @@ const solarSolutions = [
   {
     title: "Energy Storage Solutions",
     description: "Enterprise energy storage systems with intelligent battery management. Optimized for peak performance, backup power, and demand response capabilities.",
-    image: "/img/energy-storage.png",
+    image: "/img/wyre-commercial.png",
   },
   {
     title: "Hybrid & Off-Grid Solutions",
