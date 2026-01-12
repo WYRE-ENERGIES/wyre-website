@@ -49,6 +49,7 @@ const Counter = ({ end, suffix = "", duration = 2, isInView }: CounterProps) => 
 interface GlobalEnergyMetrics {
   total_energy_produced_kwh: number
   total_carbon_footprint_tons: number
+  total_solar_energy_kwh?: number
 }
 
 interface CachedData {
@@ -58,9 +59,15 @@ interface CachedData {
 
 const CACHE_KEY = 'wyre_energy_metrics'
 
-// Load cached data synchronously on initialization
-const loadCachedData = (): GlobalEnergyMetrics | null => {
-  if (typeof window === "undefined") return null
+const PLACEHOLDER_DATA: GlobalEnergyMetrics = {
+  total_energy_produced_kwh: 66879958.4,
+  total_carbon_footprint_tons: 33991.11,
+  total_solar_energy_kwh: 102476.4
+}
+
+// Load cached data synchronously on initialization, or return placeholder
+const loadCachedData = (): GlobalEnergyMetrics => {
+  if (typeof window === "undefined") return PLACEHOLDER_DATA
   try {
     const cached = localStorage.getItem(CACHE_KEY)
     if (cached) {
@@ -72,51 +79,54 @@ const loadCachedData = (): GlobalEnergyMetrics | null => {
   } catch (error) {
     console.error('Error loading cached data:', error)
   }
-  return null
+  return PLACEHOLDER_DATA
 }
 
 const Statistics = () => {
   const statsRef = useRef(null)
   const isStatsInView = useInView(statsRef, { once: true, margin: "-100px" })
-  // Initialize with cached data immediately
-  const [energyData, setEnergyData] = useState<GlobalEnergyMetrics | null>(loadCachedData)
+  const [energyData, setEnergyData] = useState<GlobalEnergyMetrics>(loadCachedData)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Fetch fresh data in the background
     const fetchEnergyMetrics = async () => {
       try {
         const response = await apiClient.get('global-energy-metrics/')
         if (response.data.status && response.data.data) {
           const newData = response.data.data
 
+          // Merge with placeholder values to ensure all fields are present
+          const mergedData: GlobalEnergyMetrics = {
+            total_energy_produced_kwh: newData.total_energy_produced_kwh ?? PLACEHOLDER_DATA.total_energy_produced_kwh,
+            total_carbon_footprint_tons: newData.total_carbon_footprint_tons ?? PLACEHOLDER_DATA.total_carbon_footprint_tons,
+            total_solar_energy_kwh: newData.total_solar_energy_kwh ?? PLACEHOLDER_DATA.total_solar_energy_kwh
+          }
+
           // Update cache first to ensure persistence
           const cacheData: CachedData = {
-            data: newData,
+            data: mergedData,
             timestamp: Date.now()
           }
           localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData))
 
           // Then update state to trigger UI update
-          setEnergyData(newData)
+          setEnergyData(mergedData)
         }
       } catch (error) {
         console.error('Error fetching energy metrics:', error)
         setError('Unable to load latest metrics. Showing cached values.')
-        // On error, keep using cached data (already set in state)
+        // On error, keep using cached/placeholder data (already set in state)
       }
     }
 
     fetchEnergyMetrics()
   }, [])
 
-  // Convert kWh to a more readable format (divide by 1000 for MWh)
-  // Only calculate if we have data, otherwise return 0 (Counter will handle it)
-  const energyProcessed = energyData ? Math.round(energyData.total_energy_produced_kwh / 1000) : 0
-  const carbonAnalysed = energyData ? Math.round(energyData.total_carbon_footprint_tons) : 0
+  // Always use data (either from API, cache, or placeholder)
+  const energyProcessed = Math.round(energyData.total_energy_produced_kwh / 1000)
+  const carbonAnalysed = Math.round(energyData.total_carbon_footprint_tons)
 
-  // Dummy data for Solar - will be replaced with API data later
-  const solarCapacity = 150 // MW
+  const solarCapacity = Math.round((energyData.total_solar_energy_kwh ?? PLACEHOLDER_DATA.total_solar_energy_kwh!) / 1000)
 
   return (
     <section className="relative py-12 flex flex-col items-center justify-center lg:py-16">
@@ -195,9 +205,9 @@ const Statistics = () => {
               <Sun className="h-6 w-6 text-orange-600" />
             </div>
             <p className="text-4xl 2xl:text-5xl font-bold text-heading mb-2">
-              <Counter end={solarCapacity} suffix=" MW" isInView={isStatsInView} />
+              <Counter end={solarCapacity} suffix=" MWh" isInView={isStatsInView} />
             </p>
-            <p className="text-gray-400 font-medium">Solar Capacity</p>
+            <p className="text-gray-400 font-medium">Total Solar Energy</p>
           </motion.div>
         </div>
       </div>
