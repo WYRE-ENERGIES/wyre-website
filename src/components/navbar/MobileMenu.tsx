@@ -86,12 +86,6 @@ const MobileMenu = ({ menuButtonClassName = "" }: MobileMenuProps) => {
               >
                 News & Pubs
               </Link>
-              <Link
-                to="/solar-catalog"
-                className="block py-2 px-2 text-sm font-medium text-heading hover:text-brandColor hover:bg-gray-50 rounded-md transition-colors"
-              >
-                Product Catalog
-              </Link>
             </div>
           </div>
 
