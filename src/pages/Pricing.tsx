@@ -9,13 +9,24 @@ import {
   Package,
   ChevronRight,
   Info,
-  Zap
+  Zap,
+  X,
+  CheckCircle2
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import OtherNavbar from "../components/navbar/OtherNavbar"
 import Footer from "../sections/Footer"
 import { AnimatedGridPattern } from "../components/magicui/animated-grid-pattern"
 import { cn } from '../lib/utils'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '../components/ui/dialog'
+import { ContactForm } from '../components/ContactForm'
 
 interface EMSProduct {
   id: string
@@ -196,11 +207,22 @@ const packageIncludes = [
   { name: 'Current Sensors', quantity: 9 },
   { name: 'Professional Installation', quantity: 'Included' },
   { name: 'Delivery & Setup', quantity: 'Included' },
-  { name: 'Free Admin Panel Access', quantity: '1-2 Years Free' }
+  { name: 'Free Admin Access', quantity: '1-2 Years Free' }
 ]
 
 const Pricing = () => {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string>('')
+  const [selectedProducts, setSelectedProducts] = useState<EMSProduct[]>([])
+  const [initialFormData, setInitialFormData] = useState<{
+    name?: string
+    email?: string
+    phone?: string
+    subject?: string
+    message?: string
+  }>({})
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -212,8 +234,64 @@ const Pricing = () => {
   }
 
   const handleRequestQuote = (product: EMSProduct) => {
-    // Navigate to contact page with product info
-    window.location.href = `/contact?product=${encodeURIComponent(product.name + ' ' + product.rating)}&price=${product.sellingPrice}`
+    // Check if product is already in selected products
+    const isAlreadySelected = selectedProducts.some(p => p.id === product.id)
+    if (!isAlreadySelected) {
+      setSelectedProducts(prev => [...prev, product])
+    }
+
+    // Pre-fill form with product information
+    const priceText = formatPrice(product.sellingPrice)
+
+    const productMessages = selectedProducts.map(p => {
+      const pPriceText = formatPrice(p.sellingPrice)
+      return `${p.name} ${p.rating} (${pPriceText})`
+    })
+
+    const newProductMessage = `${product.name} ${product.rating} (${priceText})`
+    const allProducts = [...productMessages, newProductMessage].join('\n')
+
+    setInitialFormData({
+      subject: 'EMS Product Purchase',
+      message: `I'm interested in purchasing:\n${allProducts}\n\nPlease provide more information about this product and availability.`
+    })
+
+    setIsModalOpen(true)
+  }
+
+  const removeProductFromQuote = (productId: string) => {
+    setSelectedProducts(prev => prev.filter(p => p.id !== productId))
+    // Update message to reflect remaining products
+    const remainingProducts = selectedProducts.filter(p => p.id !== productId)
+    if (remainingProducts.length > 0) {
+      const productMessages = remainingProducts.map(p => {
+        const pPriceText = formatPrice(p.sellingPrice)
+        return `${p.name} ${p.rating} (${pPriceText})`
+      })
+      setInitialFormData({
+        subject: 'EMS Product Purchase',
+        message: `I'm interested in purchasing:\n${productMessages.join('\n')}\n\nPlease provide more information about these products and availability.`
+      })
+    } else {
+      setInitialFormData({
+        subject: 'EMS Product Purchase',
+        message: ''
+      })
+    }
+  }
+
+  const handleFormSuccess = () => {
+    // Reset selected products and close modal after successful submission
+    setSelectedProducts([])
+    setInitialFormData({})
+    setIsModalOpen(false)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+    // Optionally reset when closing
+    setSelectedProducts([])
+    setInitialFormData({})
   }
 
   const handleViewSpecs = (productId: string) => {
@@ -221,15 +299,6 @@ const Pricing = () => {
   }
 
   const handleDownloadDatasheet = () => {
-    // Admin panel features list
-    const adminPanelFeatures = [
-      'Monitor 3 Energy Sources (Utility, Generator, or Solar)',
-      '5 year historical archive',
-      'Analysis from 15 minutes to a year',
-      'Unlimited email alerts for deviations & budget performance',
-      '12 monthly reports'
-    ]
-
     // Create CSV headers
     const headers = [
       'Product Name',
@@ -240,9 +309,7 @@ const Pricing = () => {
       'CT Opening Size',
       'Output Signal',
       'Certification',
-      'Package Includes',
-      'Free Admin Panel Access',
-      'Admin Panel Features'
+      'Package Includes'
     ]
 
     // Create CSV rows
@@ -250,8 +317,6 @@ const Pricing = () => {
       const packageItems = packageIncludes.map(item =>
         `${item.name}${typeof item.quantity === 'number' ? ` (${item.quantity}x)` : typeof item.quantity === 'string' ? ` (${item.quantity})` : ''}`
       ).join('; ')
-
-      const adminFeatures = adminPanelFeatures.join('; ')
 
       return [
         product.name,
@@ -262,9 +327,7 @@ const Pricing = () => {
         product.specifications.ctOpeningSize || '',
         product.specifications.outputSignal || '',
         product.specifications.certification || '',
-        packageItems,
-        '1-2 Years Free',
-        adminFeatures
+        packageItems
       ]
     })
 
@@ -308,13 +371,13 @@ const Pricing = () => {
               EMS - Wyre Smart Box Pricing
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Compare our complete energy monitoring solutions by CT Capacity Rating. All packages include professional installation and free admin panel access.
+              Compare our complete energy monitoring solutions by CT Capacity Rating. All packages include professional installation and free admin access.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* Free Admin Panel Banner */}
+      {/* Free Admin Banner */}
       <div className="container mx-auto px-6 py-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -325,17 +388,17 @@ const Pricing = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex-1">
               <h3 className="text-xl lg:text-2xl font-bold text-heading mb-2">
-                🎉 Special Offer: Free Admin Panel Access
+                🎉 Special Offer: Free Admin Access
               </h3>
               <p className="text-muted-foreground lg:text-lg">
-                Every Wyre Smart Box package includes <strong className="text-heading">free admin panel access for 1-2 years</strong>. Get real-time monitoring of 3 energy sources, 5-year historical data, detailed analytics, unlimited alerts, and 12 monthly reports all at no extra cost. After the free period, you can choose to continue with our affordable subscription plan.
+                Every Wyre Smart Box package includes <strong className="text-heading">free admin access for 1-2 years</strong>. Get real-time monitoring of 3 energy sources, 5-year historical data, detailed analytics, unlimited alerts, and 12 monthly reports all at no extra cost. After the free period, you can choose to continue with our affordable subscription plan.
               </p>
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Package Includes & Admin Panel Features - Shown Once */}
+      {/* Package Includes & Admin Features - Shown Once */}
       <div className="container mx-auto px-6 py-8">
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Package Includes */}
@@ -364,42 +427,42 @@ const Pricing = () => {
             </CardContent>
           </Card>
 
-          {/* Admin Panel Features */}
+          {/* Admin Features */}
           <Card className="border border-gray-200 shadow-sm">
             <CardContent className="pt-6">
               <h3 className="text-lg font-bold text-heading mb-4 flex items-center gap-2">
                 <Zap className="h-5 w-5 text-brandColor" />
-                Free Admin Panel Features:
+                Free Admin Access:
               </h3>
               <ul className="space-y-2.5">
                 <li className="flex items-start space-x-2 text-sm">
                   <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">
-                    Monitor 3 Energy Sources (Utility, Generator, or Solar)
+                    Admin-level monitoring of multiple locations (energy usage, Cost, efficiency, and performance)
                   </span>
                 </li>
                 <li className="flex items-start space-x-2 text-sm">
                   <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">
-                    5 year historical archive
+                    Monthly reports of all branches' performance and energy metrics
                   </span>
                 </li>
                 <li className="flex items-start space-x-2 text-sm">
                   <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">
-                    Analysis from 15 minutes to a year
+                    Set and track high-level targets for all locations to meet organizational goals
                   </span>
                 </li>
                 <li className="flex items-start space-x-2 text-sm">
                   <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">
-                    Unlimited email alerts for deviations & budget performance
+                    Cross-location analytics and comparative performance insights
                   </span>
                 </li>
                 <li className="flex items-start space-x-2 text-sm">
                   <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">
-                    12 monthly reports
+                    Centralized dashboard for enterprise-wide energy management and control
                   </span>
                 </li>
               </ul>
@@ -660,6 +723,91 @@ const Pricing = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Contact Form Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-heading">Get a Quote</DialogTitle>
+            <DialogDescription>
+              Fill out the form below and we'll get back to you with pricing information.
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Selected Products Display */}
+          {selectedProducts.length > 0 && (
+            <div className="space-y-2 mb-4">
+              <h4 className="text-sm font-medium text-heading">Products in Quote:</h4>
+              <div className="space-y-2 max-h-32 overflow-y-auto">
+                {selectedProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-heading">{product.name} {product.rating}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatPrice(product.sellingPrice)}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => removeProductFromQuote(product.id)}
+                      className="p-1 hover:bg-gray-200 rounded transition-colors"
+                      aria-label="Remove product"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <ContactForm
+            initialData={initialFormData}
+            onSubmitSuccess={(message) => {
+              setIsModalOpen(false)
+              setTimeout(() => {
+                setSuccessMessage(message || "Your message has sent successfully. We'll get back to you soon!")
+                setShowSuccessDialog(true)
+              }, 300)
+            }}
+            showTitle={false}
+            idPrefix="modal"
+            className="space-y-4"
+            showCancelButton={true}
+            onCancel={handleModalClose}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <CheckCircle2 className="h-10 w-10 text-green-600" />
+            </div>
+            <DialogTitle className="text-2xl text-center font-bold text-heading">
+              Thank You!
+            </DialogTitle>
+            <DialogDescription className="text-base text-gray-600 pt-2">
+              {successMessage}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              onClick={() => {
+                setShowSuccessDialog(false)
+                handleFormSuccess()
+              }}
+              className="w-full sm:w-auto bg-brandColor hover:bg-brandColor/90 text-white"
+            >
+              Okay
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

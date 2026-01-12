@@ -68,7 +68,7 @@ const SignIn = () => {
           )}
         />
 
-        <div className="relative z-10 max-w-5xl w-full">
+        <div className="relative max-w-5xl w-full">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}

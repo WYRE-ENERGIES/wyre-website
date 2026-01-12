@@ -12,7 +12,7 @@ interface ContactFormProps {
     subject?: string;
     message?: string;
   };
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess?: (message?: string) => void;
   showTitle?: boolean;
   title?: string;
   className?: string;
@@ -49,6 +49,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -77,7 +78,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         message: formData.message.trim(),
       };
 
-      await socialsClient.post('contact-us/', payload);
+      const response = await socialsClient.post('contact-us/', payload);
+
+      // Get success message from API response or use default
+      const apiMessage = response.data?.message || "Your message has sent successfully. We'll get back to you soon!";
+      setSuccessMessage(apiMessage);
 
       // Show success message
       setShowSuccess(true);
@@ -91,9 +96,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         message: ''
       });
 
-      // Call success callback if provided
       if (onSubmitSuccess) {
-        onSubmitSuccess();
+        // Delay callback slightly to allow success message to be visible
+        setTimeout(() => {
+          onSubmitSuccess(apiMessage);
+        }, 2000);
       }
 
       // Hide success message after 5 seconds
@@ -213,9 +220,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({
 
         {/* Success Message */}
         {showSuccess && (
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-            <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-            <p className="text-sm text-green-700">Thank you! Your message has been sent successfully. We'll get back to you soon!</p>
+          <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-2">
+            <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-green-700">{successMessage}</p>
           </div>
         )}
 

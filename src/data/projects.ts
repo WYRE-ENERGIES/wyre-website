@@ -1,4 +1,4 @@
-import { Building2, TrendingUp, Zap, Shield } from 'lucide-react'
+import { Building2, TrendingUp } from 'lucide-react'
 
 export interface Project {
   id: number
@@ -50,9 +50,9 @@ export const featuredProjects: Project[] = [
       text: "The integrated solar power and energy management platform has delivered reliable, sustainable, and efficient operations for Whitestone. Wyre's solution has exceeded our expectations in terms of performance and energy savings."
     },
     stats: [
-      { label: "System Size", value: "100kWp", icon: Building2 },
-      { label: "Energy Production", value: "120,000kWh/year", icon: TrendingUp },
-      { label: "Energy Savings", value: "35%", icon: Zap }
+      { label: "System Size", value: "97.6kWp", icon: Building2 },
+      { label: "Energy Production", value: "143,809.0 kWh/year", icon: TrendingUp },
+      // { label: "Energy Savings", value: "35%", icon: Zap }
     ],
     technologies: ["Solar Panels", "Energy Management Platform", "Smart Sensors", "Analytics Dashboard", "Battery Storage"],
     challenges: [
@@ -68,12 +68,12 @@ export const featuredProjects: Project[] = [
       "Implemented automated optimization algorithms"
     ],
     results: [
-      "35% reduction in overall energy costs",
-      "120,000kWh of clean energy production per year",
+      "143,809 kWh of clean energy production annually",
       "Real-time visibility into energy consumption patterns",
-      "Automated energy optimization reducing waste by 25%",
+      "Automated energy optimization reducing operational waste",
       "Improved sustainability with reduced carbon footprint",
-      "Centralized control and monitoring of all energy systems"
+      "Centralized control and monitoring of all energy systems",
+      "Reliable and sustainable operations for commercial facility"
     ]
   },
   {
@@ -95,9 +95,9 @@ export const featuredProjects: Project[] = [
       text: "The custom solar installation has transformed our beachfront property, providing sustainable and reliable energy for both our hospitality and residential guests. The system works flawlessly in the coastal environment and has significantly reduced our operational costs."
     },
     stats: [
-      { label: "System Size", value: "50kWp", icon: Building2 },
-      { label: "Energy Production", value: "65,000kWh/year", icon: TrendingUp },
-      { label: "Energy Independence", value: "90%", icon: Shield }
+      { label: "System Size", value: "49.6kWp", icon: Building2 },
+      { label: "Energy Production", value: "72,335.0 kWh/year", icon: TrendingUp },
+      // { label: "Energy Independence", value: "90%", icon: Shield }
     ],
     technologies: ["Solar Panels", "Inverters", "Battery Storage", "Smart Monitoring", "Grid Backup System"],
     challenges: [
@@ -113,11 +113,11 @@ export const featuredProjects: Project[] = [
       "Customized mounting solution to preserve property aesthetics"
     ],
     results: [
-      "90% energy independence achieved",
-      "65,000kWh of clean energy production annually",
+      "72,335 kWh of clean energy production annually",
       "Significant reduction in operational costs",
       "Reliable power supply even in remote coastal location",
       "Enhanced guest experience with sustainable energy",
+      "Weather-resistant system designed for coastal conditions",
       "Reduced environmental impact while maintaining premium standards"
     ]
   }

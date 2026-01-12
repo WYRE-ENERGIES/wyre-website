@@ -13,26 +13,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from '../components/ui/dialog';
 import { ContactForm } from '../components/ContactForm';
+import { CheckCircle2 } from 'lucide-react';
 
 // Solar system packages data (shared with SolarCatalog)
 const solarProducts = [
   {
-    id: 7,
-    name: "6Kva Inverter with 6kWh Lithium Battery",
-    category: "Complete Systems",
-    description: "Compact 6Kva hybrid inverter system with 6kWh lithium battery. Perfect for small residential applications, apartments, or single-room setups requiring reliable backup power and solar integration.",
-    image: "/img/solar-3.jpeg",
-    inStock: true,
-    price: null as number | null,
-    originalPrice: null as number | null
-  },
-  {
     id: 8,
-    name: "10Kva Inverter with 10kWh Lithium Battery",
+    name: "10kVA Inverter with 10kWh Lithium Battery",
     category: "Complete Systems",
-    description: "Efficient 10Kva hybrid inverter paired with 10kWh lithium battery. Ideal for small to medium residential homes seeking reliable solar power backup with moderate energy storage capacity.",
+    description: "Efficient 10kVA hybrid inverter paired with 10kWh lithium battery. Ideal for small to medium residential homes seeking reliable solar power backup with moderate energy storage capacity.",
     image: "/img/solar-4.jpeg",
     inStock: true,
     price: null as number | null,
@@ -40,9 +32,9 @@ const solarProducts = [
   },
   {
     id: 1,
-    name: "10Kva Inverter with 15kwh Lithium Battery",
+    name: "10kVA Inverter with 20kWh Lithium Battery",
     category: "Complete Systems",
-    description: "Complete solar power system featuring a 10Kva hybrid inverter paired with a 15kwh lithium battery. Perfect for small to medium residential applications with reliable backup power.",
+    description: "Complete solar power system featuring a 10kVA hybrid inverter paired with a 20kWh lithium battery. Perfect for small to medium residential applications with reliable backup power.",
     image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null, // Price available on request
@@ -50,9 +42,9 @@ const solarProducts = [
   },
   {
     id: 2,
-    name: "10Kva Inverter with 30kwh Battery",
+    name: "10kVA Inverter with 30kWh Battery",
     category: "Complete Systems",
-    description: "Enhanced solar power system with 10Kva inverter and larger 30kwh lithium battery capacity. Ideal for medium-sized homes requiring extended backup power and energy independence.",
+    description: "Enhanced solar power system with 10kVA inverter and larger 30kWh lithium battery capacity. Ideal for medium-sized homes requiring extended backup power and energy independence.",
     image: "/img/solar-5.jpeg",
     inStock: true,
     price: null as number | null,
@@ -60,9 +52,9 @@ const solarProducts = [
   },
   {
     id: 3,
-    name: "20kva with 60kwh Lithium Battery",
+    name: "20kVA with 60kWh Lithium Battery",
     category: "Complete Systems",
-    description: "Powerful 20kva inverter system with 60kwh lithium battery storage. Designed for large residential or small commercial installations with high energy demands.",
+    description: "Powerful 20kVA inverter system with 60kWh lithium battery storage. Designed for large residential or small commercial installations with high energy demands.",
     image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
@@ -70,9 +62,9 @@ const solarProducts = [
   },
   {
     id: 4,
-    name: "40kva with 100kwh Lithium Battery",
+    name: "40kVA with 100kWh Lithium Battery",
     category: "Complete Systems",
-    description: "Commercial-grade 40kva inverter system with 100kwh lithium battery bank. Perfect for large commercial buildings, offices, and industrial applications requiring substantial power capacity.",
+    description: "Commercial-grade 40kVA inverter system with 100kWh lithium battery bank. Perfect for large commercial buildings, offices, and industrial applications requiring substantial power capacity.",
     image: "/img/solar-6.jpeg",
     inStock: true,
     price: null as number | null,
@@ -80,9 +72,9 @@ const solarProducts = [
   },
   {
     id: 5,
-    name: "80kva with 160kwh Battery",
+    name: "80kVA with 160kWh Battery",
     category: "Complete Systems",
-    description: "High-capacity 80kva inverter system with 160kwh lithium battery storage. Engineered for large-scale commercial and industrial facilities with significant energy requirements.",
+    description: "High-capacity 80kVA inverter system with 160kWh lithium battery storage. Engineered for large-scale commercial and industrial facilities with significant energy requirements.",
     image: "/img/solar-7.jpeg",
     inStock: true,
     price: null as number | null,
@@ -90,9 +82,9 @@ const solarProducts = [
   },
   {
     id: 6,
-    name: "80kva with 210kwh Battery",
+    name: "80kVA with 210kWh Battery",
     category: "Complete Systems",
-    description: "Maximum capacity 80kva inverter system with 210kwh lithium battery bank. The ultimate solution for large industrial facilities, data centers, and operations requiring maximum energy storage and reliability.",
+    description: "Maximum capacity 80kVA inverter system with 210kWh lithium battery bank. The ultimate solution for large industrial facilities, data centers, and operations requiring maximum energy storage and reliability.",
     image: "/img/solar-8.jpeg",
     inStock: true,
     price: null as number | null,
@@ -104,13 +96,13 @@ const categories = [
   { name: "Complete Systems", count: 8 }
 ];
 
-// Helper function to extract KVA from product name
+// Helper function to extract kVA from product name
 const extractKVA = (productName: string): string | null => {
   const match = productName.match(/(\d+)\s*[Kk][Vv][Aa]/);
-  return match ? `${match[1]}KVA` : null;
+  return match ? `${match[1]}kVA` : null;
 };
 
-// Get unique KVA values and their counts
+// Get unique kVA values and their counts
 const getKVAOptions = () => {
   const kvaMap = new Map<string, number>();
   solarProducts.forEach(product => {
@@ -135,6 +127,8 @@ const SolarPricing = () => {
   const [sortBy, setSortBy] = useState('relevance');
   const [showFilters, setShowFilters] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const [selectedProducts, setSelectedProducts] = useState<typeof solarProducts[0][]>([]);
   const [initialFormData, setInitialFormData] = useState<{
     name?: string;
@@ -384,9 +378,9 @@ const SolarPricing = () => {
                   </div>
                 </div>
 
-                {/* KVA Filter */}
+                {/* kVA Filter */}
                 <div className="mb-6">
-                  <h4 className="text-heading font-medium mb-3">KVA Rating</h4>
+                  <h4 className="text-heading font-medium mb-3">kVA Rating</h4>
                   <div className="space-y-2">
                     {kvaOptions.map((kva) => (
                       <label
@@ -593,13 +587,47 @@ const SolarPricing = () => {
 
           <ContactForm
             initialData={initialFormData}
-            onSubmitSuccess={handleFormSuccess}
+            onSubmitSuccess={(message) => {
+              setIsModalOpen(false);
+              setTimeout(() => {
+                setSuccessMessage(message || "Your message has sent successfully. We'll get back to you soon!");
+                setShowSuccessDialog(true);
+              }, 300);
+            }}
             showTitle={false}
             idPrefix="modal"
             className="space-y-4"
             showCancelButton={true}
             onCancel={handleModalClose}
           />
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Dialog */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <CheckCircle2 className="h-10 w-10 text-green-600" />
+            </div>
+            <DialogTitle className="text-2xl text-center font-bold text-heading">
+              Thank You!
+            </DialogTitle>
+            <DialogDescription className="text-base text-gray-600 pt-2">
+              {successMessage}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              onClick={() => {
+                setShowSuccessDialog(false);
+                handleFormSuccess();
+              }}
+              className="w-full sm:w-auto bg-brandColor hover:bg-brandColor/90 text-white"
+            >
+              Okay
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
