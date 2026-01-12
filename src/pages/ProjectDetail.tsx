@@ -237,7 +237,7 @@ const ProjectDetail = () => {
                 Ready to transform your energy management? Let's discuss your project.
               </p>
               <Button asChild className="w-full bg-white text-brandColor hover:bg-gray-100">
-                <Link to="/contact">Get Started</Link>
+                <Link to="/get-started">Get Started</Link>
               </Button>
             </Card>
           </div>

@@ -7,15 +7,10 @@ import { AnimatedGridPattern } from "../components/magicui/animated-grid-pattern
 import { cn } from '../lib/utils'
 import { Link } from 'react-router-dom'
 import { featuredProjects } from '../data/projects'
-import { useEffect } from 'react'
 
 const projects = featuredProjects
 
 const Projects = () => {
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -159,7 +154,7 @@ const Projects = () => {
 
                     {/* Stats */}
                     {project.stats && project.stats.length > 0 && (
-                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+                      <div className="flex flex-wrap justify-between px-4 pt-4 border-t border-gray-200">
                         {project.stats.map((stat, idx) => (
                           <div key={idx} className="text-center">
                             <p className="text-2xl font-bold text-brandColor">{stat.value}</p>

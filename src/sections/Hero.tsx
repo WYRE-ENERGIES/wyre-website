@@ -76,7 +76,7 @@ const Hero = () => {
           </h1>
           <h1 className="text-white text-[clamp(30px,4.5vw,65px)] not-italic font-bold leading-[clamp(3.5rem,6.5vw,6.11rem)] tracking-[-0.2rem] max-[700px]:text-[clamp(32px,5vw,75px)] max-[700px]:tracking-normal">Transition <span
           // className="text-[#fcd642]"
-          >  with AI</span>
+          >  In Africa</span>
           </h1>
           <AnimatePresence>
             <motion.div
