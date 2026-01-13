@@ -105,7 +105,7 @@ const Hero = () => {
         </div>
         <div className="flex-1 flex items-end justify-end max-w-[50%] max-md:hidden h-full">
           {images.map((image, index) => (
-            <div key={index} className={`absolute top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%] animate-hero-image-${index + 1}`}>
+            <div key={index} className={`absolute top-[10%] 2xl:top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%] animate-hero-image-${index + 1}`}>
               <img
                 src={image.src}
                 alt={image.alt}
