@@ -4,7 +4,7 @@ import ".././styles/contents.css"
 import { AnimatePresence, motion } from "framer-motion";
 import type { Variants } from "framer-motion"
 import img1 from "/img/hero-img.png"
-import img2 from "/img/wyre-monitor-1.png"
+import img2 from "/img/wyre-monitor.png"
 import img3 from "/img/wyre-commercial.png"
 import { FlipWords } from "../components/ui/shadcn-io/flip-words"
 import LogoCloud from "../sections/LogoCloud"
@@ -14,12 +14,12 @@ const Hero = () => {
     {
       src: img1,
       alt: "hero image",
-      containerClassName: "w-full h-full h-[75%] max-h-[600px] -ml-14 object-contain"
+      containerClassName: "w-full h-full h-[75%] max-h-[600px] object-contain"
     },
     {
       src: img2,
       alt: "hero image",
-      containerClassName: "w-full h-full -ml-24 h-[70%] max-h-[580px] max-2xl:max-h-[500px] object-contain -ml-28 "
+      containerClassName: "w-full h-full -ml-24 h-[70%] max-h-[580px] max-2xl:max-h-[500px] object-contain "
     },
     {
       src: img3,
@@ -51,7 +51,7 @@ const Hero = () => {
   return (
     <>
       <div className="min-h-[75vh] container relative overflow-hidden z-20 max-sm:px-6 max-2xl:px-12 w-full mx-auto flex items-center justify-center gap-8">
-        <div className="flex flex-col flex-1 max-w-[60%] max-[599px]:max-w-full 2xl:px-0 2xl:ml-[10%]">
+        <div className="flex flex-col flex-1 max-w-[60%] max-[599px]:max-w-full 2xl:px-0 2xl:ml-[8%]">
           <h1 className="flex gap-2 text-white text-[clamp(30px,4.5vw,65px)] not-italic font-bold leading-[clamp(3rem,6vw,6rem)] tracking-[-0.2rem] max-[700px]:text-[clamp(32px,5vw,75px)] max-[700px]:tracking-normal">
             <motion.span
               variants={heroHeadingVariants}
@@ -105,7 +105,7 @@ const Hero = () => {
         </div>
         <div className="flex-1 flex items-end justify-end max-w-[50%] max-md:hidden h-full">
           {images.map((image, index) => (
-            <div key={index} className={`absolute top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%] animate-hero-image-${index + 1}`}>
+            <div key={index} className={`absolute top-[10%] 2xl:top-[15%] -right-[18%] max-xl:max-w-[70%] xl:w-[65%] 2xl:w-[75%] animate-hero-image-${index + 1}`}>
               <img
                 src={image.src}
                 alt={image.alt}
