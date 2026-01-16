@@ -627,8 +627,8 @@ const Solutions = () => {
               asChild
               size="lg"
             >
-              <a href="/contact">
-                <span>Request Enterprise Demo</span>
+              <a href="/get-started">
+                <span>Get Started with Us</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
@@ -638,7 +638,7 @@ const Solutions = () => {
               size="lg"
               variant="secondary"
             >
-              <a href="/contact">
+              <a href="/contact?subject=demo">
                 <span>Contact Sales Team</span>
               </a>
             </Button>

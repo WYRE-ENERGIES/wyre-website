@@ -268,7 +268,7 @@ const Segments = () => {
               asChild
               size="lg"
             >
-              <a href="/">
+              <a href="/get-started">
                 <span>Get Started Free</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
@@ -280,7 +280,7 @@ const Segments = () => {
               size="lg"
               variant="secondary"
             >
-              <a href="/">
+              <a href="/contact?subject=demo">
                 <span>Schedule Demo</span>
               </a>
             </Button>

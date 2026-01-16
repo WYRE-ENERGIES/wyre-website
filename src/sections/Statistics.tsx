@@ -136,7 +136,7 @@ const Statistics = () => {
             Metrics & Achievements
           </h2>
           <p className="text-sm font-semibold text-brandColor uppercase tracking-widest mt-2">
-            Still counting...
+            And counting...
           </p>
         </div>
       </div>

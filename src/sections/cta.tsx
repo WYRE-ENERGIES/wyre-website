@@ -40,7 +40,7 @@ export function CTA() {
             asChild
             size="lg"
             variant="secondary">
-            <a href="/get-started">
+            <a href="/contact">
               <span>Book Demo</span>
             </a>
           </Button>

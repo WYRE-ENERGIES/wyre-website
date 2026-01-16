@@ -37,7 +37,7 @@ export default function Scale() {
               </p>
             </div>
             <div>
-              <p className="text-3xl font-bold mb-1">10,000 MwH</p>
+              <p className="text-3xl font-bold mb-1">10,000 MWh</p>
               <p className="text-sm text-gray-400">Solar power generation</p>
             </div>
             <div>

@@ -109,7 +109,7 @@ const WhatWeDo = () => {
               variants={fadeUp}
               className="flex justify-center items-center"
             >
-              <img src="https://www.wyreng.com/images/what-we-do900x-1.png" alt="Wyre" className="w-full h-full object-cover" />
+              <img src="/img/wyre-connect.png" alt="Wyre" className="w-full h-full object-cover" />
             </motion.div>
           </div>
         </div>
@@ -127,7 +127,7 @@ const WhatWeDo = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Image */}
             <motion.div variants={fadeUp} className="flex justify-center items-center">
-              <img src="https://www.wyreng.com/images/Asset-1900x-2.png" alt="Wyre" className="w-full h-full object-cover" />
+              <img src="/img/wyre-world.png" alt="Wyre" className="w-full h-full object-cover" />
             </motion.div>
 
             {/* Right Column - Content */}
@@ -428,7 +428,7 @@ const WhatWeDo = () => {
               asChild
               size="lg"
             >
-              <a href="/">
+              <a href="/get-started">
                 <span>Get Started Free</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
@@ -440,7 +440,7 @@ const WhatWeDo = () => {
               size="lg"
               variant="secondary"
             >
-              <a href="/">
+              <a href="/contact?subject=demo">
                 <span>Learn More</span>
               </a>
             </Button>
