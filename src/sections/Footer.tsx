@@ -14,9 +14,9 @@ const companyLinks = [
 ]
 
 const productLinks = [
-  { href: '/solar-catalog', label: 'Products Catalog' },
   { href: '/pricing', label: 'EMS Pricing' },
   { href: '/solar-pricing', label: 'Solar Pricing' },
+  { href: '/get-started', label: 'Get Started' },
 ]
 
 const QuickLinks = [
