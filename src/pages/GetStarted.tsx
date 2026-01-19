@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
+import { MultiSelect } from '../components/ui/multi-select'
 import {
   Dialog,
   DialogContent,
@@ -24,8 +25,8 @@ const GetStarted = () => {
     location: '',
     application: '',
     facilityType: '',
-    sourcesCount: '',
-    sourcesOfEnergy: '',
+    generatorsCount: '',
+    sourcesOfEnergy: [] as string[],
     averageCost: '',
     subject: '',
     message: ''
@@ -55,9 +56,48 @@ const GetStarted = () => {
   ]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
+    })
+    // Clear error when user starts typing
+    if (error) setError(null)
+  }
+
+  const handleGeneratorsCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    // Only allow numbers
+    if (value === '' || /^\d+$/.test(value)) {
+      setFormData({
+        ...formData,
+        generatorsCount: value
+      })
+      if (error) setError(null)
+    }
+  }
+
+  const handleAverageCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    // Remove all non-digit characters
+    const numericValue = value.replace(/[^\d]/g, '')
+
+    // Format with commas
+    const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+    setFormData({
+      ...formData,
+      averageCost: formattedValue
+    })
+    // Clear error when user starts typing
+    if (error) setError(null)
+  }
+
+  const handleSourcesOfEnergyChange = (selectedValues: string[]) => {
+    setFormData({
+      ...formData,
+      sourcesOfEnergy: selectedValues
     })
     // Clear error when user starts typing
     if (error) setError(null)
@@ -66,6 +106,13 @@ const GetStarted = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+
+    // Validate required fields
+    if (formData.sourcesOfEnergy.length === 0) {
+      setError('Please select at least one energy source')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -85,11 +132,11 @@ const GetStarted = () => {
       if (formData.location) {
         messageParts.push(`Location: ${formData.location}`)
       }
-      if (formData.sourcesCount) {
-        messageParts.push(`Number of Sources: ${formData.sourcesCount}`)
+      if (formData.sourcesOfEnergy.length > 0) {
+        messageParts.push(`Sources of Energy: ${formData.sourcesOfEnergy.join(', ')}`)
       }
-      if (formData.sourcesOfEnergy) {
-        messageParts.push(`Source of Energy: ${formData.sourcesOfEnergy}`)
+      if (formData.generatorsCount) {
+        messageParts.push(`Number of Generators: ${formData.generatorsCount}`)
       }
       if (formData.averageCost) {
         messageParts.push(`Average Monthly Cost: ₦${formData.averageCost.replace(/[₦,]/g, '')}`)
@@ -129,8 +176,8 @@ const GetStarted = () => {
         location: '',
         application: '',
         facilityType: '',
-        sourcesCount: '',
-        sourcesOfEnergy: '',
+        generatorsCount: '',
+        sourcesOfEnergy: [],
         averageCost: '',
         subject: '',
         message: ''
@@ -294,46 +341,43 @@ const GetStarted = () => {
                 </div>
               </div>
 
-              {/* How many Sources and Sources of energy */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="sourcesCount" className="text-heading mb-2 block">
-                    How many Sources
-                  </Label>
-                  <Input
-                    id="sourcesCount"
-                    name="sourcesCount"
-                    type="text"
-                    required
-                    value={formData.sourcesCount}
-                    onChange={handleChange}
-                    placeholder="e.g 1"
-                    className="bg-gray-50 border-gray-200 rounded-lg"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sourcesOfEnergy" className="text-heading mb-2 block">
-                    Sources of energy
-                  </Label>
-                  <select
-                    id="sourcesOfEnergy"
-                    name="sourcesOfEnergy"
-                    required
-                    value={formData.sourcesOfEnergy}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 h-9 bg-gray-50 border border-gray-200 rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent"
-                  >
-                    <option value="">Select one...</option>
-                    {energySources.map((source) => (
-                      <option key={source} value={source}>
-                        {source}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              {/* Sources of energy */}
+              <div>
+                <Label htmlFor="sourcesOfEnergy" className="text-heading mb-2 block">
+                  Sources of energy (Select all that apply)
+                </Label>
+                <MultiSelect
+                  options={energySources}
+                  value={formData.sourcesOfEnergy}
+                  onChange={handleSourcesOfEnergyChange}
+                  placeholder="Select energy sources..."
+                  required={true}
+                  className="w-full"
+                />
               </div>
 
-              {/* Average Cost of energy or units consumed monthly */}
+              {/* How many generators - conditional */}
+              {formData.sourcesOfEnergy.some(source =>
+                source.toLowerCase().includes('generator')
+              ) && (
+                  <div>
+                    <Label htmlFor="generatorsCount" className="text-heading mb-2 block">
+                      How many generators?
+                    </Label>
+                    <Input
+                      id="generatorsCount"
+                      name="generatorsCount"
+                      type="text"
+                      required
+                      value={formData.generatorsCount}
+                      onChange={handleGeneratorsCountChange}
+                      placeholder="e.g 1"
+                      className="bg-gray-50 border-gray-200 rounded-lg"
+                      inputMode="numeric"
+                    />
+                  </div>
+                )}
+
               <div>
                 <Label htmlFor="averageCost" className="text-heading mb-2 block">
                   Average Cost of energy or units consumed monthly
@@ -348,9 +392,10 @@ const GetStarted = () => {
                     type="text"
                     required
                     value={formData.averageCost}
-                    onChange={handleChange}
+                    onChange={handleAverageCostChange}
                     placeholder="Amount"
                     className="bg-gray-50 border-gray-200 rounded-l-none rounded-r-lg flex-1"
+                    inputMode="numeric"
                   />
                 </div>
               </div>

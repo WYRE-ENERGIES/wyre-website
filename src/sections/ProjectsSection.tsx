@@ -84,12 +84,12 @@ const ProjectsSection = () => {
             size="lg"
             className=""
           >
-            <Link
-              to="/projects"
+            <a
+              href="/projects"
             >
               View All Projects
               <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+            </a>
           </Button>
         </motion.div>
       </div>

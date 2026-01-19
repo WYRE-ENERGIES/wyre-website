@@ -13,7 +13,6 @@ const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
   const project = projectsData[Number(id) as keyof typeof projectsData]
 
-  // Scroll to top when component mounts or route changes
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [id])
@@ -47,7 +46,6 @@ const ProjectDetail = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#F6F9FC] to-white">
       <OtherNavbar />
 
-      {/* Hero Section */}
       <div className="relative h-[500px] overflow-hidden">
         <img
           src={project.image}
@@ -89,9 +87,7 @@ const ProjectDetail = () => {
 
       <div className="container mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Client Info */}
             <Card className="p-6 border-none shadow-sm">
               <div className="flex items-center gap-4">
                 <div className="w-20 h-20 bg-gray-50 rounded-lg flex items-center justify-center p-3">
@@ -117,7 +113,6 @@ const ProjectDetail = () => {
               </div>
             </Card>
 
-            {/* Full Description */}
             <Card className="p-6 border-none shadow-sm">
               <h2 className="text-2xl font-bold text-heading mb-4">Project Overview</h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
@@ -125,23 +120,8 @@ const ProjectDetail = () => {
               </p>
             </Card>
 
-            {/* Challenges & Solutions */}
             {project.challenges && project.challenges.length > 0 && (
               <div className="grid md:grid-cols-2 gap-6">
-                <Card className="p-6 border-none shadow-sm">
-                  <h3 className="text-xl font-bold text-heading mb-4">Challenges</h3>
-                  <ul className="space-y-3">
-                    {project.challenges.map((challenge, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-red-600 text-xs font-bold">!</span>
-                        </div>
-                        <span className="text-muted-foreground">{challenge}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-
                 {project.solutions && project.solutions.length > 0 && (
                   <Card className="p-6 border-none shadow-sm">
                     <h3 className="text-xl font-bold text-heading mb-4">Our Solutions</h3>
@@ -155,22 +135,21 @@ const ProjectDetail = () => {
                     </ul>
                   </Card>
                 )}
-              </div>
-            )}
 
-            {/* Results */}
-            {project.results && project.results.length > 0 && (
-              <Card className="p-6 border-none shadow-sm bg-gradient-to-br from-brandColor/5 to-purple-500/5">
-                <h3 className="text-xl font-bold text-heading mb-4">Key Results</h3>
-                <ul className="space-y-3">
-                  {project.results.map((result, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <TrendingUp className="h-6 w-6 text-brandColor flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{result}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
+                {project.results && project.results.length > 0 && (
+                  <Card className="p-6 border-none shadow-sm bg-gradient-to-br from-brandColor/5 to-purple-500/5">
+                    <h3 className="text-xl font-bold text-heading mb-4">Key Results</h3>
+                    <ul className="space-y-3">
+                      {project.results.map((result, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <TrendingUp className="h-6 w-6 text-brandColor flex-shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{result}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                )}
+              </div>
             )}
           </div>
 
