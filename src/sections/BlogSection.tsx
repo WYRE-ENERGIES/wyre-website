@@ -6,7 +6,7 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { format } from "date-fns";
 import type { TypedObject } from "@portabletext/types";
 
-const POSTS_QUERY = `*[_type == 'post' && defined(slug.current)]|order(publishedAt desc)[0...6]{_id, title, slug, publishedAt, image, body}`;
+const POSTS_QUERY = `*[_type == 'post' && defined(slug.current)]|order(publishedAt desc)[0...3]{_id, title, slug, publishedAt, image, body}`;
 
 const builder = imageUrlBuilder({
   projectId: client.config().projectId || "a2kg71k7",
@@ -59,13 +59,13 @@ export default function BlogSection() {
               const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
               const description = getPlainTextFromPortableText(post.body, 160);
               return (
-                <Card key={post._id} className="flex p-0 pb-4 flex-col h-full transition-shadow border-none">
+                <Card key={post._id} className="flex p-0 pb-4 flex-col h-full overflow-hidden transition-shadow border-none">
                   {imageUrl && (
-                    <a href={`/blogs/${post.slug.current}`} className="block">
+                    <a href={`/blogs/${post.slug.current}`} className="block group">
                       <img
                         src={imageUrl}
                         alt={post.title}
-                        className="rounded-t-xl object-cover w-full h-[200px] border-b border-gray-200 object-center"
+                        className="rounded-t-xl object-cover w-full h-[200px] border-b border-gray-200 object-center group-hover:scale-105 transition-transform duration-300"
                         width="600"
                         height="300"
                       />
