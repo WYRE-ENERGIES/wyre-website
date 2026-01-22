@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import client from "../client";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import imageUrlBuilder from "@sanity/image-url";
@@ -10,7 +9,7 @@ import type { TypedObject } from "@portabletext/types";
 const POSTS_QUERY = `*[_type == 'post' && defined(slug.current)]|order(publishedAt desc)[0...6]{_id, title, slug, publishedAt, image, body}`;
 
 const builder = imageUrlBuilder({
-  projectId: client.config().projectId || "9bnraqna",
+  projectId: client.config().projectId || "a2kg71k7",
   dataset: client.config().dataset || "production",
 });
 
@@ -54,47 +53,55 @@ export default function BlogSection() {
           <h2 className="text-4xl xl:text-5xl font-bold mb-4 text-heading">Latest Articles</h2>
           <p className="text-lg text-muted-foreground">Insights, news, and stories from the Wyre team</p>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => {
-            const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
-            const description = getPlainTextFromPortableText(post.body, 160);
-            return (
-              <Card key={post._id} className="flex p-0 pb-4 flex-col h-full transition-shadow border-4 border-white bg-gradient-to-b from-[#EDF3FA]/80 via-white to-[#EDF3FA]/90 shadow-[0_20px_50px_rgba(6,24,44,0.05)]">
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    alt={post.title}
-                    className="rounded-t-xl object-cover w-full h-full"
-                    width="600"
-                    height="300"
-                  />
-                )}
-                <CardHeader className="">
-                  <CardTitle className="text-2xl font-semibold line-clamp-2 min-h-[2.5rem]">{post.title}</CardTitle>
-                  <span className="text-sm text-muted-foreground">{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
-                </CardHeader>
-                <CardContent className="flex-">
-                  <p className="text-base text-gray-700 line-clamp-2 min-h-[3rem]">{description}</p>
-                </CardContent>
-                <div className="px-6 pb-2 mt-auto">
-                  <Link
-                    to={`/blogs/${post.slug.current}`}
-                    className="inline-block text-brandColor font-semibold hover:underline mt-2"
-                  >
-                    Read more →
-                  </Link>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+        {posts.length > 0 ? (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => {
+              const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
+              const description = getPlainTextFromPortableText(post.body, 160);
+              return (
+                <Card key={post._id} className="flex p-0 pb-4 flex-col h-full transition-shadow border-none">
+                  {imageUrl && (
+                    <a href={`/blogs/${post.slug.current}`} className="block">
+                      <img
+                        src={imageUrl}
+                        alt={post.title}
+                        className="rounded-t-xl object-cover w-full h-[200px] border-b border-gray-200 object-center"
+                        width="600"
+                        height="300"
+                      />
+                    </a>
+                  )}
+                  <CardHeader className="">
+                    <CardTitle className="text-2xl font-semibold line-clamp-2 min-h-[2.5rem]">{post.title}</CardTitle>
+                    <span className="text-sm text-muted-foreground">{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
+                  </CardHeader>
+                  <CardContent className="flex-">
+                    <p className="text-base text-gray-700 line-clamp-2 min-h-[3rem]">{description}</p>
+                  </CardContent>
+                  <div className="px-6 pb-2 mt-auto">
+                    <a
+                      href={`/blogs/${post.slug.current}`}
+                      className="inline-block text-brandColor font-semibold hover:underline mt-2"
+                    >
+                      Read more →
+                    </a>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No articles available yet.</p>
+          </div>
+        )}
         <div className="flex justify-center mt-12">
-          <Link
-            to="/blogs"
+          <a
+            href="/blogs"
             className="px-8 py-3 rounded-full bg-brandColor text-white font-semibold shadow hover:opacity-90 transition"
           >
             View all articles
-          </Link>
+          </a>
         </div>
       </div>
     </section>
