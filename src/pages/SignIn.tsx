@@ -29,7 +29,7 @@ const SignIn = () => {
   const signInOptions = [
     {
       type: 'branch' as const,
-      title: 'Sign In as Branch',
+      title: 'Sign In as a Single Branch',
       description: 'Access your branch dashboard to manage energy data, view analytics, and monitor multiple sites.',
       icon: Building2,
       gradient: 'from-purple-500 to-pink-500',
@@ -40,7 +40,7 @@ const SignIn = () => {
     },
     {
       type: 'client' as const,
-      title: 'Sign In as Client',
+      title: 'Sign In as Client Admin',
       description: 'Access your client admin portal to manage your account, view reports, and configure settings.',
       icon: Users,
       gradient: 'from-blue-500 to-cyan-500',
