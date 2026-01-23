@@ -4,7 +4,6 @@ import client from "../client";
 import { format } from "date-fns";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
 import { Input } from "../components/ui/input";
 import {
   Search,
@@ -27,7 +26,7 @@ import { cn } from '../lib/utils';
 const POSTS_QUERY = `*[_type == 'post' && defined(slug.current)]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt, image, body}`;
 
 const builder = imageUrlBuilder({
-  projectId: client.config().projectId || "9bnraqna",
+  projectId: client.config().projectId || "a2kg71k7",
   dataset: client.config().dataset || "production",
 });
 
@@ -117,33 +116,41 @@ export default function Blog() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12"
           >
-            <div className="text-center">
+            <div className="text-center flex items-center w-max gap-4 md:gap-5">
               <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
                 <BookOpen className="h-6 w-6 text-brandColor" />
               </div>
-              <div className="text-2xl font-bold text-heading">{posts.length}</div>
-              <div className="text-sm text-muted-foreground">Articles</div>
+              <div className="flex flex-col items-start justify-start">
+                <div className="text-2xl font-bold text-heading">{posts.length}</div>
+                <div className="text-sm text-muted-foreground">Articles</div>
+              </div>
             </div>
-            <div className="text-center">
+            <div className="text-center flex items-start gap-4 md:gap-5 w-max ">
               <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
                 <TrendingUp className="h-6 w-6 text-brandColor" />
               </div>
-              <div className="text-2xl font-bold text-heading">Weekly</div>
-              <div className="text-sm text-muted-foreground">Updates</div>
+              <div className="flex flex-col items-start justify-start">
+                <div className="text-2xl font-bold text-heading">Weekly</div>
+                <div className="text-sm text-muted-foreground">Updates</div>
+              </div>
             </div>
-            <div className="text-center">
+            <div className="text-center flex items-center gap-4 md:gap-5 w-max ">
               <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
                 <Globe className="h-6 w-6 text-brandColor" />
               </div>
-              <div className="text-2xl font-bold text-heading">Global</div>
-              <div className="text-sm text-muted-foreground">Reach</div>
+              <div className="flex flex-col items-start justify-start">
+                <div className="text-2xl font-bold text-heading">Global</div>
+                <div className="text-sm text-muted-foreground">Reach</div>
+              </div>
             </div>
-            <div className="text-center">
+            <div className="text-center flex items-center gap-4 md:gap-5 w-max ">
               <div className="flex items-center justify-center w-12 h-12 bg-brandColor/10 rounded-full mx-auto mb-3">
                 <Clock className="h-6 w-6 text-brandColor" />
               </div>
-              <div className="text-2xl font-bold text-heading">5 min</div>
-              <div className="text-sm text-muted-foreground">Avg. Read</div>
+              <div className="flex flex-col items-start justify-start">
+                <div className="text-2xl font-bold text-heading">5 min</div>
+                <div className="text-sm text-muted-foreground">Avg. Read</div>
+              </div>
             </div>
           </motion.div>
           <motion.div
@@ -182,9 +189,9 @@ export default function Blog() {
         </motion.div>
 
         {/* Articles Grid */}
-        {filteredPosts.length > 1 ?
+        {filteredPosts.length > 0 ?
           <div
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-16"
+            className="grid xl:gap-8 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16"
           >
             {filteredPosts.map((post) => {
               const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
@@ -197,22 +204,19 @@ export default function Blog() {
                 >
                   <Card className="p-0 flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02]">
                     {imageUrl && (
-                      <div className="relative overflow-hidden rounded-t-xl">
-                        <img
-                          src={imageUrl}
-                          alt={post.title}
-                          className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
-                          width="600"
-                          height="300"
-                        />
-                        <div className="absolute top-4 left-4">
-                          <Badge variant="secondary" className="bg-white/90 text-gray-800">
-                            Article
-                          </Badge>
+                      <a href={`/blogs/${post.slug.current}`} className="block">
+                        <div className="relative overflow-hidden rounded-t-xl">
+                          <img
+                            src={imageUrl}
+                            alt={post.title}
+                            className="object-cover w-full h-[250px] border-b border-gray-200 object-center transition-transform duration-300 group-hover:scale-105"
+                            width="600"
+                            height="300"
+                          />
                         </div>
-                      </div>
+                      </a>
                     )}
-                    <CardHeader className="pb-4">
+                    <CardHeader className="pb-0">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                         <Calendar className="h-4 w-4" />
                         <span>{format(new Date(post.publishedAt), "MMM d, yyyy")}</span>
@@ -221,7 +225,7 @@ export default function Blog() {
                         {post.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="flex-1">
+                    <CardContent className="flex-1 pt-0">
                       <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                         {description}
                       </p>
@@ -261,7 +265,7 @@ export default function Blog() {
               "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
             )}
           />
-          <div className="text-center">
+          <div className="text-center flex items-center gap-4">
             <span data-aos="fade-up"
               data-aos-delay="50" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-purple-900 to-gray-300 bg-clip-text text-center text-4xl md:text-6xl xl:text-7xl font-semibold leading-none text-transparent ">
               Stay Updated with Wyre
