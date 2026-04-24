@@ -56,7 +56,7 @@ export default function SingleBlogPost() {
                 <img
                   src={postImageUrl}
                   alt={post.title}
-                  className="w-full h-full border-2 border-gray-200 max-h-[500px] object-cover object-center rounded-lg"
+                  className="w-full h-full max-h-[550px] border border-gray-200 max-w-[600px] object-contain object-center rounded-lg"
                 />
               )}
               <div className="pb-0">

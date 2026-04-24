@@ -120,6 +120,38 @@ const ProjectDetail = () => {
               </p>
             </Card>
 
+            {project.gallery && project.gallery.length > 0 && (
+              <Card className="p-6 border-none shadow-sm">
+                <h2 className="text-2xl font-bold text-heading mb-4">Project Gallery</h2>
+                <div className="columns-2 md:columns-3 gap-3 md:gap-4 [column-fill:_balance]">
+                  {project.gallery.map((src, index) => (
+                    <motion.a
+                      key={`${src}-${index}`}
+                      href={src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                      className="group relative mb-3 md:mb-4 block overflow-hidden rounded-xl bg-gray-100 break-inside-avoid"
+                    >
+                      <img
+                        src={src}
+                        alt={`${project.title} image ${index + 1}`}
+                        loading="lazy"
+                        className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "https://placehold.co/800x800/f3f4f6/6b7280?text=Project+Image";
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </motion.a>
+                  ))}
+                </div>
+              </Card>
+            )}
+
             {project.challenges && project.challenges.length > 0 && (
               <div className="grid md:grid-cols-2 gap-6">
                 {project.solutions && project.solutions.length > 0 && (

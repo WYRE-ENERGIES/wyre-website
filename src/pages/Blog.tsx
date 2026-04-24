@@ -194,7 +194,7 @@ export default function Blog() {
             className="grid xl:gap-8 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16"
           >
             {filteredPosts.map((post) => {
-              const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('clip').url() : undefined;
+              const imageUrl = post.image ? builder.image(post.image).width(600).height(300).fit('crop').crop('top').auto('format').url() : undefined;
               const description = getPlainTextFromPortableText(post.body, 160);
               return (
                 <motion.div
@@ -209,7 +209,7 @@ export default function Blog() {
                           <img
                             src={imageUrl}
                             alt={post.title}
-                            className="object-cover w-full h-[250px] border-b border-gray-200 object-center transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover align-top w-full h-[250px] border-b border-gray-200 object-top transition-transform duration-300 group-hover:scale-105"
                             width="600"
                             height="300"
                           />
