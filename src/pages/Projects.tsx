@@ -154,7 +154,7 @@ const Projects = () => {
 
                     {/* Stats */}
                     {project.stats && project.stats.length > 0 && (
-                      <div className="flex flex-wrap justify-between px-4 pt-4 border-t border-gray-200">
+                      <div className="flex flex-wrap xl:gap-12 gap-8 max-md:grid max-md:grid-cols-2 md:justify-between px-4 pt-4 border-t border-gray-200">
                         {project.stats.map((stat, idx) => (
                           <div key={idx} className="text-center">
                             <p className="text-2xl font-bold text-brandColor">{stat.value}</p>
