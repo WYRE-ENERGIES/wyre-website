@@ -12,7 +12,8 @@ import {
   BookOpen,
   TrendingUp,
   Globe,
-  Clock
+  Clock,
+  Linkedin,
 } from "lucide-react";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
@@ -265,7 +266,7 @@ export default function Blog() {
               "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
             )}
           />
-          <div className="text-center flex items-center gap-4">
+          <div className="text-center flex flex-col items-center gap-4">
             <span data-aos="fade-up"
               data-aos-delay="50" className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-purple-900 to-gray-300 bg-clip-text text-center text-4xl md:text-6xl xl:text-7xl font-semibold leading-none text-transparent ">
               Stay Updated with Wyre
@@ -276,23 +277,42 @@ export default function Blog() {
             </p>
 
             <div data-aos="fade-up"
-              data-aos-delay="150" className="mt-12 flex flex-wrap justify-center gap-4">
+              data-aos-delay="150" className="mt-12 flex flex-wrap items-center justify-center gap-4">
+              <div className="z-10 flex items-center gap-2">
+                <a
+                  href="https://www.linkedin.com/company/wyre-energy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow Wyre on LinkedIn"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-brandColor hover:text-brandColor">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.instagram.com/wyre_energy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow Wyre on Instagram"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition-colors hover:border-brandColor hover:text-brandColor">
+                  <svg
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"></path>
+                  </svg>
+                </a>
+              </div>
+
               <Button
                 className="z-10 bg-brandColor hover:bg-brandColor hover:opacity-80"
                 asChild
                 size="lg">
-                <a href="/">
-                  <span>Subscribe to Newsletter</span>
-                </a>
-              </Button>
-
-              <Button
-                className="z-10 border border-border"
-                asChild
-                size="lg"
-                variant="secondary">
-                <a href="/">
-                  <span>Follow Us</span>
+                <a href="#lets-talk">
+                  <span>Let's Talk</span>
                 </a>
               </Button>
             </div>
