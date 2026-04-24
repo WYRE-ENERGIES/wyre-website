@@ -142,7 +142,7 @@ const ProjectDetail = () => {
                         loading="lazy"
                         className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://placehold.co/800x800/f3f4f6/6b7280?text=Project+Image";
+                          (e.target as HTMLImageElement).src = "/img/project-placeholder.png";
                         }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

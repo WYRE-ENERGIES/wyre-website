@@ -90,7 +90,7 @@ const Projects = () => {
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-700"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "https://placehold.co/800x800/f3f4f6/6b7280?text=Project+Image";
+                        (e.target as HTMLImageElement).src = "/img/project-placeholder.png";
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-xl"></div>
