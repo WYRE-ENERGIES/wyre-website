@@ -160,7 +160,7 @@ export default function Footer() {
               </ul>
             </div>
           ))}
-          <div>
+          <div id="lets-talk" className="scroll-mt-24">
             <form onSubmit={handleSubmit} className="w-full max-w-xs">
               <div className="space-y-2.5">
                 <Label

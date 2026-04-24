@@ -90,7 +90,7 @@ const Projects = () => {
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-700"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "https://placehold.co/800x800/f3f4f6/6b7280?text=Project+Image";
+                        (e.target as HTMLImageElement).src = "/img/project-placeholder.png";
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-xl"></div>
@@ -154,7 +154,7 @@ const Projects = () => {
 
                     {/* Stats */}
                     {project.stats && project.stats.length > 0 && (
-                      <div className="flex flex-wrap justify-between px-4 pt-4 border-t border-gray-200">
+                      <div className="flex flex-wrap xl:gap-12 gap-8 max-md:grid max-md:grid-cols-2 md:justify-between px-4 pt-4 border-t border-gray-200">
                         {project.stats.map((stat, idx) => (
                           <div key={idx} className="text-center">
                             <p className="text-2xl font-bold text-brandColor">{stat.value}</p>

@@ -1,4 +1,4 @@
-import { Building2, TrendingUp } from 'lucide-react'
+import { Battery, Building2, Sun, TrendingUp, Zap } from 'lucide-react'
 
 export interface Project {
   id: number
@@ -6,6 +6,7 @@ export interface Project {
   category: string
   description: string
   image: string
+  gallery?: string[]
   client?: string
   clientLogo?: string
   location?: string
@@ -120,11 +121,75 @@ export const featuredProjects: Project[] = [
       "Weather-resistant system designed for coastal conditions",
       "Reduced environmental impact while maintaining premium standards"
     ]
+  },
+  {
+    id: 3,
+    title: "State Specialist Hospital, Okitipupa",
+    category: "Hybrid Solar & Battery Storage",
+    description: "A 73.8kWp hybrid solar installation powering a state secondary referral hospital in Ondo State with 24/7 clean electricity, keeping wards, theatres and clinics running around the clock.",
+    image: "/img/okitipupa-hospital.png",
+    gallery: [
+      "/img/okitipupa-hospital.png",
+      "/img/okitipupa-commissioning.png",
+      "/img/okitipupa-inverters.png",
+      "/img/okitipupa-battery-rack.png",
+      "/img/okitipupa-energy-room.png"
+    ],
+    client: "State Specialist Hospital, Okitipupa",
+    clientLogo: "",
+    location: "Okitipupa, Ondo State, Nigeria",
+    completionDate: "March 2026",
+    fullDescription: "In March 2026, Wyre energised the State Specialist Hospital in Okitipupa, Ondo State with a fully hybrid solar and battery storage system engineered for 24/7 clinical operations. Delivered in partnership with the Nigerian Midstream and Downstream Petroleum Regulatory Authority (NMDPRA) and Forshore Energy Limited (FSEL), the installation pairs 120 high-efficiency 615W solar panels (73.8kWp) with a 40kVA inverter stack and 120kWh of lithium battery storage, giving the hospital stable, grid-independent power for wards, theatres, consulting rooms, the pharmacy and cold-chain storage. As a state-run secondary referral facility serving the Ikale region, uninterrupted electricity is mission-critical for life-saving care, and this system now removes the hospital's dependency on unreliable grid supply and costly diesel generators.",
+    review: {
+      name: "State Specialist Hospital, Okitipupa",
+      role: "Hospital Management",
+      company: "Delivered in partnership with NMDPRA & Forshore Energy Limited (FSEL)",
+      rating: 5,
+      text: "Wyre delivered a complete energy transformation for our hospital. Our wards, theatres and clinics now run on clean, reliable power day and night, and our reliance on the generator has dropped dramatically. It has genuinely changed how we deliver care to our community."
+    },
+    stats: [
+      { label: "System Size", value: "73.8kWp", icon: Sun },
+      { label: "Inverter Capacity", value: "40kVA", icon: Zap },
+      { label: "Battery Storage", value: "120kWh", icon: Battery },
+      { label: "Solar Panels", value: "120 × 615W", icon: Building2 },
+      { label: "Est. Annual Output", value: "~108,000 kWh/year", icon: TrendingUp }
+    ],
+    technologies: [
+      "615W Monocrystalline Solar Panels",
+      "40kVA Hybrid Inverter Stack",
+      "120kWh Lithium Battery Bank",
+      "Automatic Transfer Switch (ATS)",
+      "Grid + Generator Integration",
+      "Remote Monitoring & Analytics"
+    ],
+    challenges: [
+      "Delivering 24/7 power for a secondary referral hospital with zero tolerance for downtime",
+      "Sizing storage to ride through long grid outages common in Okitipupa",
+      "Integrating with existing hospital distribution, generator and critical clinical loads",
+      "Installing 120 panels across multiple roof sections without disrupting hospital operations",
+      "Meeting tight commissioning window to minimise impact on patient care"
+    ],
+    solutions: [
+      "Designed a 73.8kWp hybrid array with 120 × 615W panels optimised for the hospital's roof layout",
+      "Deployed a 40kVA inverter stack paired with 120kWh of lithium storage for deep, reliable backup",
+      "Integrated solar, battery, grid and generator into a single automated power architecture",
+      "Commissioned the system in phases to keep wards, theatres and clinics live throughout installation",
+      "Configured remote monitoring so the Wyre team can proactively support the hospital"
+    ],
+    results: [
+      "24/7 clean, uninterrupted electricity for wards, theatres, consulting rooms and pharmacy",
+      "Approximately 108,000 kWh of clean energy generated per year",
+      "Sharp reduction in diesel generator runtime and fuel costs",
+      "Significantly lower monthly grid electricity expenditure for the hospital",
+      "Improved patient care through reliable lighting, cold-chain and medical equipment power",
+      "Lower carbon footprint for a public healthcare facility serving the Ikale region"
+    ]
   }
 ]
 
 // Projects data for detail pages (with all fields)
 export const projectsData: Record<number, Project> = {
   1: featuredProjects[0],
-  2: featuredProjects[1]
+  2: featuredProjects[1],
+  3: featuredProjects[2]
 }
