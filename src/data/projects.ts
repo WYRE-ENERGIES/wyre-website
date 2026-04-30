@@ -83,6 +83,11 @@ export const featuredProjects: Project[] = [
     category: "Solar Installation",
     description: "A premium beachfront rental property powered by our custom solar installation, enabling sustainable, reliable energy for both hospitality and residential comfort by the sea.",
     image: "/img/beach-resort.jpeg",
+    gallery: [
+      "/img/beach-resort.jpeg",
+      "/img/beach-resort-aerial-compound.png",
+      "/img/beach-resort-aerial-coastline.png"
+    ],
     client: "Schlepp Properties",
     clientLogo: "",
     location: "Beachfront, Nigeria",
@@ -184,6 +189,126 @@ export const featuredProjects: Project[] = [
       "Improved patient care through reliable lighting, cold-chain and medical equipment power",
       "Lower carbon footprint for a public healthcare facility serving the Ikale region"
     ]
+  },
+  {
+    id: 4,
+    title: "Ashforte by Schlepp Properties",
+    category: "Commercial Solar & Energy Storage",
+    description: "A 96.7kWp rooftop solar installation paired with 240kWh of battery storage, delivering quiet, 24/7 clean power and full backup to a premium Lagos commercial development.",
+    image: "/img/ashforte.png",
+    gallery: [
+      "/img/ashforte.png",
+      "/img/ashforte-rooftop-array.png",
+      "/img/ashforte-aerial-side.png",
+      "/img/ashforte-aerial-street.png"
+    ],
+    client: "Schlepp Properties",
+    clientLogo: "",
+    location: "Lagos, Nigeria",
+    completionDate: "2025",
+    fullDescription: "Wyre partnered with Schlepp Properties again to power Ashforte, a premium commercial development in Lagos, with a high-capacity rooftop solar and energy storage system. The installation features 156 monocrystalline 620W panels (96.7kWp) feeding an 80kVA hybrid inverter stack and a 240kWh lithium battery bank, giving residents fully silent, generator-free electricity and seamless backup through grid outages. Optimised for the building's twin-block roof layout, the system powers apartments, shared amenities and the rooftop pool while maintaining the architectural cleanliness Schlepp's properties are known for.",
+    review: {
+      name: "Schlepp Properties",
+      role: "Property Management",
+      company: "Schlepp Properties",
+      rating: 5,
+      text: "After the success at Whitestone, choosing Wyre for Ashforte was an easy decision. The system is silent, intelligent and effortlessly reliable. Our residents enjoy 24/7 power without ever hearing a generator, and our running costs have dropped dramatically."
+    },
+    stats: [
+      { label: "System Size", value: "96.7kWp", icon: Sun },
+      { label: "Inverter Capacity", value: "80kVA", icon: Zap },
+      { label: "Battery Storage", value: "240kWh", icon: Battery },
+      { label: "Solar Panels", value: "156 × 620W", icon: Building2 },
+      { label: "Est. Annual Output", value: "~141,000 kWh/year", icon: TrendingUp }
+    ],
+    technologies: [
+      "620W Monocrystalline Solar Panels",
+      "80kVA Hybrid Inverter Stack",
+      "240kWh Lithium Battery Bank",
+      "Energy Management Platform",
+      "Automatic Grid + Battery Switching",
+      "Remote Monitoring & Analytics"
+    ],
+    challenges: [
+      "Maximising rooftop generation across a split twin-block roof with limited usable surface",
+      "Powering a high-density residential building with 24/7 expectations and zero generator noise",
+      "Sizing battery storage to bridge long Lagos grid outages without compromising comfort",
+      "Preserving the architectural aesthetics of a premium residential property",
+      "Coordinating installation around an active construction and finishing schedule"
+    ],
+    solutions: [
+      "Designed a 96.7kWp split-array layout using 156 × 620W panels optimised for both roof sections",
+      "Deployed an 80kVA hybrid inverter stack paired with 240kWh of lithium storage for deep backup",
+      "Integrated solar, battery and grid into a single automated, generator-free power architecture",
+      "Implemented a low-profile mounting system that complements the building's modern lines",
+      "Delivered remote monitoring so Schlepp's facility team can track performance in real time"
+    ],
+    results: [
+      "Approximately 141,000 kWh of clean energy generated per year",
+      "Truly silent, generator-free electricity for every apartment around the clock",
+      "Seamless backup that rides through Lagos grid outages without resident impact",
+      "Major reduction in diesel and grid electricity costs for the building",
+      "Premium resident experience with stable power for AC, lifts, water and rooftop pool",
+      "A scalable energy template Schlepp can replicate across future developments"
+    ]
+  },
+  {
+    id: 5,
+    title: "Jads Wine Store",
+    category: "Retail Solar & Energy Storage",
+    description: "A hybrid solar and battery storage system for a Victoria Island wine retail outlet, delivering silent, climate-stable power for premium wines, refrigeration and showroom lighting.",
+    image: "/img/jads.png",
+    gallery: [
+      "/img/jads.png"
+    ],
+    client: "Jads Wine Store",
+    clientLogo: "",
+    location: "2B Isiola Oyekan Street, Victoria Island, Lagos",
+    completionDate: "2025",
+    fullDescription: "Wyre designed and installed a tailored solar and battery storage system for Jads, a wine retail outlet on Victoria Island, Lagos. The setup combines a rooftop solar array with a 20kVA hybrid inverter and 75kWh of lithium battery storage, giving the store stable, generator-free power around the clock. For a premium wine business, uninterrupted electricity is critical — wine refrigeration, climate control and ambient showroom lighting all depend on it — and this installation removes the store's exposure to Lagos's frequent grid outages while cutting reliance on noisy, polluting diesel.",
+    review: {
+      name: "Jads Wine Store",
+      role: "Store Management",
+      company: "Jads Wine Store, Victoria Island",
+      rating: 5,
+      text: "Wyre delivered exactly what we needed: silent, reliable power for our store. Our wines stay perfectly chilled, our showroom always looks its best, and we no longer worry about generator noise or fuel costs disrupting the customer experience."
+    },
+    stats: [
+      { label: "Inverter Capacity", value: "20kVA", icon: Zap },
+      { label: "Battery Storage", value: "75kWh", icon: Battery },
+      { label: "Power Mode", value: "Generator-Free", icon: Sun },
+      { label: "Operation", value: "24/7 Backup", icon: TrendingUp }
+    ],
+    technologies: [
+      "Monocrystalline Solar Panels",
+      "20kVA Hybrid Inverter",
+      "75kWh Lithium Battery Bank",
+      "Automatic Grid + Battery Switching",
+      "Climate-Aware Load Management",
+      "Remote Monitoring & Analytics"
+    ],
+    challenges: [
+      "Powering a premium wine retail space where temperature stability is non-negotiable",
+      "Mounting a meaningful solar array on a constrained Victoria Island rooftop",
+      "Sizing storage to ride through extended grid outages without affecting refrigeration",
+      "Eliminating generator noise and exhaust in a high-end customer-facing environment",
+      "Integrating with the store's existing electrical and refrigeration loads cleanly"
+    ],
+    solutions: [
+      "Designed a rooftop solar array spread across the available roof sections for maximum yield",
+      "Deployed a 20kVA hybrid inverter paired with 75kWh of lithium storage for deep, silent backup",
+      "Configured automatic switching between solar, battery and grid with zero-interruption transfer",
+      "Prioritised refrigeration and climate-critical loads in the energy management configuration",
+      "Set up remote monitoring so the Wyre team can proactively support the store"
+    ],
+    results: [
+      "Stable, climate-controlled power for wine storage and refrigeration around the clock",
+      "Silent operation with no generator noise disrupting the in-store experience",
+      "Significant reduction in diesel and grid electricity expenses",
+      "Improved customer experience with reliable lighting and ambience at all hours",
+      "Lower carbon footprint for a premium retail brand on Victoria Island",
+      "A repeatable energy blueprint for boutique retail across Lagos"
+    ]
   }
 ]
 
@@ -191,5 +316,7 @@ export const featuredProjects: Project[] = [
 export const projectsData: Record<number, Project> = {
   1: featuredProjects[0],
   2: featuredProjects[1],
-  3: featuredProjects[2]
+  3: featuredProjects[2],
+  4: featuredProjects[3],
+  5: featuredProjects[4]
 }
