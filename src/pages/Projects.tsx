@@ -153,16 +153,39 @@ const Projects = () => {
                     </p>
 
                     {/* Stats */}
-                    {project.stats && project.stats.length > 0 && (
-                      <div className="flex flex-wrap xl:gap-12 gap-8 max-md:grid max-md:grid-cols-2 md:justify-between px-4 pt-4 border-t border-gray-200">
-                        {project.stats.map((stat, idx) => (
-                          <div key={idx} className="text-center">
-                            <p className="text-2xl font-bold text-brandColor">{stat.value}</p>
-                            <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                    {project.stats && project.stats.length > 0 && (() => {
+                      const columns = Math.min(project.stats.length, 3)
+                      const remainder = project.stats.length % columns
+                      const lastRowSpan = remainder === 0 ? 1 : columns - remainder + 1
+                      return (
+                        <div className="pt-4 border-t border-gray-200">
+                          <div
+                            className="grid divide-x divide-y divide-gray-200 border border-gray-200 rounded-xl overflow-hidden bg-white"
+                            style={{
+                              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+                            }}
+                          >
+                            {project.stats.map((stat, idx) => {
+                              const isLast = idx === project.stats!.length - 1
+                              return (
+                                <div
+                                  key={idx}
+                                  className="flex flex-col items-center justify-center text-center px-3 py-4 sm:px-4 sm:py-5"
+                                  style={isLast && lastRowSpan > 1 ? { gridColumn: `span ${lastRowSpan} / span ${lastRowSpan}` } : undefined}
+                                >
+                                  <p className="text-xl sm:text-2xl font-bold text-brandColor leading-tight">
+                                    {stat.value}
+                                  </p>
+                                  <p className="text-[11px] sm:text-xs text-muted-foreground mt-1 leading-snug">
+                                    {stat.label}
+                                  </p>
+                                </div>
+                              )
+                            })}
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        </div>
+                      )
+                    })()}
 
                     {/* Customer Review */}
                     {project.review && (

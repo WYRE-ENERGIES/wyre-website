@@ -254,22 +254,22 @@ export const featuredProjects: Project[] = [
   },
   {
     id: 5,
-    title: "Jads Wine Store",
+    title: "Arzeh Integrated ColdRoom",
     category: "Retail Solar & Energy Storage",
     description: "A hybrid solar and battery storage system for a Victoria Island wine retail outlet, delivering silent, climate-stable power for premium wines, refrigeration and showroom lighting.",
     image: "/img/jads.png",
     gallery: [
       "/img/jads.png"
     ],
-    client: "Jads Wine Store",
+    client: "Arzeh Integrated ColdRoom",
     clientLogo: "",
     location: "2B Isiola Oyekan Street, Victoria Island, Lagos",
     completionDate: "2025",
     fullDescription: "Wyre designed and installed a tailored solar and battery storage system for Jads, a wine retail outlet on Victoria Island, Lagos. The setup combines a rooftop solar array with a 20kVA hybrid inverter and 75kWh of lithium battery storage, giving the store stable, generator-free power around the clock. For a premium wine business, uninterrupted electricity is critical — wine refrigeration, climate control and ambient showroom lighting all depend on it — and this installation removes the store's exposure to Lagos's frequent grid outages while cutting reliance on noisy, polluting diesel.",
     review: {
-      name: "Jads Wine Store",
+      name: "Arzeh Integrated ColdRoom",
       role: "Store Management",
-      company: "Jads Wine Store, Victoria Island",
+      company: "Arzeh Integrated ColdRoom, Victoria Island",
       rating: 5,
       text: "Wyre delivered exactly what we needed: silent, reliable power for our store. Our wines stay perfectly chilled, our showroom always looks its best, and we no longer worry about generator noise or fuel costs disrupting the customer experience."
     },
