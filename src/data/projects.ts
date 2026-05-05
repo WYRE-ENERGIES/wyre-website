@@ -309,6 +309,64 @@ export const featuredProjects: Project[] = [
       "Lower carbon footprint for a premium retail brand on Victoria Island",
       "A repeatable energy blueprint for boutique retail across Lagos"
     ]
+  },
+  {
+    id: 6,
+    title: "Lotana Beach Resort",
+    category: "Hybrid Solar & Battery Storage",
+    description: "A hybrid solar and battery storage system for a premium beachfront resort, delivering reliable, generator-free power for guest accommodation, leisure facilities and marina operations.",
+    image: "/img/lotana-beach.jpeg",
+    gallery: [
+      "/img/lotana-beach.jpeg"
+    ],
+    client: "Lotana Beach Resort",
+    clientLogo: "",
+    location: "Lagos, Nigeria",
+    completionDate: "2025",
+    fullDescription: "Wyre designed and deployed a tailored hybrid solar and battery storage system for Lotana Beach Resort, a premium coastal hospitality destination in Lagos. The installation combines a rooftop and ground-mount solar array with a 30kVA hybrid inverter stack and 90kWh of lithium battery storage, supplying the resort's guest rooms, restaurant, bar, pool and marina with clean, uninterrupted electricity around the clock. For a hospitality business where guest comfort is paramount, dependable power is non-negotiable — this system eliminates the resort's reliance on diesel generators while dramatically cutting its monthly energy expenditure.",
+    review: {
+      name: "Lotana Beach Resort",
+      role: "Resort Management",
+      company: "Lotana Beach Resort, Lagos",
+      rating: 5,
+      text: "Wyre transformed the way we power our resort. Our guests now enjoy seamless electricity day and night, with no generator noise polluting the beach atmosphere. Energy costs are down and the experience we deliver is up — we couldn't ask for more."
+    },
+    stats: [
+      { label: "System Size", value: "40kWp", icon: Sun },
+      { label: "Inverter Capacity", value: "30kVA", icon: Zap },
+      { label: "Battery Storage", value: "90kWh", icon: Battery },
+      { label: "Est. Annual Output", value: "~58,000 kWh/year", icon: TrendingUp }
+    ],
+    technologies: [
+      "Monocrystalline Solar Panels",
+      "30kVA Hybrid Inverter Stack",
+      "90kWh Lithium Battery Bank",
+      "Automatic Grid + Battery Switching",
+      "Smart Load Management",
+      "Remote Monitoring & Analytics"
+    ],
+    challenges: [
+      "Supplying 24/7 power across dispersed resort buildings and outdoor facilities",
+      "Designing a system resilient to the corrosive coastal salt-air environment",
+      "Eliminating generator noise to preserve the premium beachfront guest experience",
+      "Sizing storage to maintain critical loads — lighting, refrigeration, AC — during extended outages",
+      "Installing equipment without disrupting active resort operations and guest stays"
+    ],
+    solutions: [
+      "Engineered a 40kWp hybrid array using corrosion-resistant mounting hardware suited for coastal conditions",
+      "Deployed a 30kVA inverter stack paired with 90kWh of lithium storage for deep, silent backup",
+      "Configured smart load management to prioritise guest-facing loads at all times",
+      "Integrated solar, battery and grid into a single automated architecture with no manual switching",
+      "Phased the installation to keep resort operations fully live throughout the project"
+    ],
+    results: [
+      "Approximately 58,000 kWh of clean energy generated annually",
+      "Fully silent, generator-free power across all resort facilities",
+      "Significant reduction in diesel consumption and monthly energy costs",
+      "Enhanced guest experience with stable power for AC, lighting, pool and marina facilities",
+      "System designed to withstand the harsh coastal environment for long-term reliability",
+      "Lower carbon footprint for a premium hospitality brand on the Lagos coastline"
+    ]
   }
 ]
 
@@ -318,5 +376,6 @@ export const projectsData: Record<number, Project> = {
   2: featuredProjects[1],
   3: featuredProjects[2],
   4: featuredProjects[3],
-  5: featuredProjects[4]
+  5: featuredProjects[4],
+  6: featuredProjects[5]
 }
