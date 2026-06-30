@@ -16,6 +16,8 @@ const Contact = lazy(() => import("./pages/Contact"))
 const SignIn = lazy(() => import("./pages/SignIn"))
 const GetStarted = lazy(() => import("./pages/GetStarted"))
 const SolarPricing = lazy(() => import("./pages/SolarPricing"))
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"))
+const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"))
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -43,6 +45,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -25,6 +25,11 @@ const QuickLinks = [
   { href: '/contact', label: 'Contact Us' },
 ]
 
+const legalLinks = [
+  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/terms-and-conditions', label: 'Terms & Conditions' },
+]
+
 
 const footerLinks = [
   {
@@ -38,6 +43,10 @@ const footerLinks = [
   {
     name: 'Quick Links',
     links: QuickLinks,
+  },
+  {
+    name: 'Legal',
+    links: legalLinks,
   },
 ]
 
@@ -143,7 +152,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
           {footerLinks.map((linksGroup, index) => (
             <div key={index}>
               <span className="font-medium">{linksGroup.name}</span>
@@ -224,10 +233,19 @@ export default function Footer() {
             </form>
           </div>
         </div>
-        <div className="bg-[#F6F9FC] mt-16 flex items-center justify-center rounded-md p-4 px-6 py-3">
-          <span className="text-title">
+        <div className="bg-[#F6F9FC] mt-16 flex flex-col sm:flex-row items-center justify-between gap-3 rounded-md p-4 px-6 py-3">
+          <span className="text-title text-sm sm:text-base">
             Copyright Wyre {new Date().getFullYear()}. All rights reserved.
           </span>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <a href="/privacy-policy" className="hover:text-primary duration-150">
+              Privacy Policy
+            </a>
+            <span className="text-muted-foreground/40">•</span>
+            <a href="/terms-and-conditions" className="hover:text-primary duration-150">
+              Terms & Conditions
+            </a>
+          </div>
         </div>
       </div>
     </footer>
