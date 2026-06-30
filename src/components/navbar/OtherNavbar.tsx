@@ -65,6 +65,12 @@ const OtherNavbar = () => {
                   <ListItem href="/segments" title="Industry Segments" className="-mt-3">
                     Discover how we serve different industry segments.
                   </ListItem>
+                  <ListItem href="/privacy-policy" title="Privacy Policy">
+                    How we collect, use and protect your data.
+                  </ListItem>
+                  <ListItem href="/terms-and-conditions" title="Terms & Conditions">
+                    The terms that govern your use of Wyre.
+                  </ListItem>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>

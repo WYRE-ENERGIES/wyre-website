@@ -20,6 +20,8 @@ const MobileMenu = ({ menuButtonClassName = "" }: MobileMenuProps) => {
     { href: "/projects", label: "Projects" },
     { href: "/solutions", label: "Our Solutions" },
     { href: "/segments", label: "Industry Segments" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms-and-conditions", label: "Terms & Conditions" },
   ];
 
   const pricingLinks = [
