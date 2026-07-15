@@ -309,6 +309,69 @@ export const featuredProjects: Project[] = [
       "Lower carbon footprint for a premium retail brand on Victoria Island",
       "A repeatable energy blueprint for boutique retail across Lagos"
     ]
+  },
+  {
+    id: 6,
+    title: "Caring Habitat",
+    category: "Residential Solar & Energy Storage",
+    description: "A 49.65kWp three-phase hybrid solar installation with 120kWh of lithium storage and 60kW of inverter capacity, delivering silent, generator-free power to a modern residential estate off the Lekki-Epe Expressway.",
+    image: "/img/caring-habitat.png",
+    gallery: [
+      "/img/caring-habitat.png",
+      "/img/caring-habitat-install.png",
+      "/img/caring-habitat-aerial.png",
+      "/img/caring-habitat-technician.png",
+      "/img/caring-habitat-estate.png"
+    ],
+    client: "Caring Habitat",
+    clientLogo: "",
+    location: "Lekki-Epe Expressway, Lagos, Nigeria",
+    completionDate: "May 2026",
+    fullDescription: "Wyre delivered a 60kW three-phase hybrid solar installation for Caring Habitat, a modern residential development located on Block D, Plot 1 Caring Habitat Street — off the Lekki-Epe Expressway, just after Abraham Adesanya and before Lagos Business School. The system pairs 80 monocrystalline 615W panels (49.65kWp) with three 20kW hybrid inverters and a 120kWh lithium battery bank, giving residents fully silent, generator-free electricity and seamless backup through Lagos grid outages. Delivered under Project Number SPC-2026-001 and commissioned on 21 May 2026, the installation cleared all 34 ITP inspection hold points, achieved a 10/10 client satisfaction score and is now monitored 24/7 via the Wyre Dashboard.",
+    review: {
+      name: "Caring Habitat",
+      role: "Facility Management",
+      company: "Caring Habitat Residential Estate",
+      rating: 5,
+      text: "Wyre's team delivered exactly as promised — the system is clean, quiet and completely reliable. Our residents enjoy uninterrupted power without ever hearing a generator, and the Wyre Dashboard gives our facility team full visibility over performance. A genuine 10 out of 10 experience."
+    },
+    stats: [
+      { label: "System Size", value: "49.65kWp", icon: Sun },
+      { label: "Inverter Capacity", value: "60kW", icon: Zap },
+      { label: "Battery Storage", value: "120kWh", icon: Battery },
+      { label: "Solar Panels", value: "80 × 615W", icon: Building2 },
+      { label: "Est. Annual Output", value: "~72,500 kWh/year", icon: TrendingUp }
+    ],
+    technologies: [
+      "615W Monocrystalline Solar Panels",
+      "3 × 20kW Hybrid Inverters (3-Phase)",
+      "120kWh Lithium Battery Bank",
+      "5-String DC Configuration (4 × 15 + 1 × 20 panels)",
+      "Automatic Grid + Battery Switching",
+      "Wyre Dashboard Remote Monitoring"
+    ],
+    challenges: [
+      "Delivering a full 60kW three-phase hybrid system on a tight 7-working-day plan",
+      "Optimising a multi-pitch roof layout for maximum solar yield without visual clutter",
+      "Sizing storage to bridge extended Lagos grid outages across a multi-unit estate",
+      "Maintaining 34 ITP inspection hold points with zero NCRs raised during the build",
+      "Coordinating panel logistics and rooftop lifts on an active residential estate"
+    ],
+    solutions: [
+      "Designed a 49.65kWp array split across 5 DC strings (4 × 15 panels + 1 × 20 panels)",
+      "Deployed 3 × 20kW hybrid inverters for a fully balanced three-phase configuration",
+      "Integrated 12 × 10kWh lithium modules (120kWh) for deep, silent overnight backup",
+      "Ran daily toolbox talks, full PPE compliance and 100% site inductions across the build",
+      "Commissioned the system with earth resistance <1 Ohm and all string VOCs within 5%"
+    ],
+    results: [
+      "Practical Completion Certificate issued on 21 May 2026 — project delivered in 8 working days",
+      "System performance of 41.98 kW recorded at commissioning, monitored live via Wyre Dashboard",
+      "All 34 ITP inspection hold points cleared with zero non-conformance reports (NCRs)",
+      "10/10 client satisfaction score at handover",
+      "Silent, generator-free electricity for the estate with seamless outage backup",
+      "Backed by 12-year panel product, 25-year performance and 10-year mounting warranties"
+    ]
   }
 ]
 
@@ -318,5 +381,6 @@ export const projectsData: Record<number, Project> = {
   2: featuredProjects[1],
   3: featuredProjects[2],
   4: featuredProjects[3],
-  5: featuredProjects[4]
+  5: featuredProjects[4],
+  6: featuredProjects[5]
 }
