@@ -372,6 +372,69 @@ export const featuredProjects: Project[] = [
       "Silent, generator-free electricity for the estate with seamless outage backup",
       "Backed by 12-year panel product, 25-year performance and 10-year mounting warranties"
     ]
+  },
+  {
+    id: 7,
+    title: "BR Space Event Centre",
+    category: "Events Solar & Energy Storage",
+    description: "A 37.2kWp three-phase hybrid solar installation with 100kWh of lithium storage and 40kW of inverter capacity, engineered to power a Victoria Island event centre primarily from solar with minimal generator support.",
+    image: "/img/br-space.png",
+    gallery: [
+      "/img/br-space.png",
+      "/img/br-space-inverters.png",
+      "/img/br-space-aerial-pool.png",
+      "/img/br-space-aerial-side.png",
+      "/img/br-space-aerial-context.png"
+    ],
+    client: "BR Space",
+    clientLogo: "",
+    location: "8 Oju Olobun Close, Victoria Island, Lagos",
+    completionDate: "June 2026",
+    fullDescription: "Wyre delivered a 37.2kWp grid-tied three-phase hybrid solar and battery system for BR Space, an event centre on Oju Olobun Close in Victoria Island, Lagos. Designed to serve as the venue's primary power source with little to no reliance on the generator, the system combines 60 × Jinko 620W monocrystalline panels with two 20kW Deye LV three-phase hybrid inverters (40kW combined) and a 100kWh Deye battery bank arranged in two protected 51kWh clusters. Delivered end-to-end in 9 working days across two phases — panel installation followed by inverter, battery, wiring and commissioning — BR Space now runs quietly on solar self-consumption, drastically cutting fuel costs and generator noise during live events.",
+    review: {
+      name: "BR Space",
+      role: "Venue Management",
+      company: "BR Space Event Centre, Victoria Island",
+      rating: 5,
+      text: "Wyre transformed how we run BR Space. Our events now flow without a single generator interruption, we've cut our fuel spend dramatically, and guests get a genuinely quiet, premium experience. The team delivered exactly to plan in just nine days."
+    },
+    stats: [
+      { label: "System Size", value: "37.2kWp", icon: Sun },
+      { label: "Inverter Capacity", value: "40kW", icon: Zap },
+      { label: "Battery Storage", value: "100kWh", icon: Battery },
+      { label: "Solar Panels", value: "60 × 620W", icon: Building2 },
+      { label: "Est. Annual Output", value: "~54,300 kWh/year", icon: TrendingUp }
+    ],
+    technologies: [
+      "Jinko 620W Monocrystalline Solar Panels",
+      "2 × Deye 20kW LV Three-Phase Hybrid Inverters",
+      "10 × Deye 10.2kWh Lithium Battery Modules (100kWh)",
+      "Dual-Cluster DC Architecture with 400A Cluster Breakers",
+      "1200A DC Bus Bar with Grid + Generator Interlock",
+      "3-Phase Hybrid, Grid-Tied Configuration"
+    ],
+    challenges: [
+      "Making solar the primary power source for a live event venue that cannot tolerate downtime",
+      "Delivering a full 40kW three-phase hybrid system end-to-end in just 9 working days",
+      "Designing a battery architecture that stays serviceable and safe across long event nights",
+      "Interlocking grid and generator sources cleanly on a busy commercial site",
+      "Coordinating panel logistics and rooftop works around ongoing venue bookings"
+    ],
+    solutions: [
+      "Sized the 37.2kWp array on the venue's roof to cover most operational load from solar alone",
+      "Deployed 2 × Deye 20kW three-phase hybrid inverters feeding a shared 1200A DC bus bar",
+      "Split 10 × 10.2kWh batteries into two 51kWh clusters with dedicated 400A DC 2-pole breakers",
+      "Built a two-panel electrical setup (Input Panel A + Output Panel B) with grid/gen interlock",
+      "Phased the build into 4 days of solar and 5 days of inverter, battery and commissioning works"
+    ],
+    results: [
+      "Approximately 54,300 kWh of clean solar energy generated per year",
+      "Primary power supply for the venue now comes from solar, with minimal generator support",
+      "Silent, uninterrupted power during live events — no more generator noise for guests",
+      "Major reduction in monthly diesel spend and grid electricity costs",
+      "Fully commissioned three-phase hybrid system delivered on schedule in 9 working days",
+      "A repeatable energy blueprint for event centres and hospitality venues across Lagos"
+    ]
   }
 ]
 
@@ -382,5 +445,6 @@ export const projectsData: Record<number, Project> = {
   3: featuredProjects[2],
   4: featuredProjects[3],
   5: featuredProjects[4],
-  6: featuredProjects[5]
+  6: featuredProjects[5],
+  7: featuredProjects[6]
 }
