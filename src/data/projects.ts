@@ -192,7 +192,7 @@ export const featuredProjects: Project[] = [
   },
   {
     id: 4,
-    title: "Ashforte by Schlepp Properties",
+    title: "Ashfort by Schlepp Properties",
     category: "Commercial Solar & Energy Storage",
     description: "A 96.7kWp rooftop solar installation paired with 240kWh of battery storage, delivering quiet, 24/7 clean power and full backup to a premium Lagos commercial development.",
     image: "/img/ashforte.png",
@@ -206,13 +206,13 @@ export const featuredProjects: Project[] = [
     clientLogo: "",
     location: "Lagos, Nigeria",
     completionDate: "2025",
-    fullDescription: "Wyre partnered with Schlepp Properties again to power Ashforte, a premium commercial development in Lagos, with a high-capacity rooftop solar and energy storage system. The installation features 156 monocrystalline 620W panels (96.7kWp) feeding an 80kVA hybrid inverter stack and a 240kWh lithium battery bank, giving residents fully silent, generator-free electricity and seamless backup through grid outages. Optimised for the building's twin-block roof layout, the system powers apartments, shared amenities and the rooftop pool while maintaining the architectural cleanliness Schlepp's properties are known for.",
+    fullDescription: "Wyre partnered with Schlepp Properties again to power Ashfort, a premium commercial development in Lagos, with a high-capacity rooftop solar and energy storage system. The installation features 156 monocrystalline 620W panels (96.7kWp) feeding an 80kVA hybrid inverter stack and a 240kWh lithium battery bank, giving residents fully silent, generator-free electricity and seamless backup through grid outages. Optimised for the building's twin-block roof layout, the system powers apartments, shared amenities and the rooftop pool while maintaining the architectural cleanliness Schlepp's properties are known for.",
     review: {
       name: "Schlepp Properties",
       role: "Property Management",
       company: "Schlepp Properties",
       rating: 5,
-      text: "After the success at Whitestone, choosing Wyre for Ashforte was an easy decision. The system is silent, intelligent and effortlessly reliable. Our residents enjoy 24/7 power without ever hearing a generator, and our running costs have dropped dramatically."
+      text: "After the success at Whitestone, choosing Wyre for Ashfort was an easy decision. The system is silent, intelligent and effortlessly reliable. Our residents enjoy 24/7 power without ever hearing a generator, and our running costs have dropped dramatically."
     },
     stats: [
       { label: "System Size", value: "96.7kWp", icon: Sun },
