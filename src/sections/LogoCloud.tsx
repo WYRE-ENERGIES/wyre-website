@@ -67,6 +67,16 @@ export default function LogoCloud() {
                     loading="lazy"
                   /></div>
               </div>
+              <div className="flex items-center justify-center flex-shrink-0 w-30">
+                <div className="text-lg font-bold text-foreground">
+                  <img
+                    className="mx-auto w-full h-full object-cover"
+                    src="/img/schlepp-logo.svg"
+                    alt="Schlepp"
+                    width="auto"
+                    loading="lazy"
+                  /></div>
+              </div>
               <div className="flex items-center justify-center flex-shrink-0">
                 <div className="text-lg bg-gray-800 p-2 rounded-sm overflow-hidden font-bold text-foreground">  <img
                   className="mx-auto w-40 h-full object-contain"
@@ -85,7 +95,7 @@ export default function LogoCloud() {
                     loading="lazy"
                   /></div>
               </div>
-              <div className="flex items-center justify-center flex-shrink-0 w-24">
+              <div className="flex items-center justify-center flex-shrink-0 w-28">
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-cover"
