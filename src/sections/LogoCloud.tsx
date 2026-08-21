@@ -9,6 +9,7 @@ const clientPortfolio = [
   { name: "Viathan", netWorth: 0 },                     // Not publicly available (private)
   { name: "Oando PLC", netWorth: 0.5675 },                 // ~$567.5 million
   { name: "ATC Nigeria", netWorth: 1.06 },                 // Not publicly available (private)
+  { name: "WalterSmith", netWorth: 0 },                 // Not publicly available (private)
 ];
 
 const totalNetWorth = clientPortfolio.reduce((sum, client) => sum + client.netWorth, 0);
@@ -46,14 +47,6 @@ export default function LogoCloud() {
                   loading="lazy"
                 /></div>
               </div>
-              {/* <div className="flex items-center justify-center flex-shrink-0 w-24">
-                <div className="text-lg font-bold text-foreground">  <img
-                  className="mx-auto w-full h-full object-contain"
-                  src="https://tse2.mm.bing.net/th/id/OIP.0E25O2eO3fq225NV2_DCfwHaCV?rs=1&pid=ImgDetMain&o=7&rm=3"
-                  alt="Sapio Utilities"
-                  width="auto"
-                /></div>
-              </div> */}
 
               <div className="flex items-center justify-center flex-shrink-0 w-24">
                 <div className="text-lg font-bold text-foreground">   <img
@@ -74,6 +67,24 @@ export default function LogoCloud() {
                     loading="lazy"
                   /></div>
               </div>
+              <div className="flex items-center justify-center flex-shrink-0 w-30">
+                <div className="text-lg font-bold text-foreground">
+                  <img
+                    className="mx-auto w-full h-full object-cover"
+                    src="/img/schlepp-logo.svg"
+                    alt="Schlepp"
+                    width="auto"
+                    loading="lazy"
+                  /></div>
+              </div>
+              <div className="flex items-center justify-center flex-shrink-0">
+                <div className="text-lg bg-gray-800 p-2 rounded-sm overflow-hidden font-bold text-foreground">  <img
+                  className="mx-auto w-40 h-full object-contain"
+                  src="/img/waltersmith.png"
+                  alt="WalterSmith"
+                  width="auto"
+                /></div>
+              </div>
               <div className="flex items-center justify-center flex-shrink-0 w-[67.2px]">
                 <div className="text-lg font-bold text-foreground">
                   <img
@@ -84,7 +95,7 @@ export default function LogoCloud() {
                     loading="lazy"
                   /></div>
               </div>
-              <div className="flex items-center justify-center flex-shrink-0 w-24">
+              <div className="flex items-center justify-center flex-shrink-0 w-28">
                 <div className="text-lg font-bold text-foreground">
                   <img
                     className="mx-auto w-full h-full object-cover"

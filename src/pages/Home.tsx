@@ -13,6 +13,7 @@ import SolarFeat from "../sections/SolarFeat"
 import About from "../sections/About"
 import Statistics from "../sections/Statistics"
 import ProjectsSection from "../sections/ProjectsSection"
+import ProjectVideo from "../sections/ProjectVideo"
 import BlogSection from "../sections/BlogSection"
 
 // Lazy load Background component (contains heavy Spline library)
@@ -33,6 +34,7 @@ function App() {
       <EmsFeat />
       <SolarFeat />
       <Feature />
+      <ProjectVideo />
       <ProjectsSection />
       {/* <Testimonials /> */}
       <BlogSection />
