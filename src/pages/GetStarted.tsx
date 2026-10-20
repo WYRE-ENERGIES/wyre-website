@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
-import { MultiSelect } from '../components/ui/multi-select'
 import {
   Dialog,
   DialogContent,
@@ -14,8 +13,13 @@ import {
 } from '../components/ui/dialog'
 import OtherNavbar from '../components/navbar/OtherNavbar'
 import Footer from '../sections/Footer'
+import LoadCalculator from '../components/LoadCalculator'
 import { CheckCircle2 } from 'lucide-react'
 import { socialsClient } from '../lib/api'
+import {
+  upsertEstimateInMessage,
+  type CalculatorEstimate,
+} from '../data/loadCalculator'
 
 const GetStarted = () => {
   const [formData, setFormData] = useState({
@@ -25,8 +29,6 @@ const GetStarted = () => {
     location: '',
     application: '',
     facilityType: '',
-    generatorsCount: '',
-    sourcesOfEnergy: [] as string[],
     averageCost: '',
     subject: '',
     message: ''
@@ -35,6 +37,7 @@ const GetStarted = () => {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
+  const formSectionRef = useRef<HTMLDivElement>(null)
 
   const applications = [
     'Single Site',
@@ -42,18 +45,31 @@ const GetStarted = () => {
   ]
 
   const facilityTypes = [
-    'Residential',
     'Commercial',
     'Industrial',
+    'Schools',
   ]
 
-  const energySources = [
-    'Solar',
-    'Check Utility',
-    'Generator 1-5',
-    'Gas Generator',
-    'IPP',
-  ]
+  const handleEstimateChange = useCallback((next: CalculatorEstimate | null) => {
+    setFormData((current) => {
+      const facilityType = next
+        ? next.sector === 'industrial'
+          ? 'Industrial'
+          : next.sector === 'schools'
+            ? 'Schools'
+            : 'Commercial'
+        : current.facilityType
+      const message = upsertEstimateInMessage(current.message, next)
+      if (current.facilityType === facilityType && current.message === message) {
+        return current
+      }
+      return { ...current, facilityType, message }
+    })
+  }, [])
+
+  const scrollToForm = () => {
+    formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -65,17 +81,6 @@ const GetStarted = () => {
     if (error) setError(null)
   }
 
-  const handleGeneratorsCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    // Only allow numbers
-    if (value === '' || /^\d+$/.test(value)) {
-      setFormData({
-        ...formData,
-        generatorsCount: value
-      })
-      if (error) setError(null)
-    }
-  }
 
   const handleAverageCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -94,24 +99,9 @@ const GetStarted = () => {
     if (error) setError(null)
   }
 
-  const handleSourcesOfEnergyChange = (selectedValues: string[]) => {
-    setFormData({
-      ...formData,
-      sourcesOfEnergy: selectedValues
-    })
-    // Clear error when user starts typing
-    if (error) setError(null)
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
-
-    // Validate required fields
-    if (formData.sourcesOfEnergy.length === 0) {
-      setError('Please select at least one energy source')
-      return
-    }
 
     setIsSubmitting(true)
 
@@ -132,17 +122,12 @@ const GetStarted = () => {
       if (formData.location) {
         messageParts.push(`Location: ${formData.location}`)
       }
-      if (formData.sourcesOfEnergy.length > 0) {
-        messageParts.push(`Sources of Energy: ${formData.sourcesOfEnergy.join(', ')}`)
-      }
-      if (formData.generatorsCount) {
-        messageParts.push(`Number of Generators: ${formData.generatorsCount}`)
-      }
+
       if (formData.averageCost) {
         messageParts.push(`Average Monthly Cost: ₦${formData.averageCost.replace(/[₦,]/g, '')}`)
       }
       if (formData.message) {
-        messageParts.push(`\nAdditional Information: ${formData.message}`)
+        messageParts.push(`\nAdditional Information:\n${formData.message}`)
       }
 
       const message = messageParts.length > 0
@@ -176,8 +161,6 @@ const GetStarted = () => {
         location: '',
         application: '',
         facilityType: '',
-        generatorsCount: '',
-        sourcesOfEnergy: [],
         averageCost: '',
         subject: '',
         message: ''
@@ -211,21 +194,47 @@ const GetStarted = () => {
     <div className="min-h-screen bg-white">
       <OtherNavbar />
 
-      <div className="flex flex-col lg:flex-row min-h-[calc(100vh-160px)]">
-
-        {/* Right Column - Form Section */}
+      <div className="container mx-auto px-6 py-10 md:py-14">
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full bg-white p-8 md:p-12 lg:p-16 flex items-center justify-center"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-3xl mb-10 md:mb-12"
         >
-          <div className="w-full max-w-4xl text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-heading mb-4">
-              Get Started
+          <h1 className="text-4xl md:text-5xl font-bold text-heading mb-3">
+            Get Started
+          </h1>
+          <p className="text-muted-foreground text-base md:text-lg">
+            Fill in the form and we will contact you within 24 hours to get you on the way.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_minmax(380px,0.85fr)] gap-10 xl:gap-14 items-start">
+          <motion.div
+            id="load-calculator"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.05 }}
+          >
+            <LoadCalculator
+              onEstimateChange={handleEstimateChange}
+              onRequestQuote={scrollToForm}
+            />
+          </motion.div>
+
+          <motion.div
+            ref={formSectionRef}
+            id="get-started-form"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="scroll-mt-24 xl:sticky xl:top-8"
+          >
+            <h2 className="text-2xl font-bold text-heading mb-2">
+              Tell us about your site
             </h2>
-            <p className="text-muted-foreground mb-8 text-base">
-              Please fill the form below and we will be sure to contact you in 24hrs to get you on the way!
+            <p className="text-muted-foreground text-sm mb-6">
+              If you used the load calculator, the estimate is filled into Additional Information so it is sent with this request.
             </p>
 
             <form onSubmit={handleSubmit} className="text-left space-y-6">
@@ -340,44 +349,6 @@ const GetStarted = () => {
                   </select>
                 </div>
               </div>
-
-              {/* Sources of energy */}
-              <div>
-                <Label htmlFor="sourcesOfEnergy" className="text-heading mb-2 block">
-                  Sources of energy (Select all that apply)
-                </Label>
-                <MultiSelect
-                  options={energySources}
-                  value={formData.sourcesOfEnergy}
-                  onChange={handleSourcesOfEnergyChange}
-                  placeholder="Select energy sources..."
-                  required={true}
-                  className="w-full"
-                />
-              </div>
-
-              {/* How many generators - conditional */}
-              {formData.sourcesOfEnergy.some(source =>
-                source.toLowerCase().includes('generator')
-              ) && (
-                  <div>
-                    <Label htmlFor="generatorsCount" className="text-heading mb-2 block">
-                      How many generators?
-                    </Label>
-                    <Input
-                      id="generatorsCount"
-                      name="generatorsCount"
-                      type="text"
-                      required
-                      value={formData.generatorsCount}
-                      onChange={handleGeneratorsCountChange}
-                      placeholder="e.g 1"
-                      className="bg-gray-50 border-gray-200 rounded-lg"
-                      inputMode="numeric"
-                    />
-                  </div>
-                )}
-
               <div>
                 <Label htmlFor="averageCost" className="text-heading mb-2 block">
                   Average Cost of energy or units consumed monthly
@@ -411,8 +382,8 @@ const GetStarted = () => {
                   value={formData.message}
                   onChange={handleTextareaChange}
                   placeholder="Tell us more about your requirements..."
-                  rows={4}
-                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-none"
+                  rows={10}
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-heading focus:outline-none focus:ring-2 focus:ring-brandColor focus:border-transparent resize-y"
                 />
               </div>
 
@@ -433,8 +404,8 @@ const GetStarted = () => {
                 {isSubmitting ? 'Submitting...' : 'Submit'}
               </Button>
             </form>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Success Dialog */}
